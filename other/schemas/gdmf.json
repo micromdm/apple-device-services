@@ -7,7 +7,7 @@
   "properties": {
     "AssetSets": {
       "description": "This list is a subset of `PublicAssetSets` and contains all the releases available for device management services to push to devices.",
-      "type": "object"
+      "$ref": "#/$defs/os"
     },
     "PublicAssetSets": {
       "description": "This list contains the latest releases available to the general public if they try to update or upgrade.",
@@ -15,11 +15,12 @@
     },
     "PublicRapidSecurityResponses": {
       "description": "This list contains `Rapid Security Response` releases currently available for Apple devices.",
-      "type": "object"
+      "$ref": "#/$defs/os"
     }
   },
   "$defs": {
     "os": {
+      "description": "Mapping of operating system to releases.",
       "type": "object",
       "propertyNames": {
         "enum": [ "iOS", "macOS", "visionOS" ]
@@ -32,6 +33,7 @@
       }
     },
     "release": {
+      "description": "Describes a release.",
       "type": "object",
       "properties": {
         "Build": {
