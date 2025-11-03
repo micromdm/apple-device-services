@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GDMF",
+  "description": "The response from the Apple Software Lookup Service at https://gdmf.apple.com/v2/pmv",
+  "x-apple-developer-api-uri": "https://support.apple.com/guide/deployment/device-management-deploy-software-updates-depafd2fad80/web",
+  "type": "object",
+  "properties": {
+    "AssetSets": {
+      "description": "This list is a subset of `PublicAssetSets` and contains all the releases available for device management services to push to devices.",
+      "type": "object"
+    },
+    "PublicAssetSets": {
+      "description": "This list contains the latest releases available to the general public if they try to update or upgrade.",
+      "$ref": "#/$defs/os"
+    },
+    "PublicRapidSecurityResponses": {
+      "description": "This list contains `Rapid Security Response` releases currently available for Apple devices.",
+      "type": "object"
+    }
+  },
+  "$defs": {
+    "os": {
+      "type": "object",
+      "propertyNames": {
+        "enum": [ "iOS", "macOS", "visionOS" ]
+      },
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/release"
+        }
+      }
+    },
+    "release": {
+      "type": "object",
+      "properties": {
+        "Build": {
+          "description": "Build number of the operating system.",
+          "examples": [ "22C6161" ],
+          "type": "string"
+        },
+        "ExpirationDate": {
+          "description": "The expiration date, typically set to 180 days after the posting date, defines the date the signing of the update expires. An expired update can’t be installed on devices anymore. When subsequent updates are made available, previous updates might have their expiration dates updated. If an expiration date isn’t provided, the update has yet to expire. An update has expired only when it has an expiration date in the past.",
+          "examples": [ "2025-04-17" ],
+          "type": "string"
+        },
+        "PostingDate": {
+          "description": "When the release was published.",
+          "examples": [ "2025-01-06" ],
+          "type": "string"
+        },
+        "ProductVersion": {
+          "description": "Product version number of the operating system.",
+          "examples": [ "18.2.1" ],
+          "type": "string"
+        },
+        "SupportedDevices": {
+          "description": "Supported devices for this release. The device list matches the ProductName value from the device, which is returned in a DeviceInformation response, the initial Authenticate request, or in the MachineInfo when the device tries to enroll.",
+          "type": "array",
+          "items": {
+            "examples": [
+              [ "iPad11,1", "iPad11,2" ]
+            ],
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
