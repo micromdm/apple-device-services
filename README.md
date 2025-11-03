@@ -17,7 +17,7 @@ A general list of schemas managed here:
 - [ANB Schemas](anb/schemas)  
 [JSON Schema](https://json-schema.org) definitions for the [App and Book Management (ANB) API](https://developer.apple.com/documentation/devicemanagement/app-and-book-management)
 - [Other schemas](other/schemas)  
-[JSON Schema](https://json-schema.org) miscellaneous Apple services such as [GDMF](https://support.apple.com/guide/deployment/device-management-deploy-software-updates-depafd2fad80/web).
+[JSON Schema](https://json-schema.org) definitions for miscellaneous Apple services such as [GDMF](https://support.apple.com/guide/deployment/device-management-deploy-software-updates-depafd2fad80/web).
 
 ## Contributing
 
