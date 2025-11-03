@@ -16,6 +16,6 @@ jobs:
           echo "4e4fb663549fc6fcde9aa705bd6ce75294b846dec47bf155aaa5af89f0501cff  jsonschema.zip" | sha256sum -c -
           unzip -j jsonschema.zip
 
-      - run: ./jsonschema lint abm/schemas dep/schemas anb/schemas
+      - run: echo */schemas | xargs ./jsonschema lint
 
-      - run: ./jsonschema fmt -c abm/schemas dep/schemas anb/schemas
+      - run: echo */schemas | xargs ./jsonschema fmt -c

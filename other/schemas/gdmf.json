@@ -58,11 +58,11 @@
         },
         "SupportedDevices": {
           "description": "Supported devices for this release. The device list matches the ProductName value from the device, which is returned in a DeviceInformation response, the initial Authenticate request, or in the MachineInfo when the device tries to enroll.",
+          "examples": [
+            [ "iPad11,1", "iPad11,2" ]
+          ],
           "type": "array",
           "items": {
-            "examples": [
-              [ "iPad11,1", "iPad11,2" ]
-            ],
             "type": "string"
           }
         }
