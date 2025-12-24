@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/orgdeviceactivity",
+  "title": "OrgDeviceActivity",
+  "description": "The data structure that represents an organization device activity resource.",
+  "type": "object",
+  "x-apple-developer-api-version": "1.1+",
+  "required": [
+    "id",
+    "type"
+  ],
+  "properties": {
+    "attributes": {
+      "description": "The resource\u2019s attributes.",
+      "$ref": "orgdeviceactivity.attributes.json"
+    },
+    "id": {
+      "description": "The opaque resource ID that uniquely identifies the resource.",
+      "type": "string"
+    },
+    "links": {
+      "description": "Navigational links that include the self-link.",
+      "type": "resourcelinks"
+    },
+    "type": {
+      "description": "The resource type.",
+      "type": "string",
+      "default": "orgdeviceactivities"
+    }
+  }
+}
