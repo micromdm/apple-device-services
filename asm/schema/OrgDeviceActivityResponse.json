@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/orgdeviceactivityresponse",
+  "title": "OrgDeviceActivityResponse",
+  "description": "A response that contains a single organization device activity resource.",
+  "type": "object",
+  "x-apple-developer-api-version": "1.1+",
+  "required": [
+    "data",
+    "links"
+  ],
+  "properties": {
+    "data": {
+      "description": "The resource data.",
+      "type": "orgdeviceactivity"
+    },
+    "links": {
+      "description": "Navigational links that include the self-link.",
+      "type": "documentlinks"
+    }
+  }
+}

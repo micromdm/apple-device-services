@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/mdmserverdeviceslinkagesresponse",
+  "title": "MdmServerDevicesLinkagesResponse",
+  "description": "The data and links that describe the relationship between the resources.",
+  "type": "object",
+  "x-apple-developer-api-version": "1.1+",
+  "required": [
+    "data",
+    "links"
+  ],
+  "properties": {
+    "data": {
+      "description": "The resource data.",
+      "$ref": "[mdmserverdeviceslinkagesresponse.data].json"
+    },
+    "links": {
+      "description": "Navigational links that include the self-link.",
+      "type": "pageddocumentlinks"
+    },
+    "meta": {
+      "description": "Paging information.",
+      "type": "paginginformation"
+    }
+  }
+}

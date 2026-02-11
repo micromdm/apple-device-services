@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/relationshiplinks",
+  "title": "RelationshipLinks",
+  "description": "Links related to the response document, including self-links.",
+  "type": "object",
+  "x-apple-developer-api-version": "1.1+",
+  "properties": {
+    "include": {
+      "type": ""
+    },
+    "related": {
+      "description": "The link to the related documents.",
+      "type": "string",
+      "format": "uri-reference"
+    },
+    "self": {
+      "description": "The link that produces the current document.",
+      "type": "string",
+      "format": "uri-reference"
+    }
+  }
+}
