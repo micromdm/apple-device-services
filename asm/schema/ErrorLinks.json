@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/errorlinks",
+  "title": "ErrorLinks",
+  "type": "object",
+  "x-apple-developer-api-version": "1.1+",
+  "properties": {
+    "about": {
+      "type": ""
+    },
+    "associated": {
+      "type": ""
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/jsonpointer",
+  "title": "JsonPointer",
+  "description": "An object that contains the JSON pointer that indicates the location of the error.",
+  "type": "object",
+  "x-apple-developer-api-version": "1.1+",
+  "required": [
+    "pointer"
+  ],
+  "properties": {
+    "pointer": {
+      "description": "A JSON pointer that indicates the location of the error in the request entity.",
+      "type": "string"
+    }
+  }
+}

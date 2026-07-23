@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/parameter",
+  "title": "Parameter",
+  "description": "An object that contains the query parameter that produces the error.",
+  "type": "object",
+  "x-apple-developer-api-version": "1.1+",
+  "required": [
+    "parameter"
+  ],
+  "properties": {
+    "parameter": {
+      "description": "The query parameter that produces the error.",
+      "type": "string"
+    }
+  }
+}
