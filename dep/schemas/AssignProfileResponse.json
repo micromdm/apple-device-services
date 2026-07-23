@@ -16,8 +16,8 @@
       "type": "string"
     },
     "retry_after_seconds": {
-      "type": "integer",
-      "description": "This key is only returned with X-Server-Protocol-Version 10 and later. It indicates how long to wait before retrying assignment for the THROTTLED devices."
+      "description": "This key is only returned with X-Server-Protocol-Version 10 and later. It indicates how long to wait before retrying assignment for the THROTTLED devices.",
+      "type": "integer"
     }
   }
 }
