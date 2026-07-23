@@ -8,7 +8,7 @@
     "devices": {
       "type": "object",
       "additionalProperties": {
-        "description": "THROTTLED is returned with X-Server-Protocol-Version 9 and later when the server is throttling the request.",
+        "$comment": "THROTTLED is returned with X-Server-Protocol-Version 9 and later when the server is throttling the request.",
         "enum": [ "SUCCESS", "NOT_ACCESSIBLE", "FAILED", "THROTTLED" ]
       }
     },
@@ -16,7 +16,7 @@
       "type": "string"
     },
     "retry_after_seconds": {
-      "description": "This key is only returned with X-Server-Protocol-Version 10 and later. It indicates how long to wait before retrying assignment for the THROTTLED devices.",
+      "$comment": "This key is only returned with X-Server-Protocol-Version 10 and later. It indicates how long to wait before retrying assignment for the THROTTLED devices.",
       "type": "integer"
     }
   }
