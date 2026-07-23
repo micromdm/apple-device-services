@@ -8,11 +8,16 @@
     "devices": {
       "type": "object",
       "additionalProperties": {
-        "enum": [ "SUCCESS", "NOT_ACCESSIBLE", "FAILED" ]
+        "description": "THROTTLED is returned with X-Server-Protocol-Version 9 and later when the server is throttling the request.",
+        "enum": [ "SUCCESS", "NOT_ACCESSIBLE", "FAILED", "THROTTLED" ]
       }
     },
     "profile_uuid": {
       "type": "string"
+    },
+    "retry_after_seconds": {
+      "description": "This key is only returned with X-Server-Protocol-Version 10 and later. It indicates how long to wait before retrying assignment for the THROTTLED devices.",
+      "type": "integer"
     }
   }
 }
