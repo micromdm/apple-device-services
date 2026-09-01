@@ -11,7 +11,7 @@ While Apple does provide documentation in the form of HTML (i.e. for humans to r
 A general list of schemas managed here:
 
 - [ABM Schemas](abm/schemas)  
-[JSON Schema](https://json-schema.org) definitions for the [Apple Business Manager API](https://developer.apple.com/documentation/applebusinessmanagerapi)
+[JSON Schema](https://json-schema.org) definitions for the [Apple Business Manager API](https://developer.apple.com/documentation/applebusinessapi)
 - [DEP Schemas](dep/schemas)  
 [JSON Schema](https://json-schema.org) definitions for the [Device Assignment (DEP) API](https://developer.apple.com/documentation/devicemanagement/device-assignment)
 - [ANB Schemas](anb/schemas)  

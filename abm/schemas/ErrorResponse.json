@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "ErrorResponse",
   "description": "The error details that an API returns in the response body whenever the API request isn’t successful.",
-  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessmanagerapi/errorresponse",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/errorresponse",
   "x-apple-developer-api-version": "1.1+",
   "type": "object",
   "properties": {
@@ -19,7 +19,7 @@
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "title": "ErrorResponse.Errors",
       "description": "The details about an error that returns when an API request isn’t successful.",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessmanagerapi/errorresponse/errors-data.dictionary",
+      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/errorresponse/errors-data.dictionary",
       "x-apple-developer-api-version": "1.1+",
       "type": "object",
       "required": [ "code", "detail", "status", "title" ],
@@ -66,7 +66,7 @@
     "ErrorResponse.Errors.Meta": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "title": "ErrorResponse.Errors.Meta",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessmanagerapi/errorresponse/errors-data.dictionary/meta-data.dictionary",
+      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/errorresponse/errors-data.dictionary/meta-data.dictionary",
       "x-apple-developer-api-version": "1.1+",
       "type": "object"
     }

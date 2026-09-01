@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "PagedDocumentLinks",
   "description": "Links related to the response document, including paging links.",
-  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessmanagerapi/pageddocumentlinks",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/pageddocumentlinks",
   "x-apple-developer-api-version": "1.1+",
   "type": "object",
   "required": [ "self" ],

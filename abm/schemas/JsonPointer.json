@@ -3,7 +3,7 @@
   "title": "JsonPointer",
   "description": "An object that contains the JSON pointer that indicates the location of the error.",
   "x-apple-developer-api-discussion": "In some cases, the JSON pointer may indicate an element that isn’t in the request entity, but needs to be. For more information about JSON pointers, see the RFC 6901 proposed standards document.",
-  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessmanagerapi/jsonpointer",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/jsonpointer",
   "x-apple-developer-api-version": "1.1+",
   "type": "object",
   "required": [ "pointer" ],

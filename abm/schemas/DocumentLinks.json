@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "DocumentLinks",
   "description": "Self-links to documents that can contain information for one or more resources.",
-  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessmanagerapi/documentlinks",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/documentlinks",
   "x-apple-developer-api-version": "1.1+",
   "type": "object",
   "required": [ "self" ],

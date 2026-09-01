@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "OrgDevice",
   "description": "The data structure that represents an organization device resource.",
-  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessmanagerapi/orgdevice",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdevice",
   "x-apple-developer-api-version": "1.1+",
   "type": "object",
   "required": [ "id", "type" ],
@@ -34,7 +34,7 @@
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "title": "OrgDevice.Attributes",
       "description": "Attributes that describe an organization device resource.",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessmanagerapi/orgdevice/attributes-data.dictionary",
+      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdevice/attributes-data.dictionary",
       "x-apple-developer-api-version": "1.1+",
       "type": "object",
       "properties": {
@@ -124,7 +124,7 @@
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "title": "OrgDevice.Relationships",
       "description": "The relationships you include in the request, and those that you can operate on.",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessmanagerapi/orgdevice/relationships-data.dictionary",
+      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdevice/relationships-data.dictionary",
       "x-apple-developer-api-version": "1.1+",
       "type": "object",
       "properties": {
@@ -138,7 +138,7 @@
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "title": "OrgDevice.Relationships.AssignedServer",
       "description": "The links that describe the relationship between the resources.",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessmanagerapi/orgdevice/relationships-data.dictionary/assignedserver-data.dictionary",
+      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdevice/relationships-data.dictionary/assignedserver-data.dictionary",
       "x-apple-developer-api-version": "1.1+",
       "type": "object",
       "properties": {

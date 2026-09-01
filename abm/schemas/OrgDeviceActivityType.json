@@ -4,7 +4,7 @@
   "description": "Strings that represent organization device activities.",
   "$comment": "The enum should be specified here (without the x- prefix) but go-jsonschema seems to have a problem generating when no type is specified and there is an enum at the top level.",
   "x-apple-developer-api-discussion": "- Possible Values\n  - ASSIGN_DEVICES:\n  - UNASSIGN_DEVICES:",
-  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessmanagerapi/orgdeviceactivitytype",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdeviceactivitytype",
   "x-apple-developer-api-version": "1.1+",
   "x-enum": [ "ASSIGN_DEVICES", "UNASSIGN_DEVICES" ],
   "type": "string"

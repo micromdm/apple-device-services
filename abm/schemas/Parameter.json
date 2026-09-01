@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Parameter",
   "description": "An object that contains the query parameter that produces the error.",
-  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessmanagerapi/jsonpointer",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/jsonpointer",
   "x-apple-developer-api-version": "1.1+",
   "type": "object",
   "required": [ "parameter" ],

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "ErrorLinks",
-  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessmanagerapi/errorlinks",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/errorlinks",
   "x-apple-developer-api-version": "1.1+",
   "type": "object",
   "properties": {
@@ -25,7 +25,7 @@
     "ErrorLinks.Associated": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "title": "ErrorLinks.Associated",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessmanagerapi/errorlinks/associated-data.dictionary",
+      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/errorlinks/associated-data.dictionary",
       "x-apple-developer-api-version": "1.1+",
       "type": "object",
       "properties": {
@@ -41,7 +41,7 @@
     "ErrorLinks.Associated.Meta": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "title": "ErrorLinks.Associated.Meta",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessmanagerapi/errorlinks/associated-data.dictionary/meta-data.dictionary",
+      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/errorlinks/associated-data.dictionary/meta-data.dictionary",
       "x-apple-developer-api-version": "1.1+",
       "type": "object",
       "properties": {
