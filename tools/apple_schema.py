@@ -54,6 +54,15 @@ SCALAR_MAP: dict[str, str] = {
     "double": "number",
 }
 
+# Apple type names that are JSON Schema string formats, not types. They appear
+# as bare ``text`` type tokens (e.g. ``uri-reference``) and must map to
+# ``type: string`` plus the matching ``format``.
+STRING_FORMATS: set[str] = {
+    "uri-reference",
+    "date",
+    "date-time",
+}
+
 
 def derive_data_uri(api_uri: str) -> str | None:
     """Derive the tutorial JSON URL from a documentation page URL."""
@@ -231,6 +240,8 @@ def apple_type_to_schema(
     inner = expr[1:-1] if is_array else expr
     if ref and inner == ref:
         elem: dict[str, Any] = {"$ref": ref}
+    elif inner in STRING_FORMATS:
+        elem = {"type": "string", "format": inner}
     else:
         elem = {"type": SCALAR_MAP.get(inner, inner)}
     if is_array:
