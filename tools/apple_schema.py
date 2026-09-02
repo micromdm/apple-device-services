@@ -1,23 +1,27 @@
 #!/usr/bin/env python3
-"""Convert Apple's tutorial JSON to/against local JSON Schemas.
+"""Sync local JSON Schemas against Apple's documentation (DocC render JSON).
 
-Subcommands:
-    diff      diff Apple's tutorial JSON against local schema file(s)
-    merge     overwrite/add schema fields from Apple JSON (additive only)
-    generate  generate a fresh JSON Schema from an Apple tutorial JSON page
-    difftree  check Apple's nav/index against on-disk schema files
+A single ``sync`` command with these shapes:
 
-Usage:
-    python3 apple_schema.py diff <schema-or-dir>
-    python3 apple_schema.py merge <schema-or-dir> [--dry-run] [--with-enums]
-    python3 apple_schema.py generate <api-uri | doc-path | data-uri>
-    python3 apple_schema.py difftree <root> <schema-dir>
+    apple_schema.py sync <schema-file|schema-dir> [options]
+        Merge existing schema file(s) in place (additive; never removes). For a
+        directory, also flag missing/extra types against Apple's nav index,
+        auto-deriving the relevant nav root from the on-disk schemas.
 
-The documentation page URL (``x-apple-developer-api-uri``) maps to a
-machine-readable mirror at
-``https://developer.apple.com/tutorials/data/documentation/<path>.json`` by
-replacing ``developer.apple.com/documentation/`` with
-``developer.apple.com/tutorials/data/documentation/`` and appending ``.json``.
+    apple_schema.py sync <schema-dir> --root <nav-root> [--generate] [options]
+        Compare against an explicit nav root (e.g. an empty/new directory),
+        flagging missing/extra, and (with --generate) creating the missing ones.
+
+    apple_schema.py sync <type-url|doc-path> [out-dir] [options]
+        Generate a single schema from a dictionary type (stdout if no out-dir).
+
+Options:
+    --root ROOT     nav root URL/doc-path to compare a schema directory against
+    --generate      with --root, also generate the missing schemas
+    --dry-run       report what would change without writing
+    --enums         also mix in enum candidates from codeVoice tokens (noisy)
+    --cached        use cached copies only; do not hit the network
+    --cache-dir DIR cache directory (default: ~/.cache/apple_schema)
 """
 
 from __future__ import annotations
@@ -52,7 +56,7 @@ SCALAR_MAP: dict[str, str] = {
 
 
 def derive_data_uri(api_uri: str) -> str | None:
-    """Derive the tutorial JSON mirror URL from a documentation page URL."""
+    """Derive the tutorial JSON URL from a documentation page URL."""
     if "developer.apple.com/documentation/" not in api_uri:
         return None
     return (
@@ -64,22 +68,24 @@ def derive_data_uri(api_uri: str) -> str | None:
     )
 
 
-def resolve_data_uri(ref: str) -> str | None:
-    """Resolve a data URI from an api-uri, a doc path, or a data URI."""
-    if ref.startswith("https://developer.apple.com/tutorials/data/"):
-        return ref
-    if ref.startswith("https://developer.apple.com/documentation/"):
-        return derive_data_uri(ref)
-    if ref.startswith("/documentation/"):
-        return derive_data_uri("https://developer.apple.com" + ref)
-    return derive_data_uri(
-        "https://developer.apple.com/documentation/" + ref.lstrip("/")
-    )
+def resolve_doc_path(ref: str) -> str | None:
+    """Resolve a root ref (api-uri, doc path, or data URI) to a doc path."""
+    if "/documentation/" in ref:
+        return ref[ref.index("/documentation/") :]
+    if "/tutorials/data/documentation/" in ref:
+        rest = ref.split("/tutorials/data/documentation/", 1)[1]
+        return "/documentation/" + rest.removesuffix(".json")
+    return None
+
+
+def doc_path_data_uri(doc_path: str) -> str:
+    """Convert a ``/documentation/...`` doc path to its tutorial JSON data URI."""
+    return "https://developer.apple.com/tutorials/data" + doc_path + ".json"
 
 
 def cache_file(cache_dir: str, url: str) -> str:
     """Map a data URI to a cache file path (mirrors the doc path)."""
-    rest = url.split("/", 3)[3]  # e.g. "tutorials/data/documentation/...json"
+    rest = url.split("/", 3)[3]
     rest = rest.removeprefix("tutorials/data/")
     return os.path.join(cache_dir, rest)
 
@@ -100,10 +106,9 @@ def fetch_json(
     copy to fall back on.
 
     FUTURE (ETag): Apple's CDN likely returns ETag/Last-Modified. To avoid
-    re-downloading unchanged content, store the ETag + Last-Modified from the
-    response alongside the cached JSON (a sidecar or a small metadata file),
-    then issue a conditional GET (If-None-Match / If-Modified-Since) and reuse
-    the cached copy on 304 Not Modified.
+    re-downloading unchanged content, store the ETag + Last-Modified alongside
+    the cached JSON and issue a conditional GET (If-None-Match /
+    If-Modified-Since) to reuse the copy on 304 Not Modified.
     """
     path = cache_file(cache_dir, url) if cache_dir else None
 
@@ -144,9 +149,9 @@ def inline_tokens_to_commonmark(
 
     Apple's markup is a structured token stream, not Markdown:
 
-    - ``text``              -> plain text
+    - ``text``               -> plain text
     - ``codeVoice``/``code`` -> backticked code span
-    - ``reference``         -> ``[title](url)`` resolved via ``references``
+    - ``reference``          -> ``[title](url)`` resolved via ``references``
 
     Returns ``(markdown, code_voices)``, where ``code_voices`` is the list of raw
     ``code``/``codeVoice`` values (used for enum heuristics).
@@ -250,7 +255,7 @@ def extract_apple_properties(doc: JSON) -> dict[str, dict[str, Any]]:
             # (the `codes` list) is a heuristic: every `codeVoice`/`code` token
             # from the description prose, collected regardless of whether it is
             # an enum literal or inline code. Any `enum` derived from it is
-            # best-effort and must be reviewed (see `merge --with-enums`).
+            # best-effort and must be reviewed (see `sync --enums`).
             props[name] = {
                 "type": type_dict,
                 "ref": ref,
@@ -273,66 +278,6 @@ def type_key(type_dict: dict[str, Any] | None) -> str | None:
     if not type_dict:
         return None
     return type_dict.get("type")
-
-
-def diff(
-    schema: JSON,
-    apple_props: dict[str, dict[str, Any]],
-) -> tuple[list[tuple[str, dict[str, Any]]], list[str], list[dict[str, Any]]]:
-    """Compare a schema's properties against Apple's, returning deltas.
-
-    Returns ``(additions, removals, drift)`` where additions are new property
-    names, removals are repo-only property names, and drift is a list of
-    ``{kind, property, schema, apple}`` entries.
-    """
-    additions: list[tuple[str, dict[str, Any]]] = []
-    removals: list[str] = []
-    drift: list[dict[str, Any]] = []
-    schema_props = schema.get("properties", {})
-    for name, ap in apple_props.items():
-        if name not in schema_props:
-            additions.append((name, ap))
-            continue
-        sp = schema_props[name]
-        at = type_key(ap["type"])
-        st = sp.get("type")
-        if at and st and at != st:
-            drift.append(
-                {
-                    "kind": "type",
-                    "property": name,
-                    "schema": sp.get("type"),
-                    "apple": at,
-                }
-            )
-        if ap["description"] and norm(sp.get("description")) != norm(ap["description"]):
-            drift.append(
-                {
-                    "kind": "description",
-                    "property": name,
-                    "schema": sp.get("description"),
-                    "apple": ap["description"],
-                }
-            )
-        # enum is a heuristic (see extract_apple_properties): only report drift
-        # against an existing enum, never propose an enum from scratch.
-        if (
-            sp.get("enum")
-            and ap["codeVoice"]
-            and set(sp["enum"]) != set(ap["codeVoice"])
-        ):
-            drift.append(
-                {
-                    "kind": "enum",
-                    "property": name,
-                    "schema": sp.get("enum"),
-                    "apple": ap["codeVoice"],
-                }
-            )
-    for name in schema_props:
-        if name not in apple_props:
-            removals.append(name)
-    return additions, removals, drift
 
 
 def apple_property_schema(
@@ -377,21 +322,6 @@ def schema_files(path: str) -> list[str]:
             if f.endswith(".json") and not f.startswith("."):
                 result.append(os.path.join(root, f))
     return sorted(result)
-
-
-def resolve_doc_path(ref: str) -> str | None:
-    """Resolve a root ref (api-uri, doc path, or data URI) to a doc path."""
-    if "/documentation/" in ref:
-        return ref[ref.index("/documentation/") :]
-    if "/tutorials/data/documentation/" in ref:
-        rest = ref.split("/tutorials/data/documentation/", 1)[1]
-        return "/documentation/" + rest.removesuffix(".json")
-    return None
-
-
-def doc_path_data_uri(doc_path: str) -> str:
-    """Convert a ``/documentation/...`` doc path to its tutorial JSON data URI."""
-    return "https://developer.apple.com/tutorials/data" + doc_path + ".json"
 
 
 def endpoint_types(doc: JSON) -> dict[str, str | None]:
@@ -502,193 +432,12 @@ def _load_schema(path: str) -> JSON:
         return json.load(fh)
 
 
-def cmd_diff(args: argparse.Namespace) -> None:
-    """Print per-schema deltas between local schemas and Apple's JSON."""
-    deltas: dict[str, Any] = {}
-    for f in schema_files(args.target):
-        name = os.path.basename(f)
-        schema = _load_schema(f)
-        api_uri = schema.get("x-apple-developer-api-uri")
-        schema_data_uri = schema.get("x-apple-developer-data-uri")
-        missing_x_apple = []
-        if not api_uri:
-            missing_x_apple.append("x-apple-developer-api-uri")
-        if not schema_data_uri:
-            missing_x_apple.append("x-apple-developer-data-uri")
-
-        data_uri = derive_data_uri(api_uri) if api_uri else None
-
-        if not data_uri:
-            entry: dict[str, Any] = {"missing_x_apple": missing_x_apple}
-            if api_uri:
-                entry["skip"] = f"no data URI derivable from: {api_uri}"
-            deltas[name] = entry
-            continue
-
-        try:
-            doc, fetched_at = fetch_json(
-                data_uri, cache_dir=args.cache_dir, cached_only=args.cached
-            )
-        except urllib.error.HTTPError as e:
-            deltas[name] = {"error": f"HTTP {e.code}: {data_uri}"}
-            continue
-        except urllib.error.URLError as e:
-            deltas[name] = {"error": f"fetch failed: {e}"}
-            continue
-
-        apple_title = doc.get("metadata", {}).get("title")
-        apple_props = extract_apple_properties(doc)
-        additions, removals, drift = diff(schema, apple_props)
-
-        additions_out: dict[str, Any] = {}
-        for pname, ap in additions:
-            snippet = dict(ap["type"]) if ap["type"] else {}
-            if ap["description"]:
-                snippet["description"] = ap["description"]
-            if ap["datetime_hint"]:
-                snippet["format"] = "date-time"
-            if ap["codeVoice"]:
-                snippet["x-enum-candidates"] = ap["codeVoice"]
-            additions_out[pname] = snippet
-
-        refs = doc.get("references", {})
-        apple_description, _ = inline_tokens_to_commonmark(
-            doc.get("abstract", []), refs
-        )
-
-        title_mismatch = schema.get("title") != apple_title
-        description_mismatch = norm(schema.get("description")) != norm(
-            apple_description
-        )
-        data_uri_mismatch = bool(schema_data_uri and schema_data_uri != data_uri)
-
-        entry = {
-            "fetched_at": fetched_at,
-            "title_mismatch": title_mismatch,
-            "description_mismatch": description_mismatch,
-            "x_apple_data_uri_mismatch": data_uri_mismatch,
-        }
-
-        if missing_x_apple:
-            entry["missing_x_apple"] = missing_x_apple
-            if "x-apple-developer-data-uri" in missing_x_apple:
-                entry["x_apple_data_uri_derived"] = data_uri
-
-        if title_mismatch:
-            entry["title"] = schema.get("title")
-            entry["apple_title"] = apple_title
-
-        if description_mismatch:
-            entry["description"] = schema.get("description")
-            entry["apple_description"] = apple_description
-
-        if data_uri_mismatch:
-            entry["x_apple_data_uri_schema"] = schema_data_uri
-            entry["x_apple_data_uri_derived"] = data_uri
-
-        entry["additions"] = additions_out
-        entry["removals"] = removals
-        entry["drift"] = drift
-
-        deltas[name] = entry
-
-    print(json.dumps(deltas, indent=2, ensure_ascii=False))
-
-
-def cmd_merge(args: argparse.Namespace) -> None:
-    """Overwrite/add schema fields in place from Apple's JSON (additive only)."""
-    results: dict[str, Any] = {}
-    for f in schema_files(args.target):
-        name = os.path.basename(f)
-        schema = _load_schema(f)
-        api_uri = schema.get("x-apple-developer-api-uri")
-        data_uri = derive_data_uri(api_uri) if api_uri else None
-
-        if not data_uri:
-            results[name] = {"skip": f"no data URI derivable from: {api_uri}"}
-            continue
-
-        try:
-            doc, fetched_at = fetch_json(
-                data_uri, cache_dir=args.cache_dir, cached_only=args.cached
-            )
-        except urllib.error.HTTPError as e:
-            results[name] = {"error": f"HTTP {e.code}: {data_uri}"}
-            continue
-        except urllib.error.URLError as e:
-            results[name] = {"error": f"fetch failed: {e}"}
-            continue
-
-        apple_props = extract_apple_properties(doc)
-        apple_title = doc.get("metadata", {}).get("title")
-        apple_description, _ = inline_tokens_to_commonmark(
-            doc.get("abstract", []), doc.get("references", {})
-        )
-
-        summary: dict[str, Any] = {"dry_run": args.dry_run, "fetched_at": fetched_at}
-
-        if apple_title and schema.get("title") != apple_title:
-            schema["title"] = apple_title
-            summary["title_changed"] = True
-
-        if apple_description and norm(schema.get("description")) != norm(
-            apple_description
-        ):
-            schema["description"] = apple_description
-            summary["description_changed"] = True
-
-        if schema.get("x-apple-developer-data-uri") != data_uri:
-            schema["x-apple-developer-data-uri"] = data_uri
-            summary["x_apple_data_uri_changed"] = True
-
-        props = schema.setdefault("properties", {})
-        added: list[str] = []
-        type_changed: list[str] = []
-        desc_changed: list[str] = []
-        enum_changed: list[str] = []
-        for pname, ap in apple_props.items():
-            if pname not in props:
-                props[pname] = apple_property_schema(ap, with_enums=args.with_enums)
-                added.append(pname)
-            else:
-                sp = props[pname]
-                at = type_key(ap["type"])
-                st = sp.get("type")
-                if at and st and at != st:
-                    apply_type(sp, ap["type"])
-                    type_changed.append(pname)
-                if ap["description"] and norm(sp.get("description")) != norm(
-                    ap["description"]
-                ):
-                    sp["description"] = ap["description"]
-                    desc_changed.append(pname)
-                # `--with-enums`: mix in the heuristic enum (raw `codeVoice`
-                # tokens) for review only — noisy by design.
-                if (
-                    args.with_enums
-                    and ap["codeVoice"]
-                    and sp.get("enum") != ap["codeVoice"]
-                ):
-                    sp["enum"] = ap["codeVoice"]
-                    enum_changed.append(pname)
-
-        if added:
-            summary["added"] = added
-        if type_changed:
-            summary["type_changed"] = type_changed
-        if desc_changed:
-            summary["property_description_changed"] = desc_changed
-        if enum_changed:
-            summary["enum_changed"] = enum_changed
-
-        if not args.dry_run:
-            with open(f, "w") as fh:
-                json.dump(schema, fh, indent=2, ensure_ascii=False)
-                fh.write("\n")
-
-        results[name] = summary
-
-    print(json.dumps(results, indent=2, ensure_ascii=False))
+def write_schema(path: str, schema: JSON) -> None:
+    """Write a JSON Schema to disk (creating parent directories as needed)."""
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w") as fh:
+        json.dump(schema, fh, indent=2, ensure_ascii=False)
+        fh.write("\n")
 
 
 def generate_schema(doc: JSON, data_uri: str) -> JSON:
@@ -699,8 +448,7 @@ def generate_schema(doc: JSON, data_uri: str) -> JSON:
 
     properties: dict[str, Any] = {}
     for name, ap in extract_apple_properties(doc).items():
-        entry = apple_property_schema(ap)
-        properties[name] = entry
+        properties[name] = apple_property_schema(ap)
 
     api_uri = None
     variants = doc.get("variants", [])
@@ -722,54 +470,343 @@ def generate_schema(doc: JSON, data_uri: str) -> JSON:
     return schema
 
 
-def cmd_generate(args: argparse.Namespace) -> None:
-    """Print a fresh JSON Schema generated from an Apple page."""
-    data_uri = resolve_data_uri(args.ref)
+def merge_schema(
+    schema: JSON, doc: JSON, data_uri: str, with_enums: bool = False
+) -> JSON:
+    """Mutate a loaded schema in place from Apple's doc; return a summary.
+
+    Additive/overwrite only: adds new properties, overwrites title, description,
+    type, and (optionally) enum; never removes properties, ``required``, or
+    other curated fields.
+    """
+    apple_props = extract_apple_properties(doc)
+    apple_title = doc.get("metadata", {}).get("title")
+    apple_description, _ = inline_tokens_to_commonmark(
+        doc.get("abstract", []), doc.get("references", {})
+    )
+
+    summary: JSON = {}
+    if apple_title and schema.get("title") != apple_title:
+        schema["title"] = apple_title
+        summary["title_changed"] = True
+    if apple_description and norm(schema.get("description")) != norm(apple_description):
+        schema["description"] = apple_description
+        summary["description_changed"] = True
+    if schema.get("x-apple-developer-data-uri") != data_uri:
+        schema["x-apple-developer-data-uri"] = data_uri
+        summary["x_apple_data_uri_changed"] = True
+
+    props = schema.setdefault("properties", {})
+    added: list[str] = []
+    type_changed: list[str] = []
+    desc_changed: list[str] = []
+    enum_changed: list[str] = []
+    for pname, ap in apple_props.items():
+        if pname not in props:
+            props[pname] = apple_property_schema(ap, with_enums=with_enums)
+            added.append(pname)
+        else:
+            sp = props[pname]
+            at = type_key(ap["type"])
+            st = sp.get("type")
+            if at and st and at != st:
+                apply_type(sp, ap["type"])
+                type_changed.append(pname)
+            if ap["description"] and norm(sp.get("description")) != norm(
+                ap["description"]
+            ):
+                sp["description"] = ap["description"]
+                desc_changed.append(pname)
+            # `--enums`: mix in the heuristic enum (raw `codeVoice` tokens) for
+            # review only — noisy by design.
+            if with_enums and ap["codeVoice"] and sp.get("enum") != ap["codeVoice"]:
+                sp["enum"] = ap["codeVoice"]
+                enum_changed.append(pname)
+
+    # Repo-only properties (present in the schema but not Apple's docs) are
+    # kept, not removed — surfaced here since `git diff` won't show them.
+    kept: list[str] = [p for p in props if p not in apple_props]
+
+    if added:
+        summary["added"] = added
+    if type_changed:
+        summary["type_changed"] = type_changed
+    if desc_changed:
+        summary["property_description_changed"] = desc_changed
+    if enum_changed:
+        summary["enum_changed"] = enum_changed
+    if kept:
+        summary["kept_repo_only"] = kept
+    return summary
+
+
+_CHANGE_KEYS = (
+    "title_changed",
+    "description_changed",
+    "x_apple_data_uri_changed",
+    "added",
+    "type_changed",
+    "property_description_changed",
+    "enum_changed",
+)
+
+
+def _has_changes(summary: JSON) -> bool:
+    """Return True if a merge summary indicates any actual schema change."""
+    return any(k in summary for k in _CHANGE_KEYS)
+
+
+def _is_outlier(value: Any) -> bool:
+    """Return True if a sync result is worth reporting (not a clean merge)."""
+    if not isinstance(value, dict):
+        return True  # e.g. the "_extras" list
+    if value.get("action") != "merged":
+        return True  # generated / would-generate / error / skip
+    return _has_changes(value)
+
+
+def sync_file(path: str, args: argparse.Namespace) -> JSON:
+    """Sync a single schema file in place; return a summary dict."""
+    schema = _load_schema(path)
+    api_uri = schema.get("x-apple-developer-api-uri")
+    data_uri = derive_data_uri(api_uri) if api_uri else None
     if not data_uri:
-        print(f"error: could not derive a data URI from: {args.ref}", file=sys.stderr)
-        sys.exit(1)
+        return {"skip": f"no data URI derivable from: {api_uri}"}
     try:
-        doc, _fetched_at = fetch_json(
+        doc, fetched_at = fetch_json(
             data_uri, cache_dir=args.cache_dir, cached_only=args.cached
         )
     except urllib.error.HTTPError as e:
-        print(f"error: HTTP {e.code}: {data_uri}", file=sys.stderr)
-        sys.exit(1)
+        return {"error": f"HTTP {e.code}: {data_uri}"}
     except urllib.error.URLError as e:
-        print(f"error: {e}", file=sys.stderr)
-        sys.exit(1)
-    print(json.dumps(generate_schema(doc, data_uri), indent=2, ensure_ascii=False))
+        return {"error": f"fetch failed: {e}"}
+    changes = merge_schema(schema, doc, data_uri, with_enums=args.enums)
+    summary = dict(changes)
+    summary["action"] = "merged"
+    summary["dry_run"] = args.dry_run
+    summary["fetched_at"] = fetched_at
+    if not args.dry_run and _has_changes(changes):
+        write_schema(path, schema)
+    return summary
 
 
-def cmd_difftree(args: argparse.Namespace) -> None:
-    """Print missing/extra schema files vs Apple's nav index under a root."""
-    root_path = resolve_doc_path(args.root)
-    if not root_path:
-        print(f"error: could not resolve root: {args.root}", file=sys.stderr)
-        sys.exit(1)
-    try:
-        items = collect_schema_items(root_path, args.cache_dir, args.cached)
-    except urllib.error.HTTPError as e:
-        print(f"error: HTTP {e.code}", file=sys.stderr)
-        sys.exit(1)
-    except urllib.error.URLError as e:
-        print(f"error: {e}", file=sys.stderr)
-        sys.exit(1)
+def index_diff(
+    root_path: str, outdir: str, args: argparse.Namespace
+) -> tuple[dict[str, str | None], list[str]]:
+    """Return (missing, extras) between a nav root's index and a schema dir.
 
-    on_disk = {os.path.basename(f) for f in schema_files(args.target)}
+    ``missing`` maps type names (in the index but not on disk) to their doc
+    URLs; ``extras`` lists on-disk files not present in the index.
+    """
+    items = collect_schema_items(root_path, args.cache_dir, args.cached)
+    on_disk = {os.path.basename(f) for f in schema_files(outdir)}
     missing = {
-        name: url
-        for name, url in sorted(items.items())
-        if name + ".json" not in on_disk
+        name: url for name, url in items.items() if name + ".json" not in on_disk
     }
-    extra = sorted(on_disk - {name + ".json" for name in items})
+    extras = sorted(on_disk - {name + ".json" for name in items})
+    return missing, extras
 
-    report: JSON = {
-        "root": root_path,
-        "missing": missing,
-        "extra": extra,
+
+def derive_namespace(doc_paths: list[str]) -> str | None:
+    """Derive the common ``/documentation/<namespace>`` prefix from doc paths."""
+    prefixes = {
+        "/".join(p.split("/")[:3]) for p in doc_paths if p.startswith("/documentation/")
     }
-    print(json.dumps(report, indent=2, ensure_ascii=False))
+    return prefixes.pop() if len(prefixes) == 1 else None
+
+
+def namespace_sections(
+    namespace_root: str, cache_dir: str | None, cached_only: bool
+) -> dict[str, str]:
+    """Return ``{type_name: group_path}`` across a documentation namespace.
+
+    Reads each ``collection``/``collectionGroup`` listed by the namespace
+    landing page and maps its *direct* symbol titles back to that group. Direct
+    symbols are enough to identify the home group; the full nested inventory is
+    fetched later by ``index_diff``.
+    """
+    try:
+        doc, _ = fetch_json(
+            doc_path_data_uri(namespace_root),
+            cache_dir=cache_dir,
+            cached_only=cached_only,
+        )
+    except (urllib.error.HTTPError, urllib.error.URLError):
+        return {}
+    refs = doc.get("references", {})
+    sections: dict[str, str] = {}
+    for ts in doc.get("topicSections", []):
+        for ident in ts.get("identifiers", []):
+            r = refs.get(ident, {})
+            if r.get("role") not in ("collection", "collectionGroup") or not r.get(
+                "url"
+            ):
+                continue
+            group = r["url"]
+            try:
+                gdoc, _ = fetch_json(
+                    doc_path_data_uri(group),
+                    cache_dir=cache_dir,
+                    cached_only=cached_only,
+                )
+            except (urllib.error.HTTPError, urllib.error.URLError):
+                continue
+            grefs = gdoc.get("references", {})
+            for gts in gdoc.get("topicSections", []):
+                for gident in gts.get("identifiers", []):
+                    gr = grefs.get(gident, {})
+                    if gr.get("role") == "symbol" and gr.get("title"):
+                        sections.setdefault(gr["title"], group)
+    return sections
+
+
+def derive_home_root(outdir: str, args: argparse.Namespace) -> str | None:
+    """Derive the collection group most on-disk schemas belong to, or None."""
+    on_disk_names = {
+        os.path.basename(f).removesuffix(".json") for f in schema_files(outdir)
+    }
+    api_uris = []
+    for f in schema_files(outdir):
+        schema = _load_schema(f)
+        if schema.get("x-apple-developer-api-uri"):
+            api_uris.append(schema["x-apple-developer-api-uri"])
+    doc_paths = [p for p in (resolve_doc_path(u) for u in api_uris) if p]
+    namespace = derive_namespace(doc_paths)
+    if not namespace:
+        return None
+    sections = namespace_sections(namespace, args.cache_dir, args.cached)
+    counts: dict[str, int] = {}
+    for name in on_disk_names:
+        if name in sections:
+            group = sections[name]
+            counts[group] = counts.get(group, 0) + 1
+    return max(counts, key=counts.get) if counts else None
+
+
+def generate_one(
+    name: str,
+    url: str | None,
+    outdir: str,
+    args: argparse.Namespace,
+    results: JSON,
+) -> None:
+    """Generate a single missing type into ``outdir``, recording into ``results``."""
+    filename = name + ".json"
+    if not url:
+        results[filename] = {"error": f"no URL for type: {name}"}
+        return
+    data_uri = doc_path_data_uri(url)
+    try:
+        doc, fetched_at = fetch_json(
+            data_uri, cache_dir=args.cache_dir, cached_only=args.cached
+        )
+    except urllib.error.HTTPError as e:
+        results[filename] = {"error": f"HTTP {e.code}: {data_uri}"}
+        return
+    except urllib.error.URLError as e:
+        results[filename] = {"error": f"fetch failed: {e}"}
+        return
+    if args.dry_run:
+        results[filename] = {
+            "action": "would-generate",
+            "dry_run": True,
+            "fetched_at": fetched_at,
+        }
+    else:
+        write_schema(os.path.join(outdir, filename), generate_schema(doc, data_uri))
+        results[filename] = {
+            "action": "generated",
+            "dry_run": False,
+            "fetched_at": fetched_at,
+        }
+
+
+def cmd_sync(args: argparse.Namespace) -> None:
+    """Sync schemas from Apple's docs, based on the target's shape."""
+    target = args.target
+
+    if os.path.isfile(target):
+        results = {os.path.basename(target): sync_file(target, args)}
+    elif os.path.isdir(target):
+        results = {}
+        for f in schema_files(target):
+            results[os.path.basename(f)] = sync_file(f, args)
+        # Optional index comparison: flag missing/extra (and, with --generate,
+        # create missing) against a nav root — given explicitly, or derived
+        # from the on-disk schemas' shared documentation namespace.
+        root_path = None
+        if args.root:
+            root_path = resolve_doc_path(args.root)
+            if not root_path:
+                print(f"error: could not resolve root: {args.root}", file=sys.stderr)
+                sys.exit(1)
+        else:
+            root_path = derive_home_root(target, args)
+        if root_path:
+            missing, extras = index_diff(root_path, target, args)
+            if missing:
+                if args.generate:
+                    for name, url in sorted(missing.items()):
+                        generate_one(name, url, target, args, results)
+                else:
+                    results["_missing"] = {
+                        name: url for name, url in sorted(missing.items())
+                    }
+            if extras:
+                results["_extras"] = extras
+    else:
+        # A type URL/doc-path: generate a single schema (stdout unless outdir).
+        doc_path = resolve_doc_path(target)
+        if not doc_path:
+            print(f"error: could not resolve target: {target}", file=sys.stderr)
+            sys.exit(1)
+        data_uri = doc_path_data_uri(doc_path)
+        try:
+            doc, fetched_at = fetch_json(
+                data_uri, cache_dir=args.cache_dir, cached_only=args.cached
+            )
+        except urllib.error.HTTPError as e:
+            print(f"error: HTTP {e.code}: {data_uri}", file=sys.stderr)
+            sys.exit(1)
+        except urllib.error.URLError as e:
+            print(f"error: {e}", file=sys.stderr)
+            sys.exit(1)
+        kind = doc.get("metadata", {}).get("symbolKind")
+        if kind not in ("dictionary", "httpRequest"):
+            print(
+                f"error: {target} is a nav root, not a type; "
+                "use --root with a schema directory",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+        if not args.outdir:
+            print(
+                json.dumps(generate_schema(doc, data_uri), indent=2, ensure_ascii=False)
+            )
+            return
+        filename = (doc.get("metadata", {}).get("title") or "Untitled") + ".json"
+        out = os.path.join(args.outdir, filename)
+        if args.dry_run:
+            results = {
+                filename: {
+                    "action": "would-generate",
+                    "dry_run": True,
+                    "fetched_at": fetched_at,
+                }
+            }
+        else:
+            write_schema(out, generate_schema(doc, data_uri))
+            results = {
+                filename: {
+                    "action": "generated",
+                    "dry_run": False,
+                    "fetched_at": fetched_at,
+                }
+            }
+
+    # Only report outliers; clean merges (no changes) are silent.
+    results = {k: v for k, v in results.items() if _is_outlier(v)}
+    print(json.dumps(results, indent=2, ensure_ascii=False))
 
 
 def add_cache_args(sub: argparse.ArgumentParser) -> None:
@@ -787,47 +824,34 @@ def add_cache_args(sub: argparse.ArgumentParser) -> None:
 
 
 def main() -> None:
-    """Parse CLI arguments and dispatch to the requested subcommand."""
+    """Parse CLI arguments and dispatch to the sync command."""
     parser = argparse.ArgumentParser(prog="apple_schema.py")
     sub = parser.add_subparsers(dest="command", required=True)
 
-    d = sub.add_parser("diff", help="diff Apple JSON against local schema file(s)")
-    d.add_argument("target", help="schema file or directory of schema files")
-    add_cache_args(d)
-    d.set_defaults(func=cmd_diff)
-
-    m = sub.add_parser(
-        "merge", help="overwrite/add schema fields from Apple JSON (additive only)"
+    s = sub.add_parser("sync", help="generate/merge schemas from Apple's docs")
+    s.add_argument("target", help="schema file/dir, or a type URL/doc-path")
+    s.add_argument("outdir", nargs="?", help="output directory for type generation")
+    s.add_argument(
+        "--root",
+        help="nav root URL/doc-path to compare a schema directory against (flags missing/extra)",
     )
-    m.add_argument("target", help="schema file or directory of schema files")
-    m.add_argument(
-        "--dry-run", action="store_true", help="preview changes without writing"
-    )
-    m.add_argument(
-        "--with-enums",
+    s.add_argument(
+        "--generate",
         action="store_true",
-        help="also mix in enum values from Apple's codeVoice tokens (noisy; review via git diff)",
+        help="with --root, also generate the missing schemas",
     )
-    add_cache_args(m)
-    m.set_defaults(func=cmd_merge)
-
-    g = sub.add_parser(
-        "generate", help="generate a fresh JSON Schema from an Apple page"
+    s.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="report what would change without writing",
     )
-    g.add_argument("ref", help="api-uri, doc path, or data URI")
-    add_cache_args(g)
-    g.set_defaults(func=cmd_generate)
-
-    t = sub.add_parser(
-        "difftree", help="check Apple's nav/index against on-disk schema files"
+    s.add_argument(
+        "--enums",
+        action="store_true",
+        help="also mix in enum candidates from codeVoice tokens (noisy; review via git diff)",
     )
-    t.add_argument(
-        "root",
-        help="root doc path/URL (e.g. /documentation/devicemanagement/device-assignment)",
-    )
-    t.add_argument("target", help="schema directory to check against")
-    add_cache_args(t)
-    t.set_defaults(func=cmd_difftree)
+    add_cache_args(s)
+    s.set_defaults(func=cmd_sync)
 
     args = parser.parse_args()
     args.func(args)
