@@ -3,6 +3,7 @@
   "title": "ClearProfileRequest",
   "description": "The request used to remove a profile from devices.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/clearprofilerequest",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/clearprofilerequest.json",
   "type": "object",
   "properties": {
     "devices": {

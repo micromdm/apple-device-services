@@ -4,7 +4,7 @@
 
 API schema definitions for Apple's various device management web services.
 
-While Apple does provide documentation in the form of HTML (i.e. for humans to read), machine-readable API schema definitions are much preferred for e.g. validation, code generation, etc. We love the documentation Apple provides in the Apple [Device Management](https://github.com/apple/device-management) repository and hope one day they will choose to manage and provide machine-readable schemas for their web service APIs, too. Hopefully these work as a stop-gap until that happens. These schemas were hand-crafted from the HTML documentation.
+While Apple does provide documentation in the form of HTML (i.e. for humans to read), machine-readable API schema definitions are much preferred for e.g. validation, code generation, etc. We love the documentation Apple provides in the Apple [Device Management](https://github.com/apple/device-management) repository and hope one day they will choose to manage and provide machine-readable schemas for their web service APIs, too. Hopefully these work as a stop-gap until that happens. These schemas were originally hand-crafted from the HTML/JavaScript documentation. Some are now generated from Apple's machine-readable documentation source (the JSON behind the rendered pages; see [`docs/apple-developer-docs-retrieval.md`](docs/apple-developer-docs-retrieval.md) and [`tools/apple_schema.py`](tools/apple_schema.py)), with manual curation retained for the details Apple doesn't expose.
 
 ## Schemas
 
@@ -21,6 +21,6 @@ A general list of schemas managed here:
 
 ## Contributing
 
-These schemas are almost guaranteed to be incomplete due to the fact they are used as-needed and manually generated from Apple's documentation. So: **your help needed!**. Take a look at a given schema and if something you need isn't there: PRs welcome!
+These schemas are almost guaranteed to be incomplete due to the fact they are used as-needed and manually curated, with some schemas now generated from Apple's documentation via [`tools/apple_schema.py`](tools/apple_schema.py). So: **your help needed!**. Take a look at a given schema and if something you need isn't there: PRs welcome!
 
 Note that we use the [jsonschema](https://github.com/sourcemeta/jsonschema) tool to enforce JSON Schema formatting and linting.

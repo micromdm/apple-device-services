@@ -3,6 +3,7 @@
   "title": "ClearProfileResponse",
   "$comment": "This schema appears to be the same as `DeviceStatusResponse`.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/clearprofileresponse",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/clearprofileresponse.json",
   "type": "object",
   "properties": {
     "devices": {

@@ -3,6 +3,7 @@
   "title": "SyncDeviceRequest",
   "description": "The request to sync the list of devices.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/syncdevicerequest",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/syncdevicerequest.json",
   "type": "object",
   "required": [ "cursor" ],
   "properties": {

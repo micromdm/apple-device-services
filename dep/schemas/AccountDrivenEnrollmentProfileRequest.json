@@ -3,6 +3,7 @@
   "title": "AccountDrivenEnrollmentProfileRequest",
   "description": "The details for an account-driven enrollment profile.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/accountdrivenenrollmentprofilerequest",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/accountdrivenenrollmentprofilerequest.json",
   "type": "object",
   "required": [ "mdm_service_discovery_url" ],
   "properties": {

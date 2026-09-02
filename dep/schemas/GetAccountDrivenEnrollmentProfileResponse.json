@@ -1,8 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "AccountDrivenEnrollmentProfileRequest",
+  "title": "GetAccountDrivenEnrollmentProfileResponse",
   "description": "The details for an account-driven enrollment profile.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/getaccountdrivenenrollmentprofileresponse",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/getaccountdrivenenrollmentprofileresponse.json",
   "type": "object",
   "properties": {
     "last_updated_timestamp": {

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GetReplacementDetailsResponse",
+  "description": "Information about a replacement device, including the original device it replaces and the date the replacement occurred.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/getreplacementdetailsresponse",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/getreplacementdetailsresponse.json",
+  "type": "object",
+  "properties": {
+    "serial_number": {
+      "description": "The serial number of the replacement device.",
+      "type": "string"
+    },
+    "original_device_serial_number": {
+      "description": "The serial number of the original device that this device replaces.",
+      "type": "string"
+    },
+    "replacement_date": {
+      "description": "The date when the device replacement occurred, in ISO 8601 format with day granularity in UTC (for example, `2025-01-15`).",
+      "$comment": "Despite describing ISO 8601 we use `date` as the format type rather than `date-time` per the other qualifier of 'day granularity.'",
+      "type": "string",
+      "format": "date"
+    }
+  }
+}

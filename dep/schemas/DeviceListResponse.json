@@ -1,7 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "DefineProfileResponse",
+  "title": "DeviceListResponse",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/devicelistresponse",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/devicelistresponse.json",
   "type": "object",
   "properties": {
     "devices": {

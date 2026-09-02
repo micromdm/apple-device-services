@@ -3,6 +3,7 @@
   "title": "SeedBuildToken",
   "description": "Describes a beta enrollment token available for the given organization.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/seedbuildtoken",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/seedbuildtoken.json",
   "type": "object",
   "properties": {
     "title": {
@@ -10,7 +11,7 @@
       "type": "string"
     },
     "os": {
-      "description": "The platform related to beta build. Possible values are: homePodOS, iOS, OSX, tvOS, visionOS, watchOS]",
+      "description": "The platform related to beta build. Possible values are: `homePodOS`, `iOS`, `OSX`, `tvOS`, `visionOS`, `watchOS`.",
       "enum": [ "homePodOS", "iOS", "OSX", "tvOS", "visionOS", "watchOS" ]
     },
     "token": {

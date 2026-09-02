@@ -3,6 +3,7 @@
   "title": "Device",
   "description": "A device’s properties and their values.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/device",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/device.json",
   "type": "object",
   "required": [ "serial_number", "model" ],
   "properties": {
@@ -46,7 +47,7 @@
       "format": "date-time"
     },
     "op_type": {
-      "description": "Indicates whether the device was added (assigned to the MDM server), modified, or deleted. Contains one of the following strings: `added`, `modified`, or `deleted`.This field is only applicable with the `sync the list of devices` command.",
+      "description": "Indicates whether the device was added (assigned to the MDM server), modified, or deleted. Contains one of the following strings: `added`, `modified`, or `deleted`. This field is only applicable with the `sync the list of devices` command.",
       "enum": [ "added", "modified", "deleted" ]
     },
     "os": {
@@ -77,6 +78,44 @@
     },
     "serial_number": {
       "description": "The device’s serial number.",
+      "type": "string"
+    },
+    "bluetooth_mac_address": {
+      "description": "The device’s Bluetooth MAC address. This key is valid in X-Server-Protocol-Version 10 and later.",
+      "type": "string"
+    },
+    "eid": {
+      "description": "The Embedded Identity Document (EID), sometimes known as the CSN, that uniquely identifies the eSIM chip built into the device. This key is valid in X-Server-Protocol-Version 10 and later.",
+      "type": "string"
+    },
+    "ethernet_mac_address": {
+      "description": "The device’s Ethernet MAC address. This key is valid in X-Server-Protocol-Version 10 and later.",
+      "type": "string"
+    },
+    "imei": {
+      "description": "An array of strings containing the International Mobile Equipment Identity (IMEI) numbers that identify the device. This key is valid in X-Server-Protocol-Version 10 and later.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "is_replacement_device": {
+      "description": "If `true`, the device is a replacement for another device. Use [Get Replacement Details](https://developer.apple.com/documentation/devicemanagement/get-replacement-details) to retrieve information about the device it replaced. This key is valid in X-Server-Protocol-Version 10 and later.",
+      "type": "boolean"
+    },
+    "meid": {
+      "description": "An array of strings containing the Mobile Equipment Identifier (MEID) numbers that identify CDMA-based mobile devices. This key is valid in X-Server-Protocol-Version 10 and later.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "released_by_replacement": {
+      "description": "If `true`, the device was released from the MDM server because it was replaced by another device. This key is only present with [Sync the List of Devices](https://developer.apple.com/documentation/devicemanagement/sync-devices) when `op_type` is `deleted`. This key is valid in X-Server-Protocol-Version 10 and later.",
+      "type": "boolean"
+    },
+    "wifi_mac_address": {
+      "description": "The device’s Wi-Fi MAC address. This key is valid in X-Server-Protocol-Version 10 and later.",
       "type": "string"
     }
   }

@@ -3,6 +3,7 @@
   "title": "GetSeedBuildTokenResponse",
   "description": "Provides a list of beta enrollment tokens available for the given organization.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/getseedbuildtokenresponse",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/getseedbuildtokenresponse.json",
   "type": "object",
   "properties": {
     "betaEnrollmentTokens": {

@@ -3,6 +3,7 @@
   "title": "Limit",
   "description": "A ranged limit.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/limit",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/limit.json",
   "type": "object",
   "properties": {
     "default": {

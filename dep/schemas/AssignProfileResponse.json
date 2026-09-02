@@ -3,6 +3,7 @@
   "title": "AssignProfileResponse",
   "$comment": "This schema appears to be the same as `DefineProfileResponse`.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/assignprofileresponse",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/assignprofileresponse.json",
   "type": "object",
   "properties": {
     "devices": {

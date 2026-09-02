@@ -3,6 +3,7 @@
   "title": "ActivationLockStatusResponse",
   "$comment": "Required properties were inferred and not stated in documentation. Examples taken from deprecated PDF MDM documentation.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/activationlockstatusresponse",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/activationlockstatusresponse.json",
   "type": "object",
   "required": [ "response_status", "serial_number" ],
   "properties": {

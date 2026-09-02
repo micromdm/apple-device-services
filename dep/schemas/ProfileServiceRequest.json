@@ -3,6 +3,7 @@
   "title": "ProfileServiceRequest",
   "description": "The request for assigning a profile to a set of devices.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/profileservicerequest",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/profileservicerequest.json",
   "type": "object",
   "properties": {
     "devices": {

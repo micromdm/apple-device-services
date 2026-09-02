@@ -3,6 +3,7 @@
   "title": "Profile",
   "description": "A profile’s properties and their values.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/profile",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/profile.json",
   "type": "object",
   "required": [ "is_mdm_removable", "org_magic" ],
   "properties": {
@@ -19,11 +20,11 @@
       }
     },
     "auto_advance_setup": {
-      "description": "If set to true, the device will tell Setup Assistant to automatically advance though its screens. Default is `false`.\nThis key is valid in X-Server-Protocol-Version 2 and later.\nAvailable on tvOS and macOS 11 and later.",
+      "description": "If set to `true`, the device will tell Setup Assistant to automatically advance though its screens. Default is `false`.\n\nThis key is valid in X-Server-Protocol-Version 2 and later.\n\nAvailable on tvOS and macOS 11 and later.",
       "type": "boolean"
     },
     "await_device_configured": {
-      "description": "If true, the device will not continue in Setup Assistant until the MDM server sends a command that states the device is configured (see [Device Configured](https://developer.apple.com/documentation/devicemanagement/device-configured-command). Default is `false`. Ignored on iOS devices if `is_supervised` is `false`. This key is valid in X-Server-Protocol-Version 2 and later.",
+      "description": "If `true`, the device will not continue in Setup Assistant until the MDM server sends a command that states the device is configured (see [Device Configured](https://developer.apple.com/documentation/devicemanagement/device-configured-command)). Default is `false`. Ignored on iOS devices if `is_supervised` is `false`. This key is valid in X-Server-Protocol-Version 2 and later.",
       "type": "boolean"
     },
     "configuration_web_url": {
@@ -43,32 +44,32 @@
       }
     },
     "do_not_use_profile_from_backup": {
-      "description": "If true, the device does not use the profile when it restores a backup. Default is `false`. Available in iOS 26 and later, and visionOS 26 and later; otherwise ignored by devices.",
+      "description": "If `true`, the device does not use the profile when it restores a backup, reading the current profile from the server instead. In addition with iOS 26.4 and visionOS 26.4 and later, the device removes all configuration profiles when it restores a backup. This behavior will become nonelective in a future OS update. The default value is `false`. Available in iOS 26 and later, and visionOS 26 and later; otherwise ignored by devices.",
       "type": "boolean"
     },
     "is_mandatory": {
-      "description": "If true, the user may not skip applying the profile returned by the MDM server. Default is `false`.\nIn iOS 13 and later, all DEP enrollments are mandatory.",
+      "description": "If `true`, the user may not skip applying the profile returned by the MDM server. Default is `false`.\n\nIn iOS 13 and later, all ADE enrollments are mandatory.",
       "type": "boolean"
     },
     "is_mdm_removable": {
-      "description": "If false, the MDM payload delivered by the configuration URL cannot be removed by the user via the user interface on the device; that is, the MDM payload is locked onto the device. This key can be set to false only if `is_supervised` is set to `true`. Defaults to `true`.",
+      "description": "If `false`, the MDM payload delivered by the configuration URL cannot be removed by the user via the user interface on the device; that is, the MDM payload is locked onto the device. This key can be set to `false` only if `is_supervised` is set to `true`. Defaults to `true`.",
       "default": true,
       "type": "boolean"
     },
     "is_multi_user": {
-      "description": "If true, tells the device to configure for Shared iPad. Default is false. This key is valid only for Apple School Manager or Apple Business Manager organizations using X-Server-Protocol-Version 2 and later.\nDevices that do not meet the Shared iPad minimum requirements do not honor this command. With iOS devices, `com.apple.mdm.per-user-connections` must be added to the MDM enrollment profile’s Server Capabilities.",
+      "description": "If `true`, tells the device to configure for Shared iPad. Default is false. This key is valid only for Apple School Manager or Apple Business organizations using X-Server-Protocol-Version 2 and later.\n\nDevices that do not meet the Shared iPad minimum requirements do not honor this command. With iOS devices, `com.apple.mdm.per-user-connections` must be added to the MDM enrollment profile’s Server Capabilities.",
       "type": "boolean"
     },
     "is_return_to_service": {
-      "description": "If true, the device is configured for Rapid Return to Service. Default is `false`. Available in iOS 26 and later, and visionOS 26 and later; otherwise ignored by devices.",
+      "description": "If `true`, the device is configured for Rapid Return to Service. Default is `false`. Available in iOS 26 and later, and visionOS 26 and later; otherwise ignored by devices.",
       "type": "boolean"
     },
     "is_supervised": {
-      "description": "If true, the device must be supervised. Defaults to `false`.\nIn iOS 11, DEP devices that are not supervised have been deprecated.\nIn iOS 13, all DEP devices will be supervised and the OS will ignore the `is_supervised` flag completely.",
+      "description": "If `true`, the device must be supervised. Defaults to `false`.\n\nIn iOS 11, ADE devices that are not supervised have been deprecated.\n\nIn iOS 13, all ADE devices will be supervised and the OS will ignore the `is_supervised` flag completely.",
       "type": "boolean"
     },
     "language": {
-      "description": "A language designator is a code that represents a language.\nUse the two-letter ISO 639-1 standard (preferred) or the three-letter ISO 639-2 standard. If an ISO 639-1 code is not available for a particular language, use the ISO 639-2 code instead.\nSee [Language and Locale IDs](https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPInternational/LanguageandLocaleIDs/LanguageandLocaleIDs.html) for more information.\nExample two-letter: `en`, `fr`, `ja`\nExample three-letter: `eng`, `fre`, `jpn`, `haw`\nAvailable on tvOS and macOS 11 and later.",
+      "description": "A language designator is a code that represents a language.\n\nUse the two-letter ISO 639-1 standard (preferred) or the three-letter ISO 639-2 standard. If an ISO 639-1 code is not available for a particular language, use the ISO 639-2 code instead.\n\nSee [Language and Locale IDs](https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPInternational/LanguageandLocaleIDs/LanguageandLocaleIDs.html) for more information.\n\nExample two-letter: `en`, `fr`, `ja`\n\nExample three-letter: `eng`, `fre`, `jpn`, `haw`\n\nAvailable on tvOS and macOS 11 and later.",
       "examples": [ "en", "fr", "ja", "eng", "fre", "jpn", "haw" ],
       "type": "string",
       "maxLength": 3,

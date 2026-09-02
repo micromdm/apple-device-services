@@ -3,6 +3,7 @@
   "title": "FetchDeviceRequest",
   "description": "The request for a list of devices.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/fetchdevicerequest",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/fetchdevicerequest.json",
   "type": "object",
   "properties": {
     "cursor": {

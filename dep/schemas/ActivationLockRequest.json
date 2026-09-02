@@ -4,6 +4,7 @@
   "description": "Request enabling activation lock for a device.",
   "$comment": "Examples taken from deprecated PDF MDM documentation.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/activationlockrequest",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/activationlockrequest.json",
   "type": "object",
   "required": [ "device" ],
   "properties": {
@@ -13,7 +14,7 @@
       "type": "string"
     },
     "escrow_key": {
-      "description": "Escrow key (optional). If the escrow key is not provided, the device will be locked to the person who created the MDM server in the portal. For information about creating an escrow key see [Creating and Using Bypass Codes](https://developer.apple.com/documentation/devicemanagement/creating-and-using-bypass-codes).",
+      "description": "Escrow key (optional). If the escrow key is not provided, the device will be locked to the person who created the MDM server in the portal. For information about creating an escrow key see [Creating and using bypass codes](https://developer.apple.com/documentation/devicemanagement/creating-and-using-bypass-codes).",
       "$comment": "This escrow key is the PBKDF2 derived hash of the bypass code encoded as a hex string. In particular it is not the human readable \"dashed\" form.",
       "examples": [
         "30a3449822ae82b94f1839ee0248a9e2350247d4b325071e6deb84285a6bfb34"

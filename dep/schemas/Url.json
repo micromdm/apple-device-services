@@ -3,10 +3,11 @@
   "title": "Url",
   "description": "A URL object.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/url",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/url.json",
   "type": "object",
   "properties": {
     "http_method": {
-      "description": "Possible values: GET, POST, PUT, DELETE",
+      "description": "Possible values: GET, POST, PUT, DELETE.",
       "type": "array",
       "items": {
         "enum": [ "GET", "POST", "PUT", "DELETE" ]
