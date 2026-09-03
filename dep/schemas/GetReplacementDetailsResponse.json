@@ -16,7 +16,6 @@
     },
     "replacement_date": {
       "description": "The date when the device replacement occurred, in ISO 8601 format with day granularity in UTC (for example, `2025-01-15`).",
-      "$comment": "Despite describing ISO 8601 we use `date` as the format type rather than `date-time` per the other qualifier of 'day granularity.'",
       "type": "string",
       "format": "date"
     }
