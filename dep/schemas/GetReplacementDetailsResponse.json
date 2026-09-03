@@ -5,6 +5,11 @@
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/getreplacementdetailsresponse",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/getreplacementdetailsresponse.json",
   "type": "object",
+  "required": [
+    "serial_number",
+    "original_device_serial_number",
+    "replacement_date"
+  ],
   "properties": {
     "serial_number": {
       "description": "The serial number of the replacement device.",
