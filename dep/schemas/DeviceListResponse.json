@@ -6,10 +6,7 @@
   "type": "object",
   "properties": {
     "devices": {
-      "type": "object",
-      "additionalProperties": {
-        "$ref": "Device.json"
-      }
+      "$ref": "DeviceListResponse.Devices.json"
     }
   }
 }

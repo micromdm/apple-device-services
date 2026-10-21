@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DeviceStatusResponse.Devices",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/devicestatusresponse/devices-data.dictionary",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/devicestatusresponse/devices-data.dictionary.json",
+  "type": "object",
+  "additionalProperties": {
+    "enum": [ "SUCCESS", "NOT_ACCESSIBLE", "FAILED" ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AssignProfileResponse.Devices",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/assignprofileresponse/devices-data.dictionary",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/assignprofileresponse/devices-data.dictionary.json",
+  "type": "object",
+  "additionalProperties": {
+    "$comment": "THROTTLED is returned with X-Server-Protocol-Version 9 and later when the server is throttling the request.",
+    "enum": [ "SUCCESS", "NOT_ACCESSIBLE", "FAILED", "THROTTLED" ]
+  }
+}

@@ -7,10 +7,7 @@
   "type": "object",
   "properties": {
     "devices": {
-      "type": "object",
-      "additionalProperties": {
-        "enum": [ "SUCCESS", "NOT_ACCESSIBLE", "FAILED" ]
-      }
+      "$ref": "DeviceStatusResponse.Devices.json"
     }
   }
 }

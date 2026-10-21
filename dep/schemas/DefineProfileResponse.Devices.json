@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DefineProfileResponse.Devices",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/defineprofileresponse/devices-data.dictionary",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/defineprofileresponse/devices-data.dictionary.json",
+  "type": "object",
+  "additionalProperties": {
+    "enum": [ "SUCCESS", "NOT_ACCESSIBLE", "FAILED" ]
+  }
+}

@@ -21,6 +21,7 @@
     },
     "replacement_date": {
       "description": "The date when the device replacement occurred, in ISO 8601 format with day granularity in UTC (for example, `2025-01-15`).",
+      "examples": [ "2025-01-15" ],
       "type": "string",
       "format": "date"
     }

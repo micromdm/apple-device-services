@@ -7,11 +7,7 @@
   "type": "object",
   "properties": {
     "devices": {
-      "type": "object",
-      "additionalProperties": {
-        "$comment": "THROTTLED is returned with X-Server-Protocol-Version 9 and later when the server is throttling the request.",
-        "enum": [ "SUCCESS", "NOT_ACCESSIBLE", "FAILED", "THROTTLED" ]
-      }
+      "$ref": "AssignProfileResponse.Devices.json"
     },
     "profile_uuid": {
       "type": "string"

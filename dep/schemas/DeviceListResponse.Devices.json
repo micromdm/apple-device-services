@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DeviceListResponse.Devices",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/devicelistresponse/devices-data.dictionary",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/devicelistresponse/devices-data.dictionary.json",
+  "type": "object",
+  "additionalProperties": {
+    "$ref": "Device.json"
+  }
+}
