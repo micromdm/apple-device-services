@@ -21,8 +21,22 @@ Options:
     --dry-run       report what would change without writing
     --enums         also mix in enum candidates from codeVoice tokens (noisy)
     --force-types   overwrite existing properties' type shapes from Apple
+    --fmt           format the synced schemas with the `jsonschema` CLI
     --cached        use cached copies only; do not hit the network
     --cache-dir DIR cache directory (default: ~/.cache/apple_schema)
+
+Notes:
+    Enum-like *type aliases* (e.g. ``ActivationLockType``) are rendered by
+    Apple as ``typealias`` symbols carrying a ``possibleValues`` section; they
+    become string schemas constrained to that value set. A value set with a
+    single member is expressed with ``const`` instead of ``enum``.
+
+    Run without ``--cached`` once to populate the cache, then re-run with
+    ``--cached`` to re-apply the cached documents without re-fetching them.
+
+    The schemas are written as plain JSON; the repo's canonical layout comes
+    from the ``jsonschema`` CLI's formatter, which ``--fmt`` runs for you (and
+    which the CI checks with ``jsonschema fmt -c``).
 """
 
 from __future__ import annotations
@@ -30,6 +44,8 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shutil
+import subprocess
 import sys
 import urllib.error
 import urllib.request
@@ -62,6 +78,26 @@ STRING_FORMATS: set[str] = {
     "uri-reference",
     "date",
     "date-time",
+}
+
+# Apple type names that JSON Schema does not have. They map to their JSON
+# Schema equivalent: ``byte``/``data`` are base64-encoded blobs, and ``*``
+# ("any") constrains nothing at all.
+SPECIAL_TYPES: dict[str, dict[str, Any]] = {
+    "byte": {"type": "string", "contentEncoding": "base64"},
+    "data": {"type": "string", "contentEncoding": "base64"},
+    "*": {},
+}
+
+# The ``type`` values JSON Schema defines.
+JSON_SCHEMA_TYPES: set[str] = {
+    "array",
+    "boolean",
+    "integer",
+    "null",
+    "number",
+    "object",
+    "string",
 }
 
 
@@ -246,9 +282,15 @@ def apple_type_to_schema(
         elem: dict[str, Any] = {"$ref": ref_file}
     elif inner in STRING_FORMATS:
         elem = {"type": "string", "format": inner}
+    elif inner in SPECIAL_TYPES:
+        elem = dict(SPECIAL_TYPES[inner])
     else:
         elem = {"type": SCALAR_MAP.get(inner, inner)}
     if is_array:
+        if not elem:
+            # An unconstrained element type: an `items` schema that matches
+            # everything adds no constraint, so it is left out.
+            return {"type": "array"}, ref
         return {"type": "array", "items": elem}, ref
     if ref:
         return {"$ref": ref_file}, ref
@@ -345,6 +387,118 @@ def enum_slot(entry: dict[str, Any]) -> dict[str, Any]:
     return entry
 
 
+def constraint_node(entry: dict[str, Any]) -> dict[str, Any]:
+    """Return the node holding an ``enum``/``const``, without creating one.
+
+    Unlike :func:`enum_slot`, this never adds an ``items`` object to an array
+    that has none.
+    """
+    if entry.get("type") == "array":
+        items = entry.get("items")
+        if isinstance(items, dict):
+            return items
+    return entry
+
+
+def enum_constraint(values: list[Any]) -> dict[str, Any]:
+    """Return the JSON Schema constraint for a set of allowed values.
+
+    A single allowed value is expressed with ``const`` (an ``enum`` with one
+    member means the same thing, but ``const`` says it directly); anything
+    else uses ``enum``.
+    """
+    if not values:
+        return {}
+    if len(values) == 1:
+        return {"const": values[0]}
+    return {"enum": list(values)}
+
+
+def drop_redundant_type(node: dict[str, Any]) -> None:
+    """Drop a ``type`` keyword that an ``enum``/``const`` already implies.
+
+    The repo lints its schemas with the ``jsonschema`` CLI, which flags a
+    ``type`` alongside an ``enum``/``const`` as an anti-pattern.
+    """
+    if "enum" in node or "const" in node:
+        node.pop("type", None)
+
+
+def has_invalid_type(node: dict[str, Any]) -> bool:
+    """Return True if a schema node carries a type JSON Schema does not have.
+
+    Apple emits a few type names of its own (``byte``, ``data``, ``*``); an
+    earlier generation wrote them into the schemas verbatim, which makes those
+    files invalid JSON Schema.
+    """
+    type_value = node.get("type")
+    if isinstance(type_value, str) and type_value not in JSON_SCHEMA_TYPES:
+        return True
+    items = node.get("items")
+    return isinstance(items, dict) and has_invalid_type(items)
+
+
+def set_constraint(target: dict[str, Any], values: list[Any]) -> None:
+    """Constrain ``target`` to ``values``, replacing any prior constraint."""
+    target.pop("enum", None)
+    target.pop("const", None)
+    target.update(enum_constraint(values))
+    drop_redundant_type(target)
+
+
+def constraint_matches(target: dict[str, Any], values: list[Any]) -> bool:
+    """Return True if ``target`` already constrains to exactly ``values``."""
+    desired = enum_constraint(values)
+    return all(target.get(k) == desired.get(k) for k in ("enum", "const"))
+
+
+def enum_candidates(codes: list[str]) -> list[str]:
+    """Return the code tokens that plausibly form an enumeration.
+
+    A lone code token in prose is a literal mention or an example, not a list
+    of allowed values, so the heuristic needs at least two candidates.
+    """
+    return codes if len(codes) >= 2 else []
+
+
+def possible_values(doc: JSON) -> list[str] | None:
+    """Return the values of a symbol's ``possibleValues`` section, if any.
+
+    Apple documents enum-like string types (e.g. ``ActivationLockType``) as
+    ``typealias`` symbols whose render JSON carries a ``possibleValues``
+    primary-content section listing the allowed values.
+    """
+    for sec in doc.get("primaryContentSections", []):
+        if sec.get("kind") != "possibleValues":
+            continue
+        values: list[str] = []
+        for v in sec.get("values", []):
+            name = v.get("name")
+            if name is not None:
+                values.append(name)
+        return values
+    return None
+
+
+def alias_base_type(doc: JSON) -> str:
+    """Return the JSON Schema type underlying a type-alias symbol.
+
+    The alias' declaration (e.g. ``string ActivationLockType``) names the
+    aliased type; ``string`` is the only one Apple uses today.
+    """
+    for sec in doc.get("primaryContentSections", []):
+        if sec.get("kind") != "declarations":
+            continue
+        for decl in sec.get("declarations", []):
+            for tok in decl.get("tokens", []):
+                text = (tok.get("text") or "").strip().lower()
+                if text in SCALAR_MAP:
+                    return SCALAR_MAP[text]
+                if text in STRING_FORMATS:
+                    return "string"
+    return "string"
+
+
 def apple_property_schema(
     ap: dict[str, Any], with_enums: bool = False
 ) -> dict[str, Any]:
@@ -357,11 +511,13 @@ def apple_property_schema(
     if ap["allowedValues"]:
         # Structured enum from `attributes[].allowedValues` — authoritative.
         # For arrays, the enum constrains the element type, not the array.
-        enum_slot(entry)["enum"] = list(ap["allowedValues"])
-    elif with_enums and ap["codeVoice"]:
+        set_constraint(enum_slot(entry), list(ap["allowedValues"]))
+    elif with_enums and enum_candidates(ap["codeVoice"]) and not type_ref(ap["type"]):
         # Heuristic enum from prose `codeVoice` tokens — noisy by design,
-        # intended only for review (see extract_apple_properties).
-        enum_slot(entry)["enum"] = ap["codeVoice"]
+        # intended only for review (see extract_apple_properties). A `$ref`
+        # property is skipped: the referenced schema owns its own constraint,
+        # and a sibling enum would have to agree with it.
+        set_constraint(enum_slot(entry), enum_candidates(ap["codeVoice"]))
     return entry
 
 
@@ -384,7 +540,15 @@ def apply_type(
             sp.pop("additionalProperties", None)
             sp.pop("properties", None)
     else:
-        sp["type"] = ap_type["type"]
+        if "type" in ap_type:
+            sp["type"] = ap_type["type"]
+        else:
+            # An unconstrained type ("any"): drop the type keywords.
+            sp.pop("type", None)
+        # Carry any further type keywords (e.g. `contentEncoding`).
+        for key, value in ap_type.items():
+            if key not in ("type", "items"):
+                sp[key] = value
         if "items" in ap_type:
             sp["items"] = ap_type["items"]
         else:
@@ -469,17 +633,28 @@ def collect_schema_items(
         if path in seen:
             continue
         seen.add(path)
-        doc, _ = fetch_json(
-            doc_path_data_uri(path), cache_dir=cache_dir, cached_only=cached_only
-        )
+        url = doc_path_data_uri(path)
+        try:
+            doc, _ = fetch_json(url, cache_dir=cache_dir, cached_only=cached_only)
+        except urllib.error.HTTPError as e:
+            print(f"error: HTTP {e.code}: {url}", file=sys.stderr)
+            sys.exit(1)
+        except urllib.error.URLError as e:
+            print(
+                f"error: could not fetch {url}: {e}\n"
+                "hint: run the sync once without --cached to populate the cache",
+                file=sys.stderr,
+            )
+            sys.exit(1)
         refs = doc.get("references", {})
         meta = doc.get("metadata", {})
         kind = meta.get("symbolKind")
         title = meta.get("title")
 
         # A dictionary is itself a schema type (dotted names are nested
-        # dictionaries generated as their own files).
-        if kind == "dictionary" and title:
+        # dictionaries generated as their own files). Enum-like type aliases
+        # are schema types too.
+        if kind in ("dictionary", "typealias") and title:
             items.setdefault(title, path)
 
         # Nav traversal: recurse into child symbols, collections, and groups.
@@ -515,8 +690,15 @@ def _load_schema(path: str) -> JSON:
 
 
 def write_schema(path: str, schema: JSON) -> None:
-    """Write a JSON Schema to disk (creating parent directories as needed)."""
-    os.makedirs(os.path.dirname(path), exist_ok=True)
+    """Write a JSON Schema to disk (creating parent directories as needed).
+
+    The output is plain JSON with two-space indentation; the repo's canonical
+    formatting is applied afterwards with the ``jsonschema fmt`` command (the
+    CI checks it with ``jsonschema fmt -c``).
+    """
+    dirname = os.path.dirname(path)
+    if dirname:
+        os.makedirs(dirname, exist_ok=True)
     with open(path, "w") as fh:
         json.dump(schema, fh, indent=2, ensure_ascii=False)
         fh.write("\n")
@@ -527,14 +709,6 @@ def generate_schema(doc: JSON, data_uri: str) -> JSON:
     meta = doc.get("metadata", {})
     refs = doc.get("references", {})
     abstract, _ = inline_tokens_to_commonmark(doc.get("abstract", []), refs)
-
-    map_value = map_value_schema(doc)
-    properties: dict[str, Any] = {}
-    required: list[str] = []
-    for name, ap in extract_apple_properties(doc).items():
-        properties[name] = apple_property_schema(ap)
-        if ap["required"]:
-            required.append(name)
 
     api_uri = None
     variants = doc.get("variants", [])
@@ -550,21 +724,74 @@ def generate_schema(doc: JSON, data_uri: str) -> JSON:
     if api_uri:
         schema["x-apple-developer-api-uri"] = api_uri
     schema["x-apple-developer-data-uri"] = data_uri
+
+    values = possible_values(doc)
+    if values is not None:
+        # Enum-like type alias (e.g. `ActivationLockType`): the alias is a
+        # string constrained to the values Apple lists as possible.
+        if values:
+            set_constraint(schema, values)
+        else:
+            schema["type"] = alias_base_type(doc)
+        return schema
+
+    map_value = map_value_schema(doc)
+    properties: dict[str, Any] = {}
+    required: list[str] = []
+    for name, ap in extract_apple_properties(doc).items():
+        properties[name] = apple_property_schema(ap)
+        if ap["required"]:
+            required.append(name)
+
     schema["type"] = "object"
     if map_value is not None:
         # Map placeholder ("Any Key"): the schema is a map of arbitrary keys,
         # not a named-properties object.
         schema["additionalProperties"] = map_value
     else:
-        schema["properties"] = properties
+        if properties:
+            schema["properties"] = properties
         if required:
             schema["required"] = required
 
     return schema
 
 
+def merge_alias(schema: JSON, doc: JSON, values: list[str]) -> bool:
+    """Merge an enum-like type alias into a schema; return True if changed.
+
+    The alias' schema is the aliased type (a string) constrained to Apple's
+    possible values. Any leftover object shape from an earlier generation
+    (e.g. an empty ``properties`` object) is dropped.
+    """
+    changed = False
+    if values:
+        if not constraint_matches(schema, values):
+            set_constraint(schema, values)
+            changed = True
+        # An enum/const implies the type of its values; the repo's linter
+        # rejects a `type` keyword alongside them.
+        if "type" in schema:
+            del schema["type"]
+            changed = True
+    else:
+        base_type = alias_base_type(doc)
+        if schema.get("type") != base_type:
+            schema["type"] = base_type
+            changed = True
+    for key in ("properties", "required", "additionalProperties"):
+        if key in schema:
+            del schema[key]
+            changed = True
+    return changed
+
+
 def merge_schema(
-    schema: JSON, doc: JSON, data_uri: str, with_enums: bool = False, force: bool = False
+    schema: JSON,
+    doc: JSON,
+    data_uri: str,
+    with_enums: bool = False,
+    force: bool = False,
 ) -> JSON:
     """Mutate a loaded schema in place from Apple's doc; return a summary.
 
@@ -577,6 +804,10 @@ def merge_schema(
 
     Map placeholders (``Any Key`` dictionaries) are merged as
     ``additionalProperties`` maps rather than named-properties objects.
+
+    Enum-like type aliases (e.g. ``ActivationLockType``) are merged as a
+    string constrained to Apple's ``possibleValues`` — replacing the empty
+    object shape earlier generations produced for them.
 
     With ``force``, existing properties' type shapes are overwritten from Apple
     unconditionally — converting inline objects to ``$ref``s (and vice versa),
@@ -600,6 +831,14 @@ def merge_schema(
         schema["x-apple-developer-data-uri"] = data_uri
         summary["x_apple_data_uri_changed"] = True
 
+    alias_values = possible_values(doc)
+    if alias_values is not None:
+        # Enum-like type alias: the schema is the aliased type constrained to
+        # Apple's possible values.
+        if merge_alias(schema, doc, alias_values):
+            summary["alias_changed"] = True
+        return summary
+
     map_value = map_value_schema(doc)
     if map_value is not None:
         # Map placeholder ("Any Key"): the schema is a map of arbitrary keys,
@@ -616,6 +855,7 @@ def merge_schema(
                 summary["map_value_changed"] = True
         return summary
 
+    had_properties = "properties" in schema
     props = schema.setdefault("properties", {})
     added: list[str] = []
     type_changed: list[str] = []
@@ -628,21 +868,19 @@ def merge_schema(
             added.append(pname)
         else:
             sp = props[pname]
+            shape_keys = ("type", "items", "$ref", "additionalProperties", "properties")
+            before = {k: sp.get(k) for k in shape_keys}
             if force and ap["type"] is not None:
                 # Force the type shape to match Apple exactly, dropping
                 # hand-crafted inline objects / stale `$ref`s.
-                shape_keys = ("type", "items", "$ref", "additionalProperties", "properties")
-                before = {k: sp.get(k) for k in shape_keys}
                 apply_type(sp, ap["type"], force=True)
-                after = {k: sp.get(k) for k in shape_keys}
-                if before != after:
-                    type_changed.append(pname)
             else:
                 at = type_key(ap["type"])
                 st = sp.get("type")
-                if at and st and at != st:
+                if (at and st and at != st) or has_invalid_type(sp):
+                    # Apple's type differs, or the schema carries a type that
+                    # JSON Schema does not have (e.g. Apple's `byte`/`*`).
                     apply_type(sp, ap["type"])
-                    type_changed.append(pname)
                 # `$ref`: sync bare sibling refs from Apple's type (adds `.json`,
                 # follows renames). JSON pointers (`#/...`) and absolute URIs are
                 # hand-curated conventions (`$defs`, external URLs) — never touch.
@@ -656,27 +894,39 @@ def merge_schema(
                     and sp_ref != ap_ref
                 ):
                     apply_type(sp, ap["type"])
-                    ref_changed.append(pname)
             if ap["description"] and norm(sp.get("description")) != norm(
                 ap["description"]
             ):
                 sp["description"] = ap["description"]
                 desc_changed.append(pname)
             # Structured enum (`attributes[].allowedValues`) is authoritative;
-            # overwrite like `type`.
-            if ap["allowedValues"] and enum_slot(sp).get("enum") != ap["allowedValues"]:
-                enum_slot(sp)["enum"] = list(ap["allowedValues"])
-                enum_changed.append(pname)
+            # overwrite like `type`. A single allowed value is written as a
+            # `const` rather than a one-member `enum`.
+            candidates = enum_candidates(ap["codeVoice"])
+            if ap["allowedValues"]:
+                slot = enum_slot(sp)
+                if not constraint_matches(slot, ap["allowedValues"]):
+                    set_constraint(slot, list(ap["allowedValues"]))
+                    enum_changed.append(pname)
             # `--enums`: mix in the heuristic enum (raw `codeVoice` tokens) for
-            # review only, where no structured enum exists.
-            if (
-                with_enums
-                and ap["codeVoice"]
-                and not ap["allowedValues"]
-                and enum_slot(sp).get("enum") != ap["codeVoice"]
-            ):
-                enum_slot(sp)["enum"] = ap["codeVoice"]
-                enum_changed.append(pname)
+            # review only, where no structured enum exists. A `$ref` property
+            # is skipped: the referenced schema owns its own constraint.
+            elif with_enums and candidates and not type_ref(ap["type"]):
+                slot = enum_slot(sp)
+                if not constraint_matches(slot, candidates):
+                    set_constraint(slot, candidates)
+                    enum_changed.append(pname)
+            # An enum/const implies the type of its values; the repo's linter
+            # rejects a `type` keyword alongside them.
+            drop_redundant_type(constraint_node(sp))
+            # The shape is compared once everything is applied: a forced type
+            # that the enum then implies is not a change.
+            after = {k: sp.get(k) for k in shape_keys}
+            if before != after:
+                if before.get("$ref") != after.get("$ref"):
+                    ref_changed.append(pname)
+                else:
+                    type_changed.append(pname)
 
     # `required`: additive union. Never drop hand-curated entries (some
     # namespaces, e.g. DEP, report `required: false` for every property), but
@@ -688,6 +938,12 @@ def merge_schema(
     ]
     if required_added:
         schema["required"] = existing_required + required_added
+
+    # An empty `properties` object adds no constraint (the repo's linter
+    # flags it) — drop it once we know the type has no properties.
+    if not props and had_properties:
+        del schema["properties"]
+        summary["empty_properties_removed"] = True
 
     # Repo-only properties (present in the schema but not Apple's docs) are
     # kept, not removed — surfaced here since `git diff` won't show them.
@@ -718,9 +974,11 @@ _CHANGE_KEYS = (
     "type_changed",
     "property_description_changed",
     "enum_changed",
+    "alias_changed",
     "ref_changed",
     "required_added",
     "map_value_changed",
+    "empty_properties_removed",
 )
 
 
@@ -899,11 +1157,14 @@ def generate_one(
 def cmd_sync(args: argparse.Namespace) -> None:
     """Sync schemas from Apple's docs, based on the target's shape."""
     target = args.target
+    fmt_target: str | None = None
 
     if os.path.isfile(target):
         results = {os.path.basename(target): sync_file(target, args)}
+        fmt_target = target
     elif os.path.isdir(target):
         results = {}
+        fmt_target = target
         for f in schema_files(target):
             results[os.path.basename(f)] = sync_file(f, args)
         # Optional index comparison: flag missing/extra (and, with --generate,
@@ -947,7 +1208,7 @@ def cmd_sync(args: argparse.Namespace) -> None:
             print(f"error: {e}", file=sys.stderr)
             sys.exit(1)
         kind = doc.get("metadata", {}).get("symbolKind")
-        if kind not in ("dictionary", "httpRequest"):
+        if kind not in ("dictionary", "httpRequest", "typealias"):
             print(
                 f"error: {target} is a nav root, not a type; "
                 "use --root with a schema directory",
@@ -961,6 +1222,7 @@ def cmd_sync(args: argparse.Namespace) -> None:
             return
         filename = (doc.get("metadata", {}).get("title") or "Untitled") + ".json"
         out = os.path.join(args.outdir, filename)
+        fmt_target = out
         if args.dry_run:
             results = {
                 filename: {
@@ -982,6 +1244,32 @@ def cmd_sync(args: argparse.Namespace) -> None:
     # Only report outliers; clean merges (no changes) are silent.
     results = {k: v for k, v in results.items() if _is_outlier(v)}
     print(json.dumps(results, indent=2, ensure_ascii=False))
+
+    if args.fmt and fmt_target and os.path.exists(fmt_target):
+        # Formatting is a convenience step: the repo's canonical layout comes
+        # from the `jsonschema` formatter. Never fail the run over it.
+        print(f"jsonschema fmt: {format_schemas(fmt_target)}", file=sys.stderr)
+
+
+def format_schemas(path: str) -> str:
+    """Format schema files with the ``jsonschema`` CLI's formatter.
+
+    Returns a short note describing the outcome. Formatting is a convenience
+    step: a missing or failing formatter never fails the sync.
+    """
+    binary = shutil.which("jsonschema")
+    if not binary:
+        return "skipped (the `jsonschema` formatter is not installed)"
+    try:
+        proc = subprocess.run(
+            [binary, "fmt", path], capture_output=True, text=True, check=False
+        )
+    except OSError as e:
+        return f"skipped ({e})"
+    if proc.returncode != 0:
+        detail = (proc.stderr or proc.stdout).strip().splitlines()
+        return f"failed ({detail[-1] if detail else 'unknown error'})"
+    return "formatted"
 
 
 def add_cache_args(sub: argparse.ArgumentParser) -> None:
@@ -1029,6 +1317,11 @@ def main() -> None:
         "--force-types",
         action="store_true",
         help="overwrite existing properties' type shapes from Apple (converts inline objects to $refs and vice versa); useful for auditing hand-crafted overrides",
+    )
+    s.add_argument(
+        "--fmt",
+        action="store_true",
+        help="format the synced schemas with the `jsonschema` CLI's formatter (skipped if it is not installed)",
     )
     add_cache_args(s)
     s.set_defaults(func=cmd_sync)

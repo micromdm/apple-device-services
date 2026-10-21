@@ -110,7 +110,8 @@ The JSON document has a stable shape. Relevant fields:
 - `abstract[]` — the page description (maps to our `description`).
 - `metadata` — symbol identity:
   - `title` — the type name (maps to our `title`).
-  - `symbolKind` — e.g. `dictionary` (data type) or `httpRequest` (endpoint).
+  - `symbolKind` — e.g. `dictionary` (data type), `typealias` (enum-like string
+    type) or `httpRequest` (endpoint).
   - `roleHeading` — e.g. `Object`.
   - `fragments[]` — declaration tokens (e.g. `object DeviceListRequest`).
   - `externalID` — a stable internal identifier.
@@ -136,6 +137,42 @@ The JSON document has a stable shape. Relevant fields:
 - `references` — related symbols keyed by `doc://` identifier.
 - `schemaVersion` — version of the data format.
 
+### Type aliases ("Possible Values")
+
+Enum-like string types (e.g. `ActivationLockType`, `UserStatus`) are rendered
+as their own pages with `metadata.symbolKind == "typealias"`. They have no
+`properties` section; instead they carry a `possibleValues` section listing the
+allowed values:
+
+```json
+{
+  "kind": "possibleValues",
+  "title": "Possible Values",
+  "values": [ { "content": [], "name": "MDM" },
+              { "content": [], "name": "USER" },
+              { "content": [], "name": "NONE" } ]
+}
+```
+
+The `values[].name` entries are authoritative — they are the type's allowed
+values, and they map directly to a JSON Schema `enum` (or `const`, see below).
+The per-value `content[]` is empty; the prose explaining each value lives in a
+separate `content` section of the same document.
+
+Such a type alias becomes a schema of its own:
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ActivationLockType",
+  "description": "Strings that represent the type of Activation Lock on a device.",
+  "enum": [ "MDM", "USER", "NONE" ]
+}
+```
+
+Properties that reference it keep a plain `$ref` to that file — the constraint
+lives in the referenced schema, not next to the reference.
+
 ### Important: detail is split between inline tokens and structured fields
 
 The per-property `type` is a bare token (`string`, `boolean`, `[string]`). Some
@@ -154,6 +191,8 @@ Some details are now structured fields rather than inline-token heuristics:
   but unreliable across namespaces (see "Scope and limitations").
 - `enum` is available as `attributes[].allowedValues` for properties Apple
   generates from an allowed-values list (e.g. `Apps.type` → `["apps"]`).
+- `enum` is available as a `possibleValues` section for the enum-like type
+  aliases (see "Type aliases").
 
 What still lives only in the inline tokens is `format: date-time` (the
 "ISO 8601" prose) and version-gating information, so those remain heuristics.
@@ -171,7 +210,16 @@ For a property item, the `type` token maps to JSON Schema as follows:
 | `{"kind":"text","text":"string"}` | `{"type":"string"}` |
 | `{"kind":"text","text":"boolean"}` | `{"type":"boolean"}` |
 | `{"kind":"text","text":"[string]"}` | `{"type":"array","items":{"type":"string"}}` |
+| `{"kind":"text","text":"byte"}` | `{"type":"string","contentEncoding":"base64"}` |
+| `{"kind":"text","text":"data"}` | `{"type":"string","contentEncoding":"base64"}` |
+| `{"kind":"text","text":"*"}` | no `type` at all — the value is unconstrained |
+| `{"kind":"text","text":"[*]"}` | `{"type":"array"}` — an array of unconstrained values |
 | `{"kind":"typeIdentifier","identifier":"doc://…","text":"Foo.Bar"}` | `$ref` to the sibling `Foo.Bar.json` schema file |
+
+Apple emits a few type names of its own that JSON Schema does not have:
+`byte` and `data` are base64-encoded blobs (OpenAPI's `format: byte`), and `*`
+means "any value". They have to be translated, or the schema file is not valid
+JSON Schema — an OAS document cannot reference such a file.
 
 Two other per-property fields map directly, with the `required` caveat from
 "Scope and limitations":
@@ -180,6 +228,31 @@ Two other per-property fields map directly, with the `required` caveat from
 |---|---|
 | `required: true` | top-level `"required": [...]` listing the property name |
 | `attributes[].allowedValues` | property-level `"enum": [...]` |
+
+### Enum and `const` conventions
+
+Apple's allowed-value lists map to a JSON Schema `enum`, with two conventions
+worth keeping:
+
+- an allowed-values list with a single member is written as a `const` rather
+  than a one-member `enum`;
+- the `type` keyword is left out next to an `enum`/`const`, since the
+  constraint already implies the type of its values.
+
+So a property whose only allowed value is `apps` is written as:
+
+```json
+{ "description": "The resource type.", "const": "apps" }
+```
+
+and a property with several allowed values as:
+
+```json
+{ "description": "The resource type.", "enum": [ "apps", "packages" ] }
+```
+
+The same holds for a type alias (see "Type aliases"): its schema carries the
+`enum`/`const` on its own, without a `type` keyword.
 
 A `typeIdentifier` token also carries `preciseIdentifier` (e.g.
 `mdm-services:dep:DeviceListResponse.Devices`), which matches the nested
@@ -324,6 +397,8 @@ Notes:
 - Within `dep/`, the "Objects and data types" section holds the schema types
   (e.g. `Device`, `Profile`, `Limit`, `Url`, `MachineInfo`), while the endpoint
   `symbol` pages carry the request/response types.
+- The `abm/` nav also has a "Type Aliases" section (e.g. `ActivationLockType`,
+  `UserStatus`); those symbols are enum-like string types (see "Type aliases").
 
 ## Discovery and breadcrumbs
 
