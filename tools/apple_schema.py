@@ -20,6 +20,7 @@ Options:
     --generate      with --root, also generate the missing schemas
     --dry-run       report what would change without writing
     --enums         also mix in enum candidates from codeVoice tokens (noisy)
+    --force-types   overwrite existing properties' type shapes from Apple
     --cached        use cached copies only; do not hit the network
     --cache-dir DIR cache directory (default: ~/.cache/apple_schema)
 """
@@ -254,6 +255,25 @@ def apple_type_to_schema(
     return elem, None
 
 
+def map_value_schema(doc: JSON) -> dict[str, Any] | None:
+    """Return a map's value schema if ``doc`` is a map placeholder, else ``None``.
+
+    Apple encodes a dictionary with arbitrary string keys as a nested
+    ``*-data.dictionary`` whose single property is named ``Any Key``. The value
+    schema (which may itself be a ``$ref``) is the map's ``additionalProperties``.
+    """
+    items: list[JSON] = []
+    for sec in doc.get("primaryContentSections", []):
+        if sec.get("kind") != "properties":
+            continue
+        for it in sec.get("items", []):
+            items.append(it)
+    if len(items) != 1 or items[0].get("name") != "Any Key":
+        return None
+    type_dict, _ref = apple_type_to_schema(items[0].get("type", []))
+    return type_dict
+
+
 def extract_apple_properties(doc: JSON) -> dict[str, dict[str, Any]]:
     """Extract Apple's property inventory from a tutorial JSON document."""
     refs = doc.get("references", {})
@@ -345,20 +365,34 @@ def apple_property_schema(
     return entry
 
 
-def apply_type(sp: dict[str, Any], ap_type: dict[str, Any] | None) -> None:
-    """Overwrite a schema property's type (and items/$ref) from Apple's type."""
+def apply_type(
+    sp: dict[str, Any], ap_type: dict[str, Any] | None, force: bool = False
+) -> None:
+    """Overwrite a schema property's type (and items/$ref) from Apple's type.
+
+    In ``force`` mode, also drop hand-curated shape keywords that conflict with
+    the Apple type (e.g. an inline ``additionalProperties``/``properties`` object
+    being replaced by a ``$ref``, or vice versa).
+    """
     if ap_type is None:
         return
     if "$ref" in ap_type:
         sp["$ref"] = ap_type["$ref"]
         sp.pop("type", None)
         sp.pop("items", None)
+        if force:
+            sp.pop("additionalProperties", None)
+            sp.pop("properties", None)
     else:
         sp["type"] = ap_type["type"]
         if "items" in ap_type:
             sp["items"] = ap_type["items"]
         else:
             sp.pop("items", None)
+        if force:
+            sp.pop("$ref", None)
+            sp.pop("additionalProperties", None)
+            sp.pop("properties", None)
 
 
 def schema_files(path: str) -> list[str]:
@@ -494,6 +528,7 @@ def generate_schema(doc: JSON, data_uri: str) -> JSON:
     refs = doc.get("references", {})
     abstract, _ = inline_tokens_to_commonmark(doc.get("abstract", []), refs)
 
+    map_value = map_value_schema(doc)
     properties: dict[str, Any] = {}
     required: list[str] = []
     for name, ap in extract_apple_properties(doc).items():
@@ -516,15 +551,20 @@ def generate_schema(doc: JSON, data_uri: str) -> JSON:
         schema["x-apple-developer-api-uri"] = api_uri
     schema["x-apple-developer-data-uri"] = data_uri
     schema["type"] = "object"
-    schema["properties"] = properties
-    if required:
-        schema["required"] = required
+    if map_value is not None:
+        # Map placeholder ("Any Key"): the schema is a map of arbitrary keys,
+        # not a named-properties object.
+        schema["additionalProperties"] = map_value
+    else:
+        schema["properties"] = properties
+        if required:
+            schema["required"] = required
 
     return schema
 
 
 def merge_schema(
-    schema: JSON, doc: JSON, data_uri: str, with_enums: bool = False
+    schema: JSON, doc: JSON, data_uri: str, with_enums: bool = False, force: bool = False
 ) -> JSON:
     """Mutate a loaded schema in place from Apple's doc; return a summary.
 
@@ -534,6 +574,14 @@ def merge_schema(
     ``required`` entries (some namespaces report ``required: false`` for every
     property, so the repo's hand-derived lists must be preserved). Apple's
     structured ``required`` flags are added to ``required`` but never dropped.
+
+    Map placeholders (``Any Key`` dictionaries) are merged as
+    ``additionalProperties`` maps rather than named-properties objects.
+
+    With ``force``, existing properties' type shapes are overwritten from Apple
+    unconditionally — converting inline objects to ``$ref``s (and vice versa),
+    realigning array ``items``, etc. — so a sync can be used to audit hand-crafted
+    overrides against Apple's current types.
     """
     apple_props = extract_apple_properties(doc)
     apple_title = doc.get("metadata", {}).get("title")
@@ -552,6 +600,22 @@ def merge_schema(
         schema["x-apple-developer-data-uri"] = data_uri
         summary["x_apple_data_uri_changed"] = True
 
+    map_value = map_value_schema(doc)
+    if map_value is not None:
+        # Map placeholder ("Any Key"): the schema is a map of arbitrary keys,
+        # not a named-properties object.
+        schema["type"] = "object"
+        if schema.get("additionalProperties") != map_value:
+            schema["additionalProperties"] = map_value
+            summary["map_value_changed"] = True
+        # Drop a stale named-properties shape (e.g. a previously generated
+        # "Any Key" property).
+        for key in ("properties", "required"):
+            if key in schema:
+                del schema[key]
+                summary["map_value_changed"] = True
+        return summary
+
     props = schema.setdefault("properties", {})
     added: list[str] = []
     type_changed: list[str] = []
@@ -564,25 +628,35 @@ def merge_schema(
             added.append(pname)
         else:
             sp = props[pname]
-            at = type_key(ap["type"])
-            st = sp.get("type")
-            if at and st and at != st:
-                apply_type(sp, ap["type"])
-                type_changed.append(pname)
-            # `$ref`: sync bare sibling refs from Apple's type (adds `.json`,
-            # follows renames). JSON pointers (`#/...`) and absolute URIs are
-            # hand-curated conventions (`$defs`, external URLs) — never touch.
-            ap_ref = type_ref(ap["type"])
-            sp_ref = type_ref(sp)
-            if (
-                ap_ref
-                and sp_ref
-                and not sp_ref.startswith("#")
-                and "://" not in sp_ref
-                and sp_ref != ap_ref
-            ):
-                apply_type(sp, ap["type"])
-                ref_changed.append(pname)
+            if force and ap["type"] is not None:
+                # Force the type shape to match Apple exactly, dropping
+                # hand-crafted inline objects / stale `$ref`s.
+                shape_keys = ("type", "items", "$ref", "additionalProperties", "properties")
+                before = {k: sp.get(k) for k in shape_keys}
+                apply_type(sp, ap["type"], force=True)
+                after = {k: sp.get(k) for k in shape_keys}
+                if before != after:
+                    type_changed.append(pname)
+            else:
+                at = type_key(ap["type"])
+                st = sp.get("type")
+                if at and st and at != st:
+                    apply_type(sp, ap["type"])
+                    type_changed.append(pname)
+                # `$ref`: sync bare sibling refs from Apple's type (adds `.json`,
+                # follows renames). JSON pointers (`#/...`) and absolute URIs are
+                # hand-curated conventions (`$defs`, external URLs) — never touch.
+                ap_ref = type_ref(ap["type"])
+                sp_ref = type_ref(sp)
+                if (
+                    ap_ref
+                    and sp_ref
+                    and not sp_ref.startswith("#")
+                    and "://" not in sp_ref
+                    and sp_ref != ap_ref
+                ):
+                    apply_type(sp, ap["type"])
+                    ref_changed.append(pname)
             if ap["description"] and norm(sp.get("description")) != norm(
                 ap["description"]
             ):
@@ -646,6 +720,7 @@ _CHANGE_KEYS = (
     "enum_changed",
     "ref_changed",
     "required_added",
+    "map_value_changed",
 )
 
 
@@ -678,7 +753,9 @@ def sync_file(path: str, args: argparse.Namespace) -> JSON:
         return {"error": f"HTTP {e.code}: {data_uri}"}
     except urllib.error.URLError as e:
         return {"error": f"fetch failed: {e}"}
-    changes = merge_schema(schema, doc, data_uri, with_enums=args.enums)
+    changes = merge_schema(
+        schema, doc, data_uri, with_enums=args.enums, force=args.force_types
+    )
     summary = dict(changes)
     summary["action"] = "merged"
     summary["dry_run"] = args.dry_run
@@ -947,6 +1024,11 @@ def main() -> None:
         "--enums",
         action="store_true",
         help="also mix in enum candidates from codeVoice tokens where no structured enum exists (noisy; review via git diff)",
+    )
+    s.add_argument(
+        "--force-types",
+        action="store_true",
+        help="overwrite existing properties' type shapes from Apple (converts inline objects to $refs and vice versa); useful for auditing hand-crafted overrides",
     )
     add_cache_args(s)
     s.set_defaults(func=cmd_sync)

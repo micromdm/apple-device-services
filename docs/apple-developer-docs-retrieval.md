@@ -94,9 +94,14 @@ HTML page.
   to `applebusinessapi`. Schemas using the old name will 404 until their
   `x-apple-developer-api-uri` is updated (see the repo's PR #11).
 - Does not apply to `support.apple.com/guide/...` URLs (e.g. the GDMF schema).
-- Provides **no usable `required` signal**: every property's `required` is
-  `false`. The `required` arrays already in the repo's schemas are hand-derived
-  and must be preserved — they cannot be reconstructed from this source.
+- The `required` signal is **inconsistent across namespaces**: Apple's
+  per-property `required` flag is populated and meaningful in some namespaces
+  (e.g. ANB — `href`, `id`, and `type` on `Apps` are `true`), but is `false`
+  for *every* property in others (e.g. DEP). Because it cannot be trusted
+  wholesale, the sync tool captures it but treats it as additive: it emits a
+  `required` array when generating fresh schemas, and when merging it *adds*
+  Apple-declared required properties without ever dropping the repo's
+  hand-derived `required` entries.
 
 ## Structure of the source JSON
 
@@ -120,17 +125,21 @@ The JSON document has a stable shape. Relevant fields:
     - `{"kind":"typeIdentifier","identifier":"doc://…","text":"Foo.Bar"}` — a
       reference to a nested `*-data.dictionary` type (resolve via `references`,
       see below).
-  - `required` — boolean (in practice always `false` for these symbols; see the
-    caveat in "Scope and limitations").
-  - `attributes[]` — constraints (often empty).
+  - `required` — boolean, but **unreliable**: meaningful in some namespaces
+    (e.g. ANB), yet `false` for every property in others (e.g. DEP); see
+    "Scope and limitations".
+  - `attributes[]` — constraints (often empty). An entry with
+    `kind: "allowedValues"` carries a structured enum as its `values` array
+    (e.g. `{"kind":"allowedValues","values":["apps"]}` for `Apps.type`); this is
+    authoritative and maps to JSON Schema `enum`.
   - `content[]` — prose description as inline tokens (see below).
 - `references` — related symbols keyed by `doc://` identifier.
 - `schemaVersion` — version of the data format.
 
-### Important: rich detail lives in inline tokens, not structured fields
+### Important: detail is split between inline tokens and structured fields
 
-The per-property `type` is a bare token (`string`, `boolean`, `[string]`). Richer
-information is embedded in the description `content[].inlineContent[]` token
+The per-property `type` is a bare token (`string`, `boolean`, `[string]`). Some
+richer detail is embedded in the description `content[].inlineContent[]` token
 stream:
 
 | token `type` | meaning | example |
@@ -139,11 +148,19 @@ stream:
 | `codeVoice` | literal / enum value | `iPad`, `added`, `modified` |
 | `reference` | cross-link (doc:// identifier) | `Get Replacement Details` |
 
-Consequently, `enum`, `format: date-time` (e.g. "ISO 8601" time stamps), and
-`required` cannot be read directly from structured fields — they must be
-reconstructed by parsing the inline tokens. This is why the repo's schemas are
-"hand-crafted" rather than mechanically generated. The source JSON is a strong
-signal for field names, types, and descriptions, but not a drop-in schema.
+Some details are now structured fields rather than inline-token heuristics:
+
+- `required` is a per-property boolean (see "Structure of the source JSON"),
+  but unreliable across namespaces (see "Scope and limitations").
+- `enum` is available as `attributes[].allowedValues` for properties Apple
+  generates from an allowed-values list (e.g. `Apps.type` → `["apps"]`).
+
+What still lives only in the inline tokens is `format: date-time` (the
+"ISO 8601" prose) and version-gating information, so those remain heuristics.
+This is why the repo's schemas are "hand-crafted" rather than purely
+mechanically generated: the source JSON is a strong signal for field names,
+types, descriptions, and (sometimes) `required`/`enum`, but not a drop-in
+schema.
 
 ### Mapping Apple tokens to JSON Schema
 
@@ -154,13 +171,38 @@ For a property item, the `type` token maps to JSON Schema as follows:
 | `{"kind":"text","text":"string"}` | `{"type":"string"}` |
 | `{"kind":"text","text":"boolean"}` | `{"type":"boolean"}` |
 | `{"kind":"text","text":"[string]"}` | `{"type":"array","items":{"type":"string"}}` |
-| `{"kind":"typeIdentifier","identifier":"doc://…","text":"Foo.Bar"}` | `$ref` to the nested `*-data.dictionary` schema |
+| `{"kind":"typeIdentifier","identifier":"doc://…","text":"Foo.Bar"}` | `$ref` to the sibling `Foo.Bar.json` schema file |
+
+Two other per-property fields map directly, with the `required` caveat from
+"Scope and limitations":
+
+| Apple field | JSON Schema |
+|---|---|
+| `required: true` | top-level `"required": [...]` listing the property name |
+| `attributes[].allowedValues` | property-level `"enum": [...]` |
 
 A `typeIdentifier` token also carries `preciseIdentifier` (e.g.
 `mdm-services:dep:DeviceListResponse.Devices`), which matches the nested
 dictionary's `metadata.externalID`. The nested type's own JSON document is
 fetched with the same transform — append the `*-data.dictionary` path and
 `.json`.
+
+### Maps ("Any Key" dictionaries)
+
+Apple encodes a dictionary with arbitrary string keys (a map) as a nested
+`*-data.dictionary` whose single property is literally named `Any Key`; the
+value type of `Any Key` is the map's value type (which may itself be a `$ref`).
+These are still generated as their own schema files, but the `Any Key` property
+is emitted as an `additionalProperties` map rather than a named property:
+
+| Apple nested dictionary | generated schema |
+|---|---|
+| `Foo.Bar` = `{ "Any Key": "string" }` | `{"type":"object","additionalProperties":{"type":"string"}}` |
+| `Foo.Bar` = `{ "Any Key": Device }` | `{"type":"object","additionalProperties":{"$ref":"Device.json"}}` |
+
+This keeps a 1:1 mapping with Apple's `*-data.dictionary` files. The repo's
+hand-crafted schemas follow the same convention (e.g.
+`ClearProfileResponse.devices` is an `additionalProperties` map).
 
 The `reference` tokens inside `content[].inlineContent[]` likewise point to
 `doc://…` identifiers. All `doc://…` identifiers resolve against the
@@ -237,8 +279,10 @@ The `role` (and `type`) values classify each item and drive a crawl:
    request/response data dictionaries (resolved via `references`), and record
    those too.
 6. For each dictionary's properties, follow nested `typeIdentifier` tokens
-   (e.g. `SeedBuildToken`) and recurse; skip dotted names (`.Devices`), which
-   are inlined sub-objects rather than top-level files.
+   (e.g. `SeedBuildToken`, `Apps.Attributes`) and recurse. Dotted names are
+   nested dictionaries generated as their own files (e.g. `Apps.Attributes.json`),
+   not inlined. Map placeholders (see "Maps (`Any Key` dictionaries)") are also
+   generated as files, rendered as `additionalProperties` maps.
 
 The navigation tree alone is **not** the complete inventory: the request/response
 data dictionaries (e.g. `DeviceListRequest`, `FetchDeviceResponse`) are not
