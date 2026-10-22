@@ -24,7 +24,7 @@
       "format": "date-time"
     },
     "more_to_follow": {
-      "description": "Indicates that the request’s limit and cursor values resulted in only a partial list of devices.\nThe MDM server should immediately make another request (starting from the newly returned cursor) to obtain additional records.",
+      "description": "Indicates that the request’s limit and cursor values resulted in only a partial list of devices.\n\nThe MDM server should immediately make another request (starting from the newly returned cursor) to obtain additional records.",
       "type": "boolean"
     }
   }

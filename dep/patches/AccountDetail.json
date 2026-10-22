@@ -1,0 +1,19 @@
+[
+  {
+    "op": "test",
+    "path": "/properties/org_version/type",
+    "value": "string"
+  },
+  {
+    "op": "remove",
+    "path": "/properties/org_version/type"
+  },
+  {
+    "op": "add",
+    "path": "/properties/org_version/enum",
+    "value": [
+      "v1",
+      "v2"
+    ]
+  }
+]

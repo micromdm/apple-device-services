@@ -28,7 +28,7 @@
       "type": "boolean"
     },
     "configuration_web_url": {
-      "description": "The URL that the clients load into a web view during setup. This site provides the appropriate UI to authenticate the user, and when satisfied, initiates the download of the MDM enrollment profile.\nTo provide the MDM enrollment profile, the web view looks for a page with MIME type `application/x-apple-aspen-config`.\nWhile the user is allowed to navigate to any site or host during authentication, the MDM enrollment profile must originate from the same host as specified in this field.",
+      "description": "The URL that the clients load into a web view during setup. This site provides the appropriate UI to authenticate the user, and when satisfied, initiates the download of the MDM enrollment profile.\n\nTo provide the MDM enrollment profile, the web view looks for a page with MIME type `application/x-apple-aspen-config`.\n\nWhile the user is allowed to navigate to any site or host during authentication, the MDM enrollment profile must originate from the same host as specified in this field.",
       "type": "string",
       "format": "uri"
     },
@@ -69,7 +69,7 @@
       "type": "boolean"
     },
     "language": {
-      "description": "A language designator is a code that represents a language.\n\nUse the two-letter ISO 639-1 standard (preferred) or the three-letter ISO 639-2 standard. If an ISO 639-1 code is not available for a particular language, use the ISO 639-2 code instead.\n\nSee [Language and Locale IDs](https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPInternational/LanguageandLocaleIDs/LanguageandLocaleIDs.html) for more information.\n\nExample two-letter: `en`, `fr`, `ja`\n\nExample three-letter: `eng`, `fre`, `jpn`, `haw`\n\nAvailable on tvOS and macOS 11 and later.",
+      "description": "A language designator is a code that represents a language.\n\nUse the two-letter ISO 639-1 standard (preferred) or the three-letter ISO 639-2 standard. If an ISO 639-1 code is not available for a particular language, use the ISO 639-2 code instead.\n\nSee [Language and Locale IDs](https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPInternational/LanguageandLocaleIDs/LanguageandLocaleIDs.html) for more information.\n\nExample two-letter: `en`, `fr`, `ja`\n\nExample three-letter: `eng`, `fre`, `jpn`, `haw`\n\nAvailable on tvOS and macOS 11 and later.``",
       "examples": [ "en", "fr", "ja", "eng", "fre", "jpn", "haw" ],
       "type": "string",
       "maxLength": 3,
@@ -88,7 +88,7 @@
       "type": "string"
     },
     "region": {
-      "description": "A region designator is a code that represents a country. Available on tvOS and macOS 11 and later.\nUse the ISO 3166-1 standard, a two-letter, capitalized code.\nExamples: US, GB, AU",
+      "description": "A region designator is a code that represents a country. Available on tvOS and macOS 11 and later.\n\nUse the ISO 3166-1 standard, a two-letter, capitalized code.\n\nExamples: US, GB, AU",
       "type": "string",
       "maxLength": 2,
       "minLength": 2

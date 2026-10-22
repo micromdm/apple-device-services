@@ -14,7 +14,7 @@
       }
     },
     "seedBuildTokens": {
-      "$comment": "Undocumented property seen from an actual server response.",
+      "description": "Undocumented property seen from actual server responses.",
       "type": "array",
       "items": {
         "$ref": "SeedBuildToken.json"

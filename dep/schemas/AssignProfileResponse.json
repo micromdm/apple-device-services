@@ -13,7 +13,7 @@
       "type": "string"
     },
     "retry_after_seconds": {
-      "$comment": "This key is only returned with X-Server-Protocol-Version 10 and later. It indicates how long to wait before retrying assignment for the THROTTLED devices.",
+      "description": "With `X-Server-Protocol-Version` 10 and later, the response also includes `retry_after_seconds` when at least one device is throttled. Clients should wait for at least the indicated number of seconds before retrying assignment for the throttled devices.",
       "type": "integer"
     }
   }

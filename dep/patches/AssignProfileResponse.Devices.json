@@ -1,0 +1,26 @@
+[
+  {
+    "op": "test",
+    "path": "/additionalProperties/type",
+    "value": "string"
+  },
+  {
+    "op": "remove",
+    "path": "/additionalProperties/type"
+  },
+  {
+    "op": "add",
+    "path": "/additionalProperties/description",
+    "value": "With `X-Server-Protocol-Version` 9 and later, the server may throttle profile assignment on a per-device basis. When the server throttles a device, its value in the devices dictionary is `THROTTLED` instead of `SUCCESS`."
+  },
+  {
+    "op": "add",
+    "path": "/additionalProperties/enum",
+    "value": [
+      "SUCCESS",
+      "NOT_ACCESSIBLE",
+      "FAILED",
+      "THROTTLED"
+    ]
+  }
+]

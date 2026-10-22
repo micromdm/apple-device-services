@@ -12,8 +12,8 @@
     },
     "limit": {
       "description": "The maximum number of entries to return. Optional.",
+      "$comment": "Possibly an OpenAPI `int32` type.",
       "default": 100,
-      "x-type": "int32",
       "type": "integer",
       "maximum": 1000
     }

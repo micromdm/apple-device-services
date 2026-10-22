@@ -1,0 +1,7 @@
+[
+  {
+    "op": "add",
+    "path": "/$comment",
+    "value": "This schema appears to be the same as `DeviceStatusResponse`."
+  }
+]

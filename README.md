@@ -19,6 +19,12 @@ A general list of schemas managed here:
 - [Other schemas](other/schemas)  
 [JSON Schema](https://json-schema.org) definitions for miscellaneous Apple services such as [GDMF](https://support.apple.com/guide/deployment/device-management-deploy-software-updates-depafd2fad80/web).
 
+## Patches
+
+Regenerating schemas from Apple's documentation overwrites the manual curation its machine-readable source doesn't expose. That curation lives in a `patches/` folder beside each schema directory — one [JSON Patch](https://www.rfc-editor.org/rfc/rfc6902) (RFC 6902) per schema, named the same way as the schema it patches — and is re-applied after every generation, keeping the generated files a pure product of Apple's documentation with the curated detail layered on top.
+
+Patches are pinned to the values they adjust: when Apple's documentation changes beneath one, the sync fails rather than apply over it. Changes to a schema's curated content are made in its patch, not in the generated file, so they survive the next regeneration.
+
 ## Contributing
 
 These schemas are almost guaranteed to be incomplete due to the fact they are used as-needed and manually curated, with some schemas now generated from Apple's documentation via the [generation tool](tools/dev_docs_schema.py). So: **your help needed!**. Take a look at a given schema and if something you need isn't there: PRs welcome!

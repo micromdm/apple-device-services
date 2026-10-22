@@ -1,0 +1,20 @@
+[
+  {
+    "op": "test",
+    "path": "/additionalProperties/type",
+    "value": "string"
+  },
+  {
+    "op": "remove",
+    "path": "/additionalProperties/type"
+  },
+  {
+    "op": "add",
+    "path": "/additionalProperties/enum",
+    "value": [
+      "SUCCESS",
+      "NOT_ACCESSIBLE",
+      "FAILED"
+    ]
+  }
+]

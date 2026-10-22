@@ -1,0 +1,26 @@
+[
+  {
+    "op": "test",
+    "path": "/properties/http_method/items/type",
+    "value": "string"
+  },
+  {
+    "op": "remove",
+    "path": "/properties/http_method/items/type"
+  },
+  {
+    "op": "add",
+    "path": "/properties/http_method/items/enum",
+    "value": [
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE"
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/properties/uri/format",
+    "value": "uri"
+  }
+]

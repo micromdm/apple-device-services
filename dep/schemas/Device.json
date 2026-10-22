@@ -81,7 +81,7 @@
       "enum": [ "added", "modified", "deleted" ]
     },
     "os": {
-      "description": "The device’s operating system: `iOS`, `iPadOS`, `OSX`, `tvOS`, or `visionOS`.\nThis key is valid in X-Server-Protocol-Version 2 and later.\nWith X-Server-Protocol-Version 7 and later, iPad product os will return `iPadOS`.",
+      "description": "The device’s operating system: `iOS`, `iPadOS`, `OSX`, `tvOS`, or `visionOS`.\n\nThis key is valid in X-Server-Protocol-Version 2 and later.\n\nWith X-Server-Protocol-Version 7 and later, iPad product os will return `iPadOS`.",
       "enum": [ "iOS", "iPadOS", "OSX", "tvOS", "visionOS" ]
     },
     "profile_assign_time": {
@@ -107,7 +107,7 @@
       "type": "boolean"
     },
     "response_status": {
-      "$comment": "Undocumented property returned only for the `Device Details` endpoint.",
+      "description": "Undocumented property returned only for the \"Device Details\" endpoint.",
       "type": "string"
     },
     "serial_number": {

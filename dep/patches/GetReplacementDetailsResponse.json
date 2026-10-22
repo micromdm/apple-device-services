@@ -1,0 +1,28 @@
+[
+  {
+    "op": "add",
+    "path": "/required",
+    "value": [
+      "serial_number",
+      "original_device_serial_number",
+      "replacement_date"
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/properties/replacement_date/examples",
+    "value": [
+      "2025-01-15"
+    ]
+  },
+  {
+    "op": "test",
+    "path": "/properties/replacement_date/format",
+    "value": "date-time"
+  },
+  {
+    "op": "replace",
+    "path": "/properties/replacement_date/format",
+    "value": "date"
+  }
+]

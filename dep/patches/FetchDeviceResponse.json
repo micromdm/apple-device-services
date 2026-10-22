@@ -1,0 +1,11 @@
+[
+  {
+    "op": "add",
+    "path": "/required",
+    "value": [
+      "cursor",
+      "fetched_until",
+      "more_to_follow"
+    ]
+  }
+]

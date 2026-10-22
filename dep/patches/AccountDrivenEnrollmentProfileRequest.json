@@ -1,0 +1,14 @@
+[
+  {
+    "op": "add",
+    "path": "/required",
+    "value": [
+      "mdm_service_discovery_url"
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/properties/mdm_service_discovery_url/format",
+    "value": "uri"
+  }
+]

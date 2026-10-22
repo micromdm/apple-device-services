@@ -7,7 +7,7 @@
   "type": "object",
   "properties": {
     "os": {
-      "description": "The platform related to beta build. Possible values are: `homePodOS`, `iOS`, `OSX`, `tvOS`, `visionOS`, `watchOS`.",
+      "description": "The platform related to beta build. Possible values are: `homePodOS`, `iOS`, `OSX`, `tvOS`, `visionOS`, `watchOS`]",
       "enum": [ "homePodOS", "iOS", "OSX", "tvOS", "visionOS", "watchOS" ]
     },
     "title": {

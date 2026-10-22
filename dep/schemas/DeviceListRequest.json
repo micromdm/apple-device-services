@@ -2,7 +2,6 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "DeviceListRequest",
   "description": "The request for a list of devices.",
-  "$comment": "The request for a list of devices.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/devicelistrequest",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/devicelistrequest.json",
   "type": "object",

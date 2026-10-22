@@ -1,0 +1,76 @@
+[
+  {
+    "op": "add",
+    "path": "/required",
+    "value": [
+      "is_mdm_removable",
+      "org_magic"
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/properties/profile_uuid",
+    "value": {
+      "$comment": "Undocumented key only returned when requesting a profile from Apple.",
+      "type": "string"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/properties/allow_pairing/default",
+    "value": true
+  },
+  {
+    "op": "add",
+    "path": "/properties/configuration_web_url/format",
+    "value": "uri"
+  },
+  {
+    "op": "add",
+    "path": "/properties/is_mdm_removable/default",
+    "value": true
+  },
+  {
+    "op": "add",
+    "path": "/properties/language/examples",
+    "value": [
+      "en",
+      "fr",
+      "ja",
+      "eng",
+      "fre",
+      "jpn",
+      "haw"
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/properties/language/maxLength",
+    "value": 3
+  },
+  {
+    "op": "add",
+    "path": "/properties/language/minLength",
+    "value": 2
+  },
+  {
+    "op": "add",
+    "path": "/properties/region/maxLength",
+    "value": 2
+  },
+  {
+    "op": "add",
+    "path": "/properties/region/minLength",
+    "value": 2
+  },
+  {
+    "op": "add",
+    "path": "/properties/support_email_address/format",
+    "value": "email"
+  },
+  {
+    "op": "add",
+    "path": "/properties/url/format",
+    "value": "uri"
+  }
+]

@@ -1,0 +1,23 @@
+[
+  {
+    "op": "test",
+    "path": "/properties/os/type",
+    "value": "string"
+  },
+  {
+    "op": "remove",
+    "path": "/properties/os/type"
+  },
+  {
+    "op": "add",
+    "path": "/properties/os/enum",
+    "value": [
+      "homePodOS",
+      "iOS",
+      "OSX",
+      "tvOS",
+      "visionOS",
+      "watchOS"
+    ]
+  }
+]

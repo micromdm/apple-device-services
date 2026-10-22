@@ -1,0 +1,96 @@
+[
+  {
+    "op": "add",
+    "path": "/required",
+    "value": [
+      "serial_number",
+      "model"
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/properties/response_status",
+    "value": {
+      "description": "Undocumented property returned only for the \"Device Details\" endpoint.",
+      "type": "string"
+    }
+  },
+  {
+    "op": "test",
+    "path": "/properties/device_family/type",
+    "value": "string"
+  },
+  {
+    "op": "remove",
+    "path": "/properties/device_family/type"
+  },
+  {
+    "op": "add",
+    "path": "/properties/device_family/enum",
+    "value": [
+      "iPad",
+      "iPhone",
+      "iPod",
+      "Mac",
+      "AppleTV",
+      "Vision"
+    ]
+  },
+  {
+    "op": "test",
+    "path": "/properties/op_type/type",
+    "value": "string"
+  },
+  {
+    "op": "remove",
+    "path": "/properties/op_type/type"
+  },
+  {
+    "op": "add",
+    "path": "/properties/op_type/enum",
+    "value": [
+      "added",
+      "modified",
+      "deleted"
+    ]
+  },
+  {
+    "op": "test",
+    "path": "/properties/os/type",
+    "value": "string"
+  },
+  {
+    "op": "remove",
+    "path": "/properties/os/type"
+  },
+  {
+    "op": "add",
+    "path": "/properties/os/enum",
+    "value": [
+      "iOS",
+      "iPadOS",
+      "OSX",
+      "tvOS",
+      "visionOS"
+    ]
+  },
+  {
+    "op": "test",
+    "path": "/properties/profile_status/type",
+    "value": "string"
+  },
+  {
+    "op": "remove",
+    "path": "/properties/profile_status/type"
+  },
+  {
+    "op": "add",
+    "path": "/properties/profile_status/enum",
+    "value": [
+      "empty",
+      "assigned",
+      "pushed",
+      "removed"
+    ]
+  }
+]

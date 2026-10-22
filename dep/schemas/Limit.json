@@ -8,12 +8,12 @@
   "properties": {
     "default": {
       "description": "Default value of limit.",
-      "x-type": "int32",
+      "$comment": "Possibly an OpenAPI `int32` type.",
       "type": "integer"
     },
     "maximum": {
       "description": "Maximum value of limit.",
-      "x-type": "int32",
+      "$comment": "Possibly an OpenAPI `int32` type.",
       "type": "integer"
     }
   }

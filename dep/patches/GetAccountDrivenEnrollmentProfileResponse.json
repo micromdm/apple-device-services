@@ -1,0 +1,12 @@
+[
+  {
+    "op": "add",
+    "path": "/properties/last_updated_timestamp/format",
+    "value": "date-time"
+  },
+  {
+    "op": "add",
+    "path": "/properties/mdm_service_discovery_url/format",
+    "value": "uri"
+  }
+]

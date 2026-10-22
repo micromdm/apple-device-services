@@ -1,0 +1,17 @@
+[
+  {
+    "op": "add",
+    "path": "/properties/limit/default",
+    "value": 100
+  },
+  {
+    "op": "add",
+    "path": "/properties/limit/$comment",
+    "value": "Possibly an OpenAPI `int32` type."
+  },
+  {
+    "op": "add",
+    "path": "/properties/limit/maximum",
+    "value": 1000
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "op": "add",
+    "path": "/properties/profile_uuid/$comment",
+    "value": "This property appears to be superfluous and not used. You don't appear to need to know beforehand which profile to remove; you can remove any assigned profile."
+  }
+]

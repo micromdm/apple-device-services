@@ -1,0 +1,50 @@
+[
+  {
+    "op": "add",
+    "path": "/$comment",
+    "value": "Examples taken from deprecated PDF MDM documentation."
+  },
+  {
+    "op": "add",
+    "path": "/required",
+    "value": [
+      "device"
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/properties/device/examples",
+    "value": [
+      "C8TJ500QF1MN"
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/properties/escrow_key/$comment",
+    "value": "This escrow key is the PBKDF2 derived hash of the bypass code encoded as a hex string. In particular it is not the human readable \"dashed\" form."
+  },
+  {
+    "op": "add",
+    "path": "/properties/escrow_key/examples",
+    "value": [
+      "30a3449822ae82b94f1839ee0248a9e2350247d4b325071e6deb84285a6bfb34"
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/properties/escrow_key/maxLength",
+    "value": 64
+  },
+  {
+    "op": "add",
+    "path": "/properties/escrow_key/minLength",
+    "value": 64
+  },
+  {
+    "op": "add",
+    "path": "/properties/lost_message/examples",
+    "value": [
+      "Please phone 1-800-555-1212"
+    ]
+  }
+]
