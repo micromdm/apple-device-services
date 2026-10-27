@@ -492,7 +492,10 @@ def property_schema(item: JSON, refs: JSON) -> dict[str, Any]:
     description = content_text(item.get("content", []), refs)
     if description:
         schema["description"] = description
-    if "ISO 8601" in description:
+    if "iso 8601" in description.lower() and "format" not in schema:
+        # Case-insensitive: Apple writes "iSO 8601" too. The hyphenated
+        # "ISO-8601" of the ANB docs is left alone: its examples carry a
+        # "+0000" offset, which is not an RFC 3339 date-time.
         schema["format"] = "date-time"
     for attribute in item.get("attributes", []):
         # A bound constrains the values (an array's items); a default is

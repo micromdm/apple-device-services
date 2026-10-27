@@ -47,7 +47,8 @@
     },
     "op_date": {
       "description": "The time stamp, in iSO 8601 format, when the system added, updated, or deleted the person.",
-      "type": "string"
+      "type": "string",
+      "format": "date-time"
     },
     "passcode_type": {
       "description": "The password policy of the person. Possible values are `complex`, `four`, or `six`. Available in protocol version 3 and later.",

@@ -18,7 +18,8 @@
     },
     "op_date": {
       "description": "The time stamp, in iSO 8601 format, when the course was added, updated, or deleted.",
-      "type": "string"
+      "type": "string",
+      "format": "date-time"
     },
     "source": {
       "description": "The data source where the class was created.",

@@ -31,8 +31,6 @@ fetch-abm:
 
 generate-anb:
 	tools/dev_docs_schema.py generate devicemanagement/app-book-and-subscription-management.json anb/schemas
-	tools/sortkeys.py anb/patches/*.json
-	tools/apply_schema_patches.py anb/patches anb/schemas
 	$(JSONSCHEMA) fmt anb/schemas
 
 fetch-anb:

@@ -16,7 +16,7 @@ A general list of schemas managed here:
 [JSON Schema](https://json-schema.org) definitions for the [Apple School Manager API](https://developer.apple.com/documentation/appleschoolmanagerapi)
 - [DEP + Roster Schemas](dep/schemas) and [patches](dep/patches)  
 [JSON Schema](https://json-schema.org) definitions for the [Device Assignment (DEP)](https://developer.apple.com/documentation/devicemanagement/device-assignment) and [Roster Management](https://developer.apple.com/documentation/devicemanagement/roster-management) APIs
-- [ANB Schemas](anb/schemas) and [patches](anb/patches)  
+- [ANB Schemas](anb/schemas)  
 [JSON Schema](https://json-schema.org) definitions for the [App and Book Management (ANB) API](https://developer.apple.com/documentation/devicemanagement/app-and-book-management)
 - [Other schemas](other/schemas)  
 [JSON Schema](https://json-schema.org) definitions for miscellaneous Apple services such as [GDMF](https://support.apple.com/guide/deployment/device-management-deploy-software-updates-depafd2fad80/web).

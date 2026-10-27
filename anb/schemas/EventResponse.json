@@ -17,8 +17,7 @@
     },
     "tokenExpirationDate": {
       "description": "The token expiration date in an ISO-8601 format.\n\nNote: The server shows all dates and times in UTC.",
-      "type": "string",
-      "format": "date-time"
+      "type": "string"
     },
     "uId": {
       "description": "The unique library identifier. When querying records using multiple tokens that may share libraries, use the `uId` field to filter duplicates and avoid double-counting records when different content managers upload duplicate tokens.",
