@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "StatusResponse",
+  "description": "The status of an asynchronous event.\n\nCompare `numCompleted` against `numRequested` to track the progress of an event. When an event finishes with failures, `failures` describes each one.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/statusresponse",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/statusresponse.json",
+  "type": "object",
+  "properties": {
+    "eventStatus": {
+      "description": "The current status of the asynchronous event.",
+      "enum": [ "PENDING", "COMPLETE", "FAILED" ]
+    },
+    "eventType": {
+      "description": "The type of the asynchronous event.",
+      "enum": [
+        "ASSOCIATE",
+        "DISASSOCIATE",
+        "REVOKE",
+        "CREATE",
+        "UPDATE",
+        "RETIRE"
+      ]
+    },
+    "failures": {
+      "description": "The set of failures that occurred while the server processed the event.",
+      "type": "array",
+      "items": {
+        "$ref": "ErrorResponse.json"
+      }
+    },
+    "mdmInfo": {
+      "description": "The client-specific information that the server stores for your device management service.",
+      "$ref": "MdmInfo.json"
+    },
+    "numCompleted": {
+      "description": "The number of tasks from the request that the server completed.",
+      "type": "integer"
+    },
+    "numRequested": {
+      "description": "The total number of tasks in the request.",
+      "type": "integer"
+    },
+    "tokenExpirationDate": {
+      "description": "The token expiration date in an ISO-8601 format.\n\nNote: The server shows all dates and times in UTC.",
+      "type": "string"
+    },
+    "uId": {
+      "description": "The unique library identifier. When querying records using multiple tokens that may share libraries, use the `uId` field to filter duplicates and avoid double-counting records when different content managers upload duplicate tokens.",
+      "type": "string"
+    }
+  }
+}

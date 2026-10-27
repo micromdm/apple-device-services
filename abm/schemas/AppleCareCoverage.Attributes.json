@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AppleCareCoverage.Attributes",
+  "description": "Attributes for an organization device’s AppleCare coverage resource.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/applecarecoverage/attributes-data.dictionary",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/applecarecoverage/attributes-data.dictionary.json",
+  "type": "object",
+  "properties": {
+    "agreementNumber": {
+      "description": "Agreement number associated with device coverage. This field isn’t applicable for Limited Warranty and AppleCare+ for Business.",
+      "type": "string"
+    },
+    "contractCancelDateTime": {
+      "description": "UTC date when coverage was canceled for the device. This field isn’t applicable for Limited Warranty and AppleCare+ for Business.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "description": {
+      "description": "Description of device coverage.",
+      "type": "string"
+    },
+    "endDateTime": {
+      "description": "UTC date when coverage period ends for the device. This field isn’t applicable for AppleCare+ for Business.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "isCanceled": {
+      "description": "Indicates whether coverage is canceled for the device. This field isn’t applicable for Limited Warranty and AppleCare+ for Business.",
+      "type": "boolean"
+    },
+    "isRenewable": {
+      "description": "Indicates whether coverage renews after endDateTime for the device. This field isn’t applicable for Limited Warranty.",
+      "type": "boolean"
+    },
+    "paymentType": {
+      "description": "Payment type of device coverage. Possible values: ‘ABE_SUBSCRIPTION’, ‘PAID_UP_FRONT’, ‘SUBSCRIPTION’, ‘NONE’",
+      "$ref": "AppleCareCoveragePaymentType.json"
+    },
+    "startDateTime": {
+      "description": "UTC date when coverage period commenced. For AppleCare+ for Business, it’s UTC date when a device enrolls into the plan.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "description": "The current status of device coverage. Possible values: ‘ACTIVE’, ‘INACTIVE’",
+      "$ref": "AppleCareCoverageStatus.json"
+    }
+  }
+}

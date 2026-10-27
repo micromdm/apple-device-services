@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ResponseSubscriptionAssignment",
+  "description": "An assignment of a subscription to a user.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/responsesubscriptionassignment",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/responsesubscriptionassignment.json",
+  "type": "object",
+  "properties": {
+    "adamId": {
+      "description": "The Adam ID for the subscription.",
+      "type": "integer"
+    },
+    "clientUserId": {
+      "description": "The client user ID.",
+      "type": "string"
+    },
+    "renewing": {
+      "description": "A Boolean value that indicates whether the subscription is renewing.",
+      "type": "boolean"
+    }
+  }
+}

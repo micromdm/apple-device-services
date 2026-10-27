@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventIdpCreated",
+  "description": "The data structure that represents the event data for an identity provider created audit event.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventidpcreated",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventidpcreated.json",
+  "type": "object",
+  "properties": {
+    "protocol": {
+      "description": "The federation protocol used by the identity provider.",
+      "$ref": "AuditEventIdpProtocol.json"
+    },
+    "vendorName": {
+      "description": "The identity provider vendor.",
+      "$ref": "AuditEventIdpVendorName.json"
+    }
+  }
+}

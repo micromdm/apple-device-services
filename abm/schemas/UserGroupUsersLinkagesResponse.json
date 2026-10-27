@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UserGroupUsersLinkagesResponse",
+  "description": "A response that contains a list of user IDs for a user group.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/usergroupuserslinkagesresponse",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/usergroupuserslinkagesresponse.json",
+  "type": "object",
+  "required": [ "data", "links" ],
+  "properties": {
+    "data": {
+      "description": "The resource data containing user IDs.",
+      "type": "array",
+      "items": {
+        "$ref": "UserGroupUsersLinkagesResponse.Data.json"
+      }
+    },
+    "links": {
+      "description": "Navigational links that include the self-link.",
+      "$ref": "PagedDocumentLinks.json"
+    },
+    "meta": {
+      "description": "Paging information.",
+      "$ref": "PagingInformation.json"
+    }
+  }
+}

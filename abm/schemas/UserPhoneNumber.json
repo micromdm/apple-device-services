@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UserPhoneNumber",
+  "description": "The data structure that represents a user’s phone number.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/userphonenumber",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/userphonenumber.json",
+  "type": "object",
+  "properties": {
+    "phoneNumber": {
+      "description": "The phone number.",
+      "type": "string"
+    },
+    "type": {
+      "description": "The type of phone number. See [UserPhoneNumberType](https://developer.apple.com/documentation/applebusinessapi/userphonenumbertype) for possible values.",
+      "$ref": "UserPhoneNumberType.json"
+    }
+  }
+}

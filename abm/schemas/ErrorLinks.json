@@ -1,8 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "ErrorLinks",
+  "description": "Introduced in Apple Business API 2.6.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/errorlinks",
-  "x-apple-developer-api-version": "1.1+",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/errorlinks.json",
   "type": "object",
   "properties": {
     "about": {
@@ -10,45 +12,7 @@
       "format": "uri-reference"
     },
     "associated": {
-      "oneOf": [
-        {
-          "type": "string",
-          "format": "uri-reference"
-        },
-        {
-          "$ref": "#/$defs/ErrorLinks.Associated"
-        }
-      ]
-    }
-  },
-  "$defs": {
-    "ErrorLinks.Associated": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "ErrorLinks.Associated",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/errorlinks/associated-data.dictionary",
-      "x-apple-developer-api-version": "1.1+",
-      "type": "object",
-      "properties": {
-        "href": {
-          "type": "string",
-          "format": "uri-reference"
-        },
-        "meta": {
-          "$ref": "#/$defs/ErrorLinks.Associated.Meta"
-        }
-      }
-    },
-    "ErrorLinks.Associated.Meta": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "ErrorLinks.Associated.Meta",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/errorlinks/associated-data.dictionary/meta-data.dictionary",
-      "x-apple-developer-api-version": "1.1+",
-      "type": "object",
-      "properties": {
-        "source": {
-          "type": "string"
-        }
-      }
+      "$ref": "ErrorLinks.Associated.json"
     }
   }
 }

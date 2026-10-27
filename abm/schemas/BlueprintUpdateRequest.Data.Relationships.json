@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BlueprintUpdateRequest.Data.Relationships",
+  "description": "Introduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/blueprintupdaterequest/data-data.dictionary/relationships-data.dictionary",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/blueprintupdaterequest/data-data.dictionary/relationships-data.dictionary.json",
+  "type": "object",
+  "properties": {
+    "apps": {
+      "$ref": "BlueprintUpdateRequest.Data.Relationships.Apps.json"
+    },
+    "configurations": {
+      "$ref": "BlueprintUpdateRequest.Data.Relationships.Configurations.json"
+    },
+    "orgDevices": {
+      "$ref": "BlueprintUpdateRequest.Data.Relationships.OrgDevices.json"
+    },
+    "packages": {
+      "$ref": "BlueprintUpdateRequest.Data.Relationships.Packages.json"
+    },
+    "userGroups": {
+      "$ref": "BlueprintUpdateRequest.Data.Relationships.UserGroups.json"
+    },
+    "users": {
+      "$ref": "BlueprintUpdateRequest.Data.Relationships.Users.json"
+    }
+  }
+}

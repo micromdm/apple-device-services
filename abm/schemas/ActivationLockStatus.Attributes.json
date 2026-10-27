@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ActivationLockStatus.Attributes",
+  "description": "Attributes for an organization device’s Activation Lock status.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/activationlockstatus/attributes-data.dictionary",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/activationlockstatus/attributes-data.dictionary.json",
+  "type": "object",
+  "properties": {
+    "isLocked": {
+      "description": "Whether the device is currently Activation Locked.",
+      "type": "boolean"
+    },
+    "lockType": {
+      "description": "The type of Activation Lock on the device, if `isLocked` is `true`. Possible values: `MDM`, `USER`, `NONE`",
+      "$ref": "ActivationLockType.json"
+    }
+  }
+}

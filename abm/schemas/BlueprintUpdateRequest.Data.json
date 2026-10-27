@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BlueprintUpdateRequest.Data",
+  "description": "Introduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/blueprintupdaterequest/data-data.dictionary",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/blueprintupdaterequest/data-data.dictionary.json",
+  "type": "object",
+  "required": [ "id", "type" ],
+  "properties": {
+    "attributes": {
+      "$ref": "BlueprintUpdateRequest.Data.Attributes.json"
+    },
+    "id": {
+      "type": "string"
+    },
+    "relationships": {
+      "$ref": "BlueprintUpdateRequest.Data.Relationships.json"
+    },
+    "type": {
+      "const": "blueprints"
+    }
+  }
+}

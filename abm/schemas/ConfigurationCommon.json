@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ConfigurationCommon",
+  "description": "Introduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/configurationcommon",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/configurationcommon.json",
+  "type": "object",
+  "required": [ "type" ],
+  "properties": {
+    "configuredForPlatforms": {
+      "type": "array",
+      "items": {
+        "$ref": "ConfigurationPlatform.json"
+      }
+    },
+    "createdDateTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "$ref": "ConfigurationType.json"
+    },
+    "updatedDateTime": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MdmServer.Attributes",
+  "description": "Attributes that describe a device management service resource.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/mdmserver/attributes-data.dictionary",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/mdmserver/attributes-data.dictionary.json",
+  "type": "object",
+  "properties": {
+    "createdDateTime": {
+      "description": "The date and time of the creation of the resource.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "defaultProductFamilies": {
+      "description": "The product families that are assigned by default to this device management service. Read/update only.",
+      "type": "array",
+      "items": {
+        "$ref": "MdmServerProductFamily.json"
+      }
+    },
+    "deviceCount": {
+      "description": "The number of devices currently assigned to this device management service. Read only.",
+      "type": "integer"
+    },
+    "enableMdmDisownFlag": {
+      "description": "A Boolean value that indicates whether the device management service is allowed to disown its enrolled devices.",
+      "type": "boolean"
+    },
+    "lastConnectedDateTime": {
+      "description": "The date and time the device management service last connected to Apple’s servers. Read only.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "lastConnectedIp": {
+      "description": "The IP address from which the device management service last connected to Apple’s servers. Read only.",
+      "type": "string"
+    },
+    "serverName": {
+      "description": "The device management service’s name.",
+      "type": "string"
+    },
+    "serverType": {
+      "description": "The type of device management service: `MDM`, `APPLE_CONFIGURATOR`, `APPLE_MDM`. Read only.",
+      "type": "string"
+    },
+    "status": {
+      "description": "The operational status of the device management service. Read only. See [MdmServerStatus](https://developer.apple.com/documentation/applebusinessapi/mdmserverstatus) for possible values.",
+      "$ref": "MdmServerStatus.json"
+    },
+    "updatedDateTime": {
+      "description": "The date and time of the most-recent update for the resource.",
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

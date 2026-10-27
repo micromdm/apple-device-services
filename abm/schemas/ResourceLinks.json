@@ -1,9 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "ResourceLinks",
-  "description": "Self-links to requested resources.",
+  "description": "Self-links to requested resources.\n\nIntroduced in Apple Business API 2.6.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/resourcelinks",
-  "x-apple-developer-api-version": "1.1+",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/resourcelinks.json",
   "type": "object",
   "properties": {
     "self": {

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SubscriptionManagementResponse",
+  "description": "A confirmation response that reports your device management service’s subscription management support.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/subscriptionmanagementresponse",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/subscriptionmanagementresponse.json",
+  "type": "object",
+  "properties": {
+    "mdmInfo": {
+      "description": "The client-specific information that the server stores for your device management service.",
+      "$ref": "MdmInfo.json"
+    },
+    "subscriptionManagement": {
+      "description": "The flag denoting whether your device management service supports subscription management for the organizational unit.",
+      "type": "boolean"
+    },
+    "tokenExpirationDate": {
+      "description": "The token expiration date in an ISO-8601 format.\n\nNote: The server shows all dates and times in UTC.",
+      "type": "string"
+    },
+    "uId": {
+      "description": "The unique library identifier. When querying records using multiple tokens that may share libraries, use the `uId` field to filter duplicates and avoid double-counting records when different content managers upload duplicate tokens.",
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OrganizationalUnitResponse",
+  "description": "A response that contains a single organizational unit resource.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/organizationalunitresponse",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/organizationalunitresponse.json",
+  "type": "object",
+  "required": [ "data", "links" ],
+  "properties": {
+    "data": {
+      "description": "The resource data.",
+      "$ref": "OrganizationalUnit.json"
+    },
+    "links": {
+      "description": "Navigational links that include the self-link.",
+      "$ref": "DocumentLinks.json"
+    }
+  }
+}

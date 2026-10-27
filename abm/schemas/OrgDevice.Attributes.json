@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OrgDevice.Attributes",
+  "description": "Attributes that describe an organization device resource.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdevice/attributes-data.dictionary",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/orgdevice/attributes-data.dictionary.json",
+  "type": "object",
+  "properties": {
+    "addedToOrgDateTime": {
+      "description": "The date and time of adding the device to an organization.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "bluetoothMacAddress": {
+      "description": "The device’s Bluetooth MAC address.",
+      "type": "string"
+    },
+    "color": {
+      "description": "The color of the device.",
+      "type": "string"
+    },
+    "deviceCapacity": {
+      "description": "The capacity of the device.",
+      "type": "string"
+    },
+    "deviceModel": {
+      "description": "The model name.",
+      "type": "string"
+    },
+    "eid": {
+      "description": "The device’s EID (if available).",
+      "type": "string"
+    },
+    "ethernetMacAddress": {
+      "description": "The device’s built-in Ethernet MAC addresses.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "imei": {
+      "description": "The device’s IMEI (if available).",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "isMdmMigrationCapable": {
+      "description": "Whether the device is eligible for device management service migration.",
+      "type": "boolean"
+    },
+    "mdmMigrationDeadlineDateTime": {
+      "description": "The deadline, in ISO 8601 format, by which the device needs to complete its device management service migration, if a migration has been requested.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "mdmMigrationStatus": {
+      "description": "The device’s current device management service migration state, if a migration has been requested.",
+      "$ref": "MdmMigrationStatus.json"
+    },
+    "meid": {
+      "description": "The device’s MEID (if available).",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "orderDateTime": {
+      "description": "The date and time of placing the device’s order.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "orderNumber": {
+      "description": "The order number of the device.",
+      "type": "string"
+    },
+    "partNumber": {
+      "description": "The part number of the device.",
+      "type": "string"
+    },
+    "productFamily": {
+      "description": "The device’s Apple product family: `iPhone`, `iPad`,`Mac`, `AppleTV`, `Watch`, or `Vision`",
+      "type": "string"
+    },
+    "productType": {
+      "description": "The device’s product type: (examples: `iPhone14,3`, `iPad13,4`,  `MacBookPro14,2`)",
+      "type": "string"
+    },
+    "purchaseSourceId": {
+      "description": "The unique ID of the purchase source type: Apple Customer Number or Reseller Number",
+      "type": "string"
+    },
+    "purchaseSourceType": {
+      "description": "The device’s purchase source type: `APPLE`, `RESELLER`, or `MANUALLY_ADDED`",
+      "type": "string"
+    },
+    "releasedFromOrgDateTime": {
+      "description": "The date and time the device was released from an organization. This will be null if the device hasn’t been released. Currently only querying by a single device is supported. Batch device queries aren’t currently supported for this property.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "serialNumber": {
+      "description": "The device’s serial number.",
+      "type": "string"
+    },
+    "status": {
+      "description": "The devices status: ASSIGNED or UNASSIGNED. If ASSIGNED, use a separate API to get the information of the assigned server.",
+      "type": "string"
+    },
+    "updatedDateTime": {
+      "description": "The date and time of the most-recent update for the device.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "wifiMacAddress": {
+      "description": "The device’s Wi-Fi MAC address.",
+      "type": "string"
+    }
+  }
+}

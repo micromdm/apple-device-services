@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ResponseSubscription",
+  "description": "A subscription with its assignment counts.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/responsesubscription",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/responsesubscription.json",
+  "type": "object",
+  "properties": {
+    "adamId": {
+      "description": "The Adam ID for the subscription.",
+      "type": "integer"
+    },
+    "counts": {
+      "description": "The assignment counts for the subscription, broken down by renewal state.",
+      "$ref": "SubscriptionCounts.json"
+    },
+    "parentAdamId": {
+      "description": "The parent Adam ID for the subscription. This value can be `null`, so don’t require it when you parse a subscription record.",
+      "type": "integer"
+    },
+    "periodEndDate": {
+      "description": "The end date of the current billing period in ISO-8601 calendar date format (`YYYY-MM-DD`).",
+      "type": "string",
+      "format": "date"
+    },
+    "status": {
+      "description": "The current state of the subscription.",
+      "enum": [ "ACTIVE", "INACTIVE", "PAUSED" ]
+    }
+  }
+}

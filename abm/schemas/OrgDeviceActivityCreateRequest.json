@@ -1,144 +1,16 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "OrgDeviceActivityCreateRequest",
-  "description": "The request body you use to update the device management service for a device.",
+  "description": "The request body you use to update the device management service for a device.\n\nIntroduced in Apple Business API 2.6.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdeviceactivitycreaterequest",
-  "x-apple-developer-api-version": "1.1+",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/orgdeviceactivitycreaterequest.json",
   "type": "object",
   "required": [ "data" ],
   "properties": {
     "data": {
       "description": "The resource data.",
-      "$ref": "#/$defs/OrgDeviceActivityCreateRequest.Data"
-    }
-  },
-  "$defs": {
-    "OrgDeviceActivityCreateRequest.Data": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "OrgDeviceActivityCreateRequest.Data",
-      "description": "The request body you use to update the device management service for a device.",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdeviceactivitycreaterequest/data-data.dictionary",
-      "x-apple-developer-api-version": "1.1+",
-      "type": "object",
-      "required": [ "attributes", "relationships", "type" ],
-      "properties": {
-        "attributes": {
-          "description": "The resource’s attributes.",
-          "$ref": "#/$defs/OrgDeviceActivityCreateRequest.Data.Attributes"
-        },
-        "relationships": {
-          "description": "The types and IDs of the related data to update.",
-          "$ref": "#/$defs/OrgDeviceActivityCreateRequest.Data.Relationships"
-        },
-        "type": {
-          "description": "The resource type.",
-          "default": "orgDeviceActivities",
-          "type": "string"
-        }
-      }
-    },
-    "OrgDeviceActivityCreateRequest.Data.Attributes": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "OrgDeviceActivityCreateRequest.Data.Attributes",
-      "description": "Attributes with values that you’re changing as part of the create request.",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdeviceactivitycreaterequest/data-data.dictionary/attributes-data.dictionary",
-      "x-apple-developer-api-version": "1.1+",
-      "type": "object",
-      "required": [ "activityType" ],
-      "properties": {
-        "activityType": {
-          "description": "The type of activity you want to create.",
-          "$ref": "OrgDeviceActivityType.json"
-        }
-      }
-    },
-    "OrgDeviceActivityCreateRequest.Data.Relationships": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "OrgDeviceActivityCreateRequest.Data.Relationships",
-      "description": "The relationships you include in the request, and those that you can operate on.",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdeviceactivitycreaterequest/data-data.dictionary/relationships-data.dictionary",
-      "x-apple-developer-api-version": "1.1+",
-      "type": "object",
-      "required": [ "devices" ],
-      "properties": {
-        "devices": {
-          "$ref": "#/$defs/OrgDeviceActivityCreateRequest.Data.Relationships.Devices"
-        },
-        "mdmServer": {
-          "$ref": "#/$defs/OrgDeviceActivityCreateRequest.Data.Relationships.MdmServer"
-        }
-      }
-    },
-    "OrgDeviceActivityCreateRequest.Data.Relationships.Devices": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "OrgDeviceActivityCreateRequest.Data.Relationships.Devices",
-      "description": "The data that describe the relationship between the resources.",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdeviceactivitycreaterequest/data-data.dictionary/relationships-data.dictionary/devices-data.dictionary",
-      "x-apple-developer-api-version": "1.1+",
-      "type": "object",
-      "required": [ "data" ],
-      "properties": {
-        "data": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/OrgDeviceActivityCreateRequest.Data.Relationships.Devices.Data"
-          }
-        }
-      }
-    },
-    "OrgDeviceActivityCreateRequest.Data.Relationships.Devices.Data": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "OrgDeviceActivityCreateRequest.Data.Relationships.Devices.Data",
-      "description": "The type and ID of a related resource.",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdeviceactivitycreaterequest/data-data.dictionary/relationships-data.dictionary/devices-data.dictionary/data-data.dictionary",
-      "x-apple-developer-api-version": "1.1+",
-      "type": "object",
-      "required": [ "id", "type" ],
-      "properties": {
-        "id": {
-          "description": "The opaque resource ID that uniquely identifies the resource.",
-          "type": "string"
-        },
-        "type": {
-          "description": "The resource type.",
-          "default": "orgDevices",
-          "type": "string"
-        }
-      }
-    },
-    "OrgDeviceActivityCreateRequest.Data.Relationships.MdmServer": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "OrgDeviceActivityCreateRequest.Data.Relationships.MdmServer",
-      "description": "The data that describe the relationship between the resources.",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdeviceactivitycreaterequest/data-data.dictionary/relationships-data.dictionary/mdmserver-data.dictionary",
-      "x-apple-developer-api-version": "1.1+",
-      "type": "object",
-      "required": [ "data" ],
-      "properties": {
-        "data": {
-          "$ref": "#/$defs/OrgDeviceActivityCreateRequest.Data.Relationships.MdmServer.Data"
-        }
-      }
-    },
-    "OrgDeviceActivityCreateRequest.Data.Relationships.MdmServer.Data": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "OrgDeviceActivityCreateRequest.Data.Relationships.MdmServer.Data",
-      "description": "The type and ID of a related resource.",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdeviceactivitycreaterequest/data-data.dictionary/relationships-data.dictionary/mdmserver-data.dictionary/data-data.dictionary",
-      "x-apple-developer-api-version": "1.1+",
-      "type": "object",
-      "required": [ "id", "type" ],
-      "properties": {
-        "id": {
-          "description": "The opaque resource ID that uniquely identifies the resource.",
-          "type": "string"
-        },
-        "type": {
-          "description": "The resource type.",
-          "default": "mdmServers",
-          "type": "string"
-        }
-      }
+      "$ref": "OrgDeviceActivityCreateRequest.Data.json"
     }
   }
 }

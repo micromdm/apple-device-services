@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventSubscriptionDeleted",
+  "description": "The data structure that represents the event data for a subscription deleted audit event.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventsubscriptiondeleted",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventsubscriptiondeleted.json",
+  "type": "object",
+  "properties": {
+    "planCaption": {
+      "description": "A terse friendly name given by AMP for the plan select. (For example, ‘1 Device 2TB iCloud Storage’).",
+      "type": "string"
+    }
+  }
+}

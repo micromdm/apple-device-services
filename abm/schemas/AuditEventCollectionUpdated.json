@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventCollectionUpdated",
+  "description": "The data structure that represents the event data for a collection updated audit event.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventcollectionupdated",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventcollectionupdated.json",
+  "type": "object",
+  "properties": {
+    "description": {
+      "description": "Description of the collection given by admin who created the collection.",
+      "type": "string"
+    },
+    "name": {
+      "description": "Name of the collection given by admin who created the collection.",
+      "type": "string"
+    }
+  }
+}

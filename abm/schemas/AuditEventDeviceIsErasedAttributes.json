@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventDeviceIsErasedAttributes",
+  "description": "The attributes for a device is erased audit event.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventdeviceiserasedattributes",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventdeviceiserasedattributes.json",
+  "type": "object",
+  "properties": {
+    "eventDataDeviceIsErased": {
+      "description": "The event data for this audit event type.",
+      "$ref": "AuditEventDeviceIsErased.json"
+    }
+  }
+}

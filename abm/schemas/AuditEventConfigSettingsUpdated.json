@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventConfigSettingsUpdated",
+  "description": "The data structure that represents the event data for a config settings updated audit event.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventconfigsettingsupdated",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventconfigsettingsupdated.json",
+  "type": "object",
+  "properties": {
+    "configId": {
+      "description": "The unique identifier of an instance of an admin-created Configuration.",
+      "type": "string"
+    },
+    "configType": {
+      "description": "The type of the Configuration (e.g. “WiFi”).",
+      "examples": [ "WiFi" ],
+      "type": "string"
+    },
+    "configVersion": {
+      "description": "The version of the Configuration.",
+      "type": "string"
+    }
+  }
+}

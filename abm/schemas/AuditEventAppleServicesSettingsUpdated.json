@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventAppleServicesSettingsUpdated",
+  "description": "The data structure that represents the event data for an Apple services settings updated audit event.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventappleservicessettingsupdated",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventappleservicessettingsupdated.json",
+  "type": "object",
+  "properties": {
+    "settingsDisabled": {
+      "description": "The list of Apple services settings that were disabled.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "settingsEnabled": {
+      "description": "The list of Apple services settings that were enabled.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

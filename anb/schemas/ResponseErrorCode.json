@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ResponseErrorCode",
+  "description": "An error code.\n\nIntroduced in VPP License Management 2.0.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/responseerrorcode",
+  "x-apple-developer-api-version": "2.0",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/responseerrorcode.json",
+  "type": "object",
+  "properties": {
+    "errorMessage": {
+      "description": "The human-readable explanation of an error.",
+      "type": "string"
+    },
+    "errorNumber": {
+      "description": "The number that uniquely identifies an error.",
+      "type": "integer"
+    }
+  }
+}

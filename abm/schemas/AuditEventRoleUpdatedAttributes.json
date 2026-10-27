@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventRoleUpdatedAttributes",
+  "description": "The attributes for a role updated audit event.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventroleupdatedattributes",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventroleupdatedattributes.json",
+  "type": "object",
+  "properties": {
+    "eventDataRoleUpdated": {
+      "description": "The event data for this audit event type.",
+      "$ref": "AuditEventRoleUpdated.json"
+    }
+  }
+}

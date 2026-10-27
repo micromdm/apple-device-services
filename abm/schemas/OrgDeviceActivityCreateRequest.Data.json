@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OrgDeviceActivityCreateRequest.Data",
+  "description": "The data element of the request body.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdeviceactivitycreaterequest/data-data.dictionary",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/orgdeviceactivitycreaterequest/data-data.dictionary.json",
+  "type": "object",
+  "required": [ "attributes", "relationships", "type" ],
+  "properties": {
+    "attributes": {
+      "description": "The resource’s attributes.",
+      "$ref": "OrgDeviceActivityCreateRequest.Data.Attributes.json"
+    },
+    "relationships": {
+      "description": "The types and IDs of the related data to update.",
+      "$ref": "OrgDeviceActivityCreateRequest.Data.Relationships.json"
+    },
+    "type": {
+      "description": "The resource type.",
+      "const": "orgDeviceActivities"
+    }
+  }
+}

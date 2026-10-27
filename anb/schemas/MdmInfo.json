@@ -1,8 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "MdmInfo",
-  "description": "Information about the MDM client.",
+  "description": "Information about the MDM client.\n\nIntroduced in VPP License Management 2.0.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/mdminfo",
+  "x-apple-developer-api-version": "2.0",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/mdminfo.json",
   "type": "object",
   "properties": {
     "id": {

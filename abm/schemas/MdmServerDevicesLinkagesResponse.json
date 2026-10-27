@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MdmServerDevicesLinkagesResponse",
+  "description": "The data and links that describe the relationship between the resources.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/mdmserverdeviceslinkagesresponse",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/mdmserverdeviceslinkagesresponse.json",
+  "type": "object",
+  "required": [ "data", "links" ],
+  "properties": {
+    "data": {
+      "description": "The resource data.",
+      "type": "array",
+      "items": {
+        "$ref": "MdmServerDevicesLinkagesResponse.Data.json"
+      }
+    },
+    "links": {
+      "description": "Navigational links that include the self-link.",
+      "$ref": "PagedDocumentLinks.json"
+    },
+    "meta": {
+      "description": "Paging information.",
+      "$ref": "PagingInformation.json"
+    }
+  }
+}

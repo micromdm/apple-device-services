@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OrganizationalUnit.Attributes",
+  "description": "Attributes that describe an organizational unit resource.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/organizationalunit/attributes-data.dictionary",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/organizationalunit/attributes-data.dictionary.json",
+  "type": "object",
+  "properties": {
+    "createdDateTime": {
+      "description": "The date and time the organizational unit was created.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "description": {
+      "description": "A description of the organizational unit.",
+      "type": "string"
+    },
+    "name": {
+      "description": "The name of the organizational unit.",
+      "type": "string"
+    },
+    "updatedDateTime": {
+      "description": "The date and time the organizational unit was last modified.",
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

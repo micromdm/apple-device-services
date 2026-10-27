@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ManageUsersRequest",
+  "description": "The request for user management.\n\nIntroduced in VPP License Management 2.0.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/manageusersrequest",
+  "x-apple-developer-api-version": "2.0",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/manageusersrequest.json",
+  "type": "object",
+  "required": [ "users" ],
+  "properties": {
+    "users": {
+      "description": "The set of users to manage.",
+      "type": "array",
+      "items": {
+        "$ref": "RequestUser.json"
+      }
+    }
+  }
+}

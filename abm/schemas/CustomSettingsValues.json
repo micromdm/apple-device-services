@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CustomSettingsValues",
+  "description": "The custom settings payload for a Configuration of type `CUSTOM_SETTING`.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/customsettingsvalues",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/customsettingsvalues.json",
+  "type": "object",
+  "properties": {
+    "configurationProfile": {
+      "description": "The XML content of the Configuration profile in Apple .plist format.",
+      "type": "string",
+      "contentEncoding": "base64"
+    },
+    "filename": {
+      "description": "The filename for the Configuration profile (For example, `Settings.mobileconfig`).",
+      "type": "string"
+    }
+  }
+}

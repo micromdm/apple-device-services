@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventDomainFederationEnabled",
+  "description": "The data structure that represents the event data for a domain federation enabled audit event.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventdomainfederationenabled",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventdomainfederationenabled.json",
+  "type": "object",
+  "properties": {
+    "activityId": {
+      "description": "The unique identifier for the domain federation activity.",
+      "type": "string"
+    },
+    "scimActivityId": {
+      "description": "The unique identifier for the associated SCIM provisioning activity.",
+      "type": "string"
+    }
+  }
+}

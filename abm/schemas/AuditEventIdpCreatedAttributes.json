@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventIdpCreatedAttributes",
+  "description": "The attributes for an identity provider created audit event.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventidpcreatedattributes",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventidpcreatedattributes.json",
+  "type": "object",
+  "properties": {
+    "eventDataIdpCreated": {
+      "description": "The event data for this audit event type.",
+      "$ref": "AuditEventIdpCreated.json"
+    }
+  }
+}

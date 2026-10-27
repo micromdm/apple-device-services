@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventActorType",
+  "description": "Strings that represent the type of entity that performed an action.\n\nIntroduced in Apple Business API 2.6.\n\n- Possible Values\n  \n  - USER: Action performed by a user.\n  - API_USER: Action performed via API account.\n  - SYSTEM: Action performed by the system.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventactortype",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventactortype.json",
+  "enum": [ "USER", "API_USER", "SYSTEM" ]
+}

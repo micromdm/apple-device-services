@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ConfigurationPlatform",
+  "description": "The platform that a Configuration targets.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/configurationplatform",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/configurationplatform.json",
+  "enum": [
+    "PLATFORM_MACOS",
+    "PLATFORM_IOS",
+    "PLATFORM_TVOS",
+    "PLATFORM_VISIONOS"
+  ]
+}

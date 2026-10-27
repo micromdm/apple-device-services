@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ManageSubscriptionsRequest",
+  "description": "The request for subscription management.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/managesubscriptionsrequest",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/managesubscriptionsrequest.json",
+  "type": "object",
+  "required": [ "adamIds", "clientUserIds" ],
+  "properties": {
+    "adamIds": {
+      "description": "The set of Adam IDs for the subscriptions to manage.",
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "clientUserIds": {
+      "description": "The set of identifiers for users in your organization.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "deferred": {
+      "description": "A Boolean value that indicates whether the disassociation is deferred. Used for disassociation operations.",
+      "type": "boolean"
+    },
+    "renewing": {
+      "description": "A Boolean value that indicates whether the subscription is renewing. Used for association operations.",
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Blueprint.Relationships",
+  "description": "Relationships that link a Blueprint to related resources.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/blueprint/relationships-data.dictionary",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/blueprint/relationships-data.dictionary.json",
+  "type": "object",
+  "properties": {
+    "apps": {
+      "description": "The apps associated with this Blueprint.",
+      "$ref": "Blueprint.Relationships.Apps.json"
+    },
+    "configurations": {
+      "description": "The configurations associated with this Blueprint.",
+      "$ref": "Blueprint.Relationships.Configurations.json"
+    },
+    "orgDevices": {
+      "description": "The devices associated with this Blueprint.",
+      "$ref": "Blueprint.Relationships.OrgDevices.json"
+    },
+    "packages": {
+      "description": "The packages associated with this Blueprint.",
+      "$ref": "Blueprint.Relationships.Packages.json"
+    },
+    "userGroups": {
+      "description": "The user groups associated with this Blueprint.",
+      "$ref": "Blueprint.Relationships.UserGroups.json"
+    },
+    "users": {
+      "description": "The users associated with this Blueprint.",
+      "$ref": "Blueprint.Relationships.Users.json"
+    }
+  }
+}

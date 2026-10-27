@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UnlimitedResponseAsset",
+  "description": "An asset with an unlimited license that the organization owns.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/unlimitedresponseasset",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/unlimitedresponseasset.json",
+  "type": "object",
+  "properties": {
+    "adamId": {
+      "description": "The unique identifier for the product in the store.",
+      "type": "string"
+    },
+    "assignedCount": {
+      "description": "The assigned amount of the asset.",
+      "type": "integer"
+    },
+    "deviceAssignable": {
+      "description": "The flag denoting whether the asset is device-assignable.",
+      "type": "boolean"
+    },
+    "pricingParam": {
+      "description": "The quality of the product in the store.",
+      "enum": [ "STDQ", "PLUS" ]
+    },
+    "productType": {
+      "description": "The asset product type.",
+      "enum": [ "App", "Book" ]
+    },
+    "revocable": {
+      "description": "The flag denoting whether the asset is revocable.",
+      "type": "boolean"
+    },
+    "supportedPlatforms": {
+      "description": "The platforms that the asset supports.",
+      "type": "array",
+      "items": {
+        "enum": [ "iOS", "macOS", "tvOS", "watchOS", "visionOS" ]
+      }
+    }
+  }
+}

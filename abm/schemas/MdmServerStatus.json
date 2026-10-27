@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MdmServerStatus",
+  "description": "Strings that represent the operational status of a device management service.\n\nIntroduced in Apple Business API 2.6.\n\n- Possible Values\n  \n  - ACTIVE: The server is active and able to manage devices.\n  - INACTIVE: The server is currently inactive.\n  - DELETED: The server has been removed from the organization.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/mdmserverstatus",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/mdmserverstatus.json",
+  "enum": [ "ACTIVE", "DELETED", "INACTIVE" ]
+}

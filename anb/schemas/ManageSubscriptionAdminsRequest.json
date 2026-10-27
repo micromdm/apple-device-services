@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ManageSubscriptionAdminsRequest",
+  "description": "The request body for adding or removing subscription administrators.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/managesubscriptionadminsrequest",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/managesubscriptionadminsrequest.json",
+  "type": "object",
+  "required": [ "adamIds", "clientUserIds" ],
+  "properties": {
+    "adamIds": {
+      "description": "The set of Adam IDs for the subscriptions to manage.",
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "clientUserIds": {
+      "description": "The set of client user identifiers to add as administrators or remove as administrators.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

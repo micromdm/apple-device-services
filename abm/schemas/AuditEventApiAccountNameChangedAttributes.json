@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventApiAccountNameChangedAttributes",
+  "description": "The attributes for an API account name changed audit event.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventapiaccountnamechangedattributes",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventapiaccountnamechangedattributes.json",
+  "type": "object",
+  "properties": {
+    "eventDataApiAccountNameChanged": {
+      "description": "The event data for this audit event type.",
+      "$ref": "AuditEventApiAccountNameChanged.json"
+    }
+  }
+}

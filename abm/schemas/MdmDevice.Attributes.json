@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MdmDevice.Attributes",
+  "description": "The attributes for a device management service enrolled device resource.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/mdmdevice/attributes-data.dictionary",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/mdmdevice/attributes-data.dictionary.json",
+  "type": "object",
+  "properties": {
+    "deviceName": {
+      "description": "The name of the device.",
+      "type": "string"
+    },
+    "enrolledUserId": {
+      "description": "The unique identifier of the user enrolled with the device.",
+      "type": "string"
+    },
+    "productFamily": {
+      "description": "The product family of the device.",
+      "type": "string"
+    },
+    "serialNumber": {
+      "description": "The serial number of the device.",
+      "type": "string"
+    }
+  }
+}

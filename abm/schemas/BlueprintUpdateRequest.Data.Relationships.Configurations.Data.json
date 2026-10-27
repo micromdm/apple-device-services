@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BlueprintUpdateRequest.Data.Relationships.Configurations.Data",
+  "description": "Introduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/blueprintupdaterequest/data-data.dictionary/relationships-data.dictionary/configurations-data.dictionary/data-data.dictionary",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/blueprintupdaterequest/data-data.dictionary/relationships-data.dictionary/configurations-data.dictionary/data-data.dictionary.json",
+  "type": "object",
+  "required": [ "id", "type" ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "type": {
+      "const": "configurations"
+    }
+  }
+}

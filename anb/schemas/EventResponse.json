@@ -1,8 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "EventResponse",
-  "description": "The response that contains the event identifier.",
+  "description": "The response that contains the event identifier.\n\nIntroduced in VPP License Management 2.0.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/eventresponse",
+  "x-apple-developer-api-version": "2.0",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/eventresponse.json",
   "type": "object",
   "properties": {
     "eventId": {
@@ -10,11 +12,11 @@
       "type": "string"
     },
     "mdmInfo": {
-      "description": "The current information for the provided token.\nThe response only includes this field when MDM sets a value using the [Client Config](https://developer.apple.com/documentation/devicemanagement/client-config-4szk1) endpoint.",
+      "description": "The current information for the provided token.\n\nThe response only includes this field when MDM sets a value using the [Client Config](https://developer.apple.com/documentation/devicemanagement/client-config-4szk1) endpoint.",
       "$ref": "MdmInfo.json"
     },
     "tokenExpirationDate": {
-      "description": "The token expiration date in an ISO-8601 format.\nNote: The server shows all dates and times in UTC.",
+      "description": "The token expiration date in an ISO-8601 format.\n\nNote: The server shows all dates and times in UTC.",
       "type": "string",
       "format": "date-time"
     },

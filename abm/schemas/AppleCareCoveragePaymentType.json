@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AppleCareCoveragePaymentType",
+  "description": "Strings that represent AppleCare coverage payment types.\n\nIntroduced in Apple Business API 2.6.\n\n- Possible Values\n  \n  - ABE_SUBSCRIPTION:\n  - PAID_UP_FRONT:\n  - SUBSCRIPTION:\n  - NONE:",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/applecarecoveragepaymenttype",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/applecarecoveragepaymenttype.json",
+  "enum": [ "ABE_SUBSCRIPTION", "PAID_UP_FRONT", "SUBSCRIPTION", "NONE" ]
+}

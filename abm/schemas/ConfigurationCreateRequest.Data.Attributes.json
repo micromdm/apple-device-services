@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ConfigurationCreateRequest.Data.Attributes",
+  "description": "Introduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/configurationcreaterequest/data-data.dictionary/attributes-data.dictionary",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/configurationcreaterequest/data-data.dictionary/attributes-data.dictionary.json",
+  "type": "object",
+  "required": [ "name", "type" ],
+  "properties": {
+    "configuredForPlatforms": {
+      "type": "array",
+      "items": {
+        "$ref": "ConfigurationPlatform.json"
+      }
+    },
+    "customSettingsValues": {
+      "$ref": "CustomSettingsValues.json"
+    },
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "$ref": "ConfigurationType.json"
+    }
+  }
+}

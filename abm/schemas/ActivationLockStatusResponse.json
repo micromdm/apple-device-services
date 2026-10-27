@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ActivationLockStatusResponse",
+  "description": "A response that contains the Activation Lock status of an organization device.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/activationlockstatusresponse",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/activationlockstatusresponse.json",
+  "type": "object",
+  "required": [ "data", "links" ],
+  "properties": {
+    "data": {
+      "description": "The resource data.",
+      "$ref": "ActivationLockStatus.json"
+    },
+    "links": {
+      "description": "Navigational links that include the self-link.",
+      "$ref": "DocumentLinks.json"
+    }
+  }
+}

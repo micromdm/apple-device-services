@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventDeviceRemovedFromOrg",
+  "description": "The data structure that represents the event data for a device removed from organization audit event.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventdeviceremovedfromorg",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventdeviceremovedfromorg.json",
+  "type": "object",
+  "properties": {
+    "releaseEntityId": {
+      "description": "The unique id of the releasing entity. In the case of releaseEntityType == USER this property is intentionally not populated since it’s already given by SUBJECT_TYPE and SUBJECT_ID.",
+      "type": "string"
+    },
+    "releaseEntityType": {
+      "description": "The type of entity that conducted the release/disown operation.",
+      "$ref": "AuditEventReleaseEntityType.json"
+    },
+    "serialNumber": {
+      "description": "Serial number of the device, unique to that device.",
+      "type": "string"
+    }
+  }
+}

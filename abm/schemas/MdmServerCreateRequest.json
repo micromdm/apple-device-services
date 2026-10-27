@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MdmServerCreateRequest",
+  "description": "A request to create a new device management service.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/mdmservercreaterequest",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/mdmservercreaterequest.json",
+  "type": "object",
+  "required": [ "data" ],
+  "properties": {
+    "data": {
+      "description": "The resource data for the new device management service.",
+      "$ref": "MdmServerCreateRequest.Data.json"
+    }
+  }
+}

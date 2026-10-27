@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "App.Attributes",
+  "description": "Attributes that describe an app resource.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/app/attributes-data.dictionary",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/app/attributes-data.dictionary.json",
+  "type": "object",
+  "properties": {
+    "appStoreUrl": {
+      "description": "The App Store URL for the app.",
+      "type": "string"
+    },
+    "bundleId": {
+      "description": "The bundle identifier of the app.",
+      "type": "string"
+    },
+    "isCustomApp": {
+      "description": "Indicates whether this is a custom B2B app.",
+      "type": "boolean"
+    },
+    "name": {
+      "description": "The display name of the app.",
+      "type": "string"
+    },
+    "supportedOS": {
+      "description": "The list of operating systems the app supports. See [SupportedOS](https://developer.apple.com/documentation/applebusinessapi/supportedos) for possible values.",
+      "type": "array",
+      "items": {
+        "$ref": "SupportedOS.json"
+      }
+    },
+    "version": {
+      "description": "The current version of the app.",
+      "type": "string"
+    },
+    "websiteUrl": {
+      "description": "The website URL for the app.",
+      "type": "string"
+    }
+  }
+}

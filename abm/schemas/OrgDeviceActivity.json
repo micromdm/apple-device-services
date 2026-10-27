@@ -1,15 +1,16 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "OrgDeviceActivity",
-  "description": "The data structure that represents an organization device activity resource.",
+  "description": "The data structure that represents an organization device activity resource.\n\nIntroduced in Apple Business API 2.6.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdeviceactivity",
-  "x-apple-developer-api-version": "1.1+",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/orgdeviceactivity.json",
   "type": "object",
   "required": [ "id", "type" ],
   "properties": {
     "attributes": {
       "description": "The resource’s attributes.",
-      "$ref": "#/$defs/OrgDeviceActivity.Attributes"
+      "$ref": "OrgDeviceActivity.Attributes.json"
     },
     "id": {
       "description": "The opaque resource ID that uniquely identifies the resource.",
@@ -21,53 +22,7 @@
     },
     "type": {
       "description": "The resource type.",
-      "type": "string"
-    }
-  },
-  "$defs": {
-    "OrgDeviceActivity.Attributes": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "OrgDeviceActivity.Attributes",
-      "description": "Attributes that describe an organization device activity resource.",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdeviceactivity/attributes-data.dictionary",
-      "x-apple-developer-api-version": "1.1+",
-      "type": "object",
-      "properties": {
-        "completedDateTime": {
-          "description": "The date and time of the completion of organization device activity. This is available only when an activity is in a COMPLETED status.",
-          "type": "string",
-          "format": "date-time"
-        },
-        "createdDateTime": {
-          "description": "The date and time of the creation of organization device activity.",
-          "type": "string",
-          "format": "date-time"
-        },
-        "downloadUrl": {
-          "description": "A presigned URL for downloading activity logs in a CSV format. This is available only when an activity is in a COMPLETED status.",
-          "type": "string",
-          "format": "url"
-        },
-        "status": {
-          "description": "The top-level status of an activity. For more details, see the table below. Possible values: COMPLETED, IN_PROGRESS, STOPPED, FAILED",
-          "enum": [ "COMPLETED", "IN_PROGRESS", "STOPPED", "FAILED" ]
-        },
-        "subStatus": {
-          "description": "The low-level status of an activity. For more details, see the table below. Possible values: SUBMITTED,PRE_PROCESSING,PENDING,PROCESSING,POST_PROCESSING, STOPPING,COMPLETED_WITH_SUCCESS,COMPLETED_WITH_ERROR,COMPLETED_WITH_FAILURE,COMPLETED_POST_PROCESSING_FAILED",
-          "enum": [
-            "SUBMITTED",
-            "PRE_PROCESSING",
-            "PENDING",
-            "PROCESSING",
-            "POST_PROCESSING",
-            "STOPPING",
-            "COMPLETED_WITH_SUCCESS",
-            "COMPLETED_WITH_ERROR",
-            "COMPLETED_WITH_FAILURE",
-            "COMPLETED_POST_PROCESSING_FAILED"
-          ]
-        }
-      }
+      "const": "orgDeviceActivities"
     }
   }
 }

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UserStatus",
+  "description": "Strings that represent user statuses.\n\nIntroduced in Apple Business API 2.6.\n\n- Possible Values\n  \n  - NEW: The user is newly created.\n  - RELEASED: The user has been released.\n  - ACTIVE: The user is active.\n  - DEACTIVATED: The user has been deactivated.\n  - LOCKED: The user is locked.\n  - LOCKED_FOR_SHARED_IPAD: The user is locked for Shared iPad.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/userstatus",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/userstatus.json",
+  "enum": [
+    "NEW",
+    "RELEASED",
+    "ACTIVE",
+    "DEACTIVATED",
+    "LOCKED",
+    "LOCKED_FOR_SHARED_IPAD"
+  ]
+}

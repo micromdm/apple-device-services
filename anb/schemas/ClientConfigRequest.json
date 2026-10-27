@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ClientConfigRequest",
+  "description": "The request for the client configuration.\n\nIntroduced in VPP License Management 2.0.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/clientconfigrequest",
+  "x-apple-developer-api-version": "2.0",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/clientconfigrequest.json",
+  "type": "object",
+  "properties": {
+    "mdmInfo": {
+      "description": "This value is returned by the server on all subsequent responses, and MDM uses it to ensure that no other MDM manages the same organization.",
+      "$ref": "MdmInfo.json"
+    },
+    "notificationAuthToken": {
+      "description": "The bearer token that the server provides in the Authorization header of notifications. This is a shared secret between you and the server to verify that incoming notifications are from Apple.",
+      "type": "string"
+    },
+    "notificationTypes": {
+      "description": "The complete set of notification types to which MDM subscribes.",
+      "type": "array",
+      "items": {
+        "enum": [
+          "TEST_NOTIFICATION",
+          "ASSET_MANAGEMENT",
+          "USER_MANAGEMENT",
+          "USER_ASSOCIATED",
+          "ASSET_COUNT",
+          "SUBSCRIPTION_MANAGEMENT",
+          "SUBSCRIPTION_COUNT",
+          "UNLIMITED_ASSET"
+        ]
+      }
+    },
+    "notificationUrl": {
+      "description": "The URL to which subscribed notifications POST. This URL should only include a host and path.",
+      "type": "string"
+    }
+  }
+}

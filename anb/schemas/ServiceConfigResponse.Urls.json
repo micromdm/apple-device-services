@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ServiceConfigResponse.Urls",
+  "description": "The set of current service URLs.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/serviceconfigresponse/urls-data.dictionary",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/serviceconfigresponse/urls-data.dictionary.json",
+  "type": "object",
+  "additionalProperties": {
+    "type": "string"
+  }
+}

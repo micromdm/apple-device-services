@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MdmDevice",
+  "description": "The data structure that represents a device management service enrolled device resource.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/mdmdevice",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/mdmdevice.json",
+  "type": "object",
+  "required": [ "id", "type" ],
+  "properties": {
+    "attributes": {
+      "description": "The resource’s attributes.",
+      "$ref": "MdmDevice.Attributes.json"
+    },
+    "id": {
+      "description": "The opaque resource ID that uniquely identifies the resource.",
+      "type": "string"
+    },
+    "links": {
+      "description": "Navigational links that include the self-link.",
+      "$ref": "ResourceLinks.json"
+    },
+    "relationships": {
+      "description": "Navigational links to related data and included resource types and IDs.",
+      "$ref": "MdmDevice.Relationships.json"
+    },
+    "type": {
+      "description": "The resource type.",
+      "const": "mdmDevices"
+    }
+  }
+}

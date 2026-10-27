@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventSubjectHasIcloudStoragePurchaseRemovedAttributes",
+  "description": "The attributes for a subject has iCloud storage purchase removed audit event.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventsubjecthasicloudstoragepurchaseremovedattributes",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventsubjecthasicloudstoragepurchaseremovedattributes.json",
+  "type": "object",
+  "properties": {
+    "eventDataSubjectHasICloudStoragePurchaseRemoved": {
+      "description": "The event data for this audit event type.",
+      "$ref": "AuditEventSubjectHasICloudStoragePurchaseRemoved.json"
+    }
+  }
+}

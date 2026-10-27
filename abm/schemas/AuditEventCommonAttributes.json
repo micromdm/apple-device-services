@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventCommonAttributes",
+  "description": "The common attributes for all audit events.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventcommonattributes",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventcommonattributes.json",
+  "type": "object",
+  "required": [ "type" ],
+  "properties": {
+    "actorId": {
+      "description": "Unique identifier of the actor.",
+      "type": "string"
+    },
+    "actorName": {
+      "description": "Display name of the actor. Optional, may not be populated for all events.",
+      "type": "string"
+    },
+    "actorType": {
+      "description": "The type of entity that performed the action.",
+      "$ref": "AuditEventActorType.json"
+    },
+    "category": {
+      "description": "The category of the event.",
+      "$ref": "AuditEventCategory.json"
+    },
+    "eventDataPropertyKey": {
+      "description": "Property key for event-specific data.",
+      "type": "string"
+    },
+    "eventDateTime": {
+      "description": "Timestamp when the event occurred (ISO8601 format, UTC).",
+      "type": "string",
+      "format": "date-time"
+    },
+    "groupId": {
+      "description": "Identifier for grouping related events. Optional, may not be populated for all events.",
+      "type": "string"
+    },
+    "outcome": {
+      "description": "The result of the action. Optional, may not be populated for all events.",
+      "$ref": "AuditEventOutcome.json"
+    },
+    "subjectId": {
+      "description": "Unique identifier of the subject.",
+      "type": "string"
+    },
+    "subjectName": {
+      "description": "Display name of the subject. Optional, may not be populated for all events.",
+      "type": "string"
+    },
+    "subjectType": {
+      "description": "The type of entity that was affected.",
+      "$ref": "AuditEventSubjectType.json"
+    },
+    "type": {
+      "description": "The type of event that occurred.",
+      "$ref": "AuditEventType.json"
+    }
+  }
+}

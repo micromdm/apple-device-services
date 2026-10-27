@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MdmMigrationStatus",
+  "description": "Strings that represent the state of a device’s device management service migration.\n\nIntroduced in Apple Business API 2.6.\n\n- Possible Values\n  \n  - REQUESTED: The migration has been requested but hasn’t started.\n  - STARTED: The device has started the device management service migration.\n  - SUCCESS: The device successfully completed the device management service migration.\n  - FAILED: The device failed to complete the device management service migration.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/mdmmigrationstatus",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/mdmmigrationstatus.json",
+  "enum": [ "REQUESTED", "STARTED", "SUCCESS", "FAILED" ]
+}

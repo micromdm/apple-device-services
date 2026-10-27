@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ConfigurationCreateRequest",
+  "description": "A request to create a new Configuration.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/configurationcreaterequest",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/configurationcreaterequest.json",
+  "type": "object",
+  "required": [ "data" ],
+  "properties": {
+    "data": {
+      "description": "The resource data for the new Configuration.",
+      "$ref": "ConfigurationCreateRequest.Data.json"
+    }
+  }
+}

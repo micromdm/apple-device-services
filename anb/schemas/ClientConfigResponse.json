@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ClientConfigResponse",
+  "description": "The response that contains the client configuration.\n\nIntroduced in VPP License Management 2.0.\n\nClient config should be checked regularly in order to verify expected values for the various fields.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/clientconfigresponse",
+  "x-apple-developer-api-version": "2.0",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/clientconfigresponse.json",
+  "type": "object",
+  "properties": {
+    "countryISO2ACode": {
+      "description": "The ISO alpha-2 country code that designates the organization’s location.",
+      "type": "string"
+    },
+    "defaultPlatform": {
+      "description": "The value that the MDM client passes for the platform parameter in the `contentMetadataLookup` request. For more information about how the MDM client queries metadata by using `contentMetadataLookup`, see [Getting app and book information (Legacy)](https://developer.apple.com/documentation/devicemanagement/getting-app-and-book-information-legacy).",
+      "enum": [ "volumestore", "enterprisestore" ]
+    },
+    "locationName": {
+      "description": "The current name of the library.",
+      "type": "string"
+    },
+    "mdmInfo": {
+      "description": "The current information for the provided token.\n\nThe response only includes this field when the MDM client sets a value using the [Client Config](https://developer.apple.com/documentation/devicemanagement/client-config-4szk1) endpoint.",
+      "$ref": "MdmInfo.json"
+    },
+    "notificationAuthToken": {
+      "description": "The current shared secret that the server returns in the Authorization header of notifications.",
+      "type": "string"
+    },
+    "notificationUrl": {
+      "description": "The current URL to post notifications to.",
+      "type": "string"
+    },
+    "subscribedNotificationTypes": {
+      "description": "The set of currently subscribed notification types.",
+      "type": "array",
+      "items": {
+        "enum": [
+          "ASSET_MANAGEMENT",
+          "USER_MANAGEMENT",
+          "USER_ASSOCIATED",
+          "ASSET_COUNT",
+          "SUBSCRIPTION_MANAGEMENT",
+          "SUBSCRIPTION_COUNT",
+          "UNLIMITED_ASSET"
+        ]
+      }
+    },
+    "tokenExpirationDate": {
+      "description": "The token’s expiration date in an ISO-8601 format.\n\nNote: The server shows all dates and times in UTC.",
+      "type": "string"
+    },
+    "uId": {
+      "description": "The unique library identifier. When querying records using multiple tokens that may share libraries, use the `uId` field to filter duplicates and avoid double-counting records when different content managers upload duplicate tokens.",
+      "type": "string"
+    },
+    "websiteURL": {
+      "description": "The current website URL for the specified platform.",
+      "enum": [ "https://school.apple.com", "https://business.apple.com" ]
+    }
+  }
+}

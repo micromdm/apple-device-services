@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PagingInformation.Paging",
+  "description": "Paging details, such as the total number of resources and the per-page limit.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/paginginformation/paging-data.dictionary",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/paginginformation/paging-data.dictionary.json",
+  "type": "object",
+  "required": [ "limit" ],
+  "properties": {
+    "limit": {
+      "description": "The maximum number of resources to return per page.",
+      "type": "integer"
+    },
+    "nextCursor": {
+      "description": "The cursor to use for the next request, in case of pagination.",
+      "type": "string"
+    },
+    "total": {
+      "description": "The total number of resources to return.",
+      "type": "integer"
+    }
+  }
+}

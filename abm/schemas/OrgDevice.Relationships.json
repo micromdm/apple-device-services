@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OrgDevice.Relationships",
+  "description": "The relationships you include in the request, and those that you can operate on.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdevice/relationships-data.dictionary",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/orgdevice/relationships-data.dictionary.json",
+  "type": "object",
+  "properties": {
+    "activationLockStatus": {
+      "description": "The relationship representing a device and its Activation Lock status.",
+      "$ref": "OrgDevice.Relationships.ActivationLockStatus.json"
+    },
+    "appleCareCoverage": {
+      "description": "The relationship representing a device and its AppleCare coverage.",
+      "$ref": "OrgDevice.Relationships.AppleCareCoverage.json"
+    },
+    "assignedServer": {
+      "description": "The relationship representing a device and its assigned device management service.",
+      "$ref": "OrgDevice.Relationships.AssignedServer.json"
+    }
+  }
+}

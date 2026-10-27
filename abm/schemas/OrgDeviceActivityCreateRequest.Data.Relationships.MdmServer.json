@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OrgDeviceActivityCreateRequest.Data.Relationships.MdmServer",
+  "description": "The data that describe the relationship between the resources.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdeviceactivitycreaterequest/data-data.dictionary/relationships-data.dictionary/mdmserver-data.dictionary",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/orgdeviceactivitycreaterequest/data-data.dictionary/relationships-data.dictionary/mdmserver-data.dictionary.json",
+  "type": "object",
+  "required": [ "data" ],
+  "properties": {
+    "data": {
+      "$ref": "OrgDeviceActivityCreateRequest.Data.Relationships.MdmServer.Data.json"
+    }
+  }
+}

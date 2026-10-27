@@ -1,8 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "ResponseErrorInfo",
-  "description": "Information about the error.",
+  "description": "Information about the error.\n\nIntroduced in VPP License Management 2.0.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/responseerrorinfo",
+  "x-apple-developer-api-version": "2.0",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/responseerrorinfo.json",
   "type": "object",
   "properties": {
     "assets": {

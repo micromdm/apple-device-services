@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Assignment",
+  "description": "The asset assignment for a user or device.\n\nIntroduced in VPP License Management 2.0.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/assignment",
+  "x-apple-developer-api-version": "2.0",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/assignment.json",
+  "type": "object",
+  "properties": {
+    "adamId": {
+      "description": "The unique identifier for a product in the store.",
+      "type": "string"
+    },
+    "clientUserId": {
+      "description": "The unique identifier for an active user in your organization.",
+      "type": "string"
+    },
+    "idHash": {
+      "type": "string"
+    },
+    "pricingParam": {
+      "description": "The quality of a product in the store.",
+      "enum": [ "STDQ", "PLUS" ]
+    },
+    "serialNumber": {
+      "description": "The unique identifier for a device in your organization.",
+      "type": "string"
+    },
+    "userStatus": {
+      "enum": [ "Registered", "Associated", "Retired", "Deleted" ]
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventConfigSettingsUpdatedAttributes",
+  "description": "The attributes for a configuration settings updated audit event.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventconfigsettingsupdatedattributes",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventconfigsettingsupdatedattributes.json",
+  "type": "object",
+  "properties": {
+    "eventDataConfigSettingsUpdated": {
+      "description": "The event data for this audit event type.",
+      "$ref": "AuditEventConfigSettingsUpdated.json"
+    }
+  }
+}

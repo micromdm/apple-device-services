@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ResponseUser",
+  "description": "The user in the organization.\n\nIntroduced in VPP License Management 2.0.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/responseuser",
+  "x-apple-developer-api-version": "2.0",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/responseuser.json",
+  "type": "object",
+  "properties": {
+    "clientUserId": {
+      "description": "The unique identifier for a user in your organization.",
+      "type": "string"
+    },
+    "email": {
+      "description": "The user’s email address.",
+      "type": "string"
+    },
+    "idHash": {
+      "description": "The hash of the user’s unique store identifier. The `idHash` field is only present when the user has an associated Apple Account.",
+      "type": "string"
+    },
+    "inviteCode": {
+      "description": "The invitation code that associates an Apple Account to a user.",
+      "type": "string"
+    },
+    "status": {
+      "description": "The current status of the user in the organization.",
+      "enum": [ "Registered", "Associated", "Retired", "Deleted" ]
+    }
+  }
+}

@@ -1,8 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Asset",
-  "description": "A product in the store.",
+  "description": "A product in the store.\n\nIntroduced in VPP License Management 2.0.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/asset",
+  "x-apple-developer-api-version": "2.0",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/asset.json",
   "type": "object",
   "properties": {
     "adamId": {

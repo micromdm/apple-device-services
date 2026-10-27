@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MdmServerResponse",
+  "description": "A response that contains a single device management service resource.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/mdmserverresponse",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/mdmserverresponse.json",
+  "type": "object",
+  "required": [ "data", "links" ],
+  "properties": {
+    "data": {
+      "description": "The resource data.",
+      "$ref": "MdmServer.json"
+    },
+    "included": {
+      "type": "array",
+      "items": {
+        "$ref": "OrgDevice.json"
+      }
+    },
+    "links": {
+      "description": "Navigational links that include the self-link.",
+      "$ref": "DocumentLinks.json"
+    }
+  }
+}

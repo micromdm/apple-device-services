@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RequestUser",
+  "description": "The requested user in the organization.\n\nIntroduced in VPP License Management 2.0.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/requestuser",
+  "x-apple-developer-api-version": "2.0",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/requestuser.json",
+  "type": "object",
+  "required": [ "clientUserId" ],
+  "properties": {
+    "clientUserId": {
+      "description": "The unique identifier for a user in your organization.",
+      "type": "string"
+    },
+    "email": {
+      "description": "The email address for the user.",
+      "type": "string"
+    },
+    "managedAppleId": {
+      "description": "The Managed Apple Account for the user.",
+      "type": "string"
+    }
+  }
+}

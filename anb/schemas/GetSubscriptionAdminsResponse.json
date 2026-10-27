@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GetSubscriptionAdminsResponse",
+  "description": "The response that contains the requested subscription administrators.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/getsubscriptionadminsresponse",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/getsubscriptionadminsresponse.json",
+  "type": "object",
+  "properties": {
+    "admins": {
+      "description": "The set of requested subscription administrators.",
+      "type": "array",
+      "items": {
+        "$ref": "ResponseSubscriptionAdmin.json"
+      }
+    },
+    "nextCursor": {
+      "description": "The cursor for fetching the next page of results.",
+      "type": "string"
+    },
+    "tokenExpirationDate": {
+      "description": "The token expiration date in an ISO-8601 format.\n\nNote: The server shows all dates and times in UTC.",
+      "type": "string"
+    },
+    "uId": {
+      "description": "The unique library identifier. When querying records using multiple tokens that may share libraries, use the `uId` field to filter duplicates and avoid double-counting records when different content managers upload duplicate tokens.",
+      "type": "string"
+    },
+    "versionId": {
+      "description": "The current version identifier.",
+      "type": "string"
+    }
+  }
+}

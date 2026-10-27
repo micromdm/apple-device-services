@@ -1,0 +1,7 @@
+[
+  {
+    "op": "add",
+    "path": "/properties/tokenExpirationDate/format",
+    "value": "date-time"
+  }
+]

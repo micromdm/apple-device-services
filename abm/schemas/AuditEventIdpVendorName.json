@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventIdpVendorName",
+  "description": "Strings that represent the identity provider vendor.\n\nIntroduced in Apple Business API 2.6.\n\n- Possible Values\n  \n  - GOOGLE: Google as the identity provider.\n  - MICROSOFT: Microsoft as the identity provider.\n  - MICROSOFT_OIDC: Microsoft using the OpenID Connect protocol as the identity provider.\n  - GENERIC_IDP: A generic (custom) identity provider.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventidpvendorname",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventidpvendorname.json",
+  "enum": [ "GOOGLE", "MICROSOFT", "MICROSOFT_OIDC", "GENERIC_IDP" ]
+}

@@ -1,0 +1,7 @@
+[
+  {
+    "op": "add",
+    "path": "/properties/errorNumber/$comment",
+    "value": "Possibly an OpenAPI `int32` type."
+  }
+]

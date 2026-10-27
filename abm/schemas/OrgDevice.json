@@ -1,15 +1,16 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "OrgDevice",
-  "description": "The data structure that represents an organization device resource.",
+  "description": "The data structure that represents an organization device resource.\n\nIntroduced in Apple Business API 2.6.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdevice",
-  "x-apple-developer-api-version": "1.1+",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/orgdevice.json",
   "type": "object",
   "required": [ "id", "type" ],
   "properties": {
     "attributes": {
       "description": "The resource’s attributes.",
-      "$ref": "#/$defs/OrgDevice.Attributes"
+      "$ref": "OrgDevice.Attributes.json"
     },
     "id": {
       "description": "The opaque resource ID that uniquely identifies the resource.",
@@ -21,131 +22,11 @@
     },
     "relationships": {
       "description": "Navigational links to related data and included resource types and IDs.",
-      "$ref": "#/$defs/OrgDevice.Relationships"
+      "$ref": "OrgDevice.Relationships.json"
     },
     "type": {
       "description": "The resource type.",
-      "default": "orgDevices",
-      "type": "string"
-    }
-  },
-  "$defs": {
-    "OrgDevice.Attributes": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "OrgDevice.Attributes",
-      "description": "Attributes that describe an organization device resource.",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdevice/attributes-data.dictionary",
-      "x-apple-developer-api-version": "1.1+",
-      "type": "object",
-      "properties": {
-        "addedToOrgDateTime": {
-          "description": "The date and time of adding the device to an organization.",
-          "type": "string",
-          "format": "date-time"
-        },
-        "bluetoothMacAddress": {
-          "description": "The device’s Bluetooth MAC address.",
-          "type": "string"
-        },
-        "color": {
-          "description": "The color of the device.",
-          "type": "string"
-        },
-        "deviceCapacity": {
-          "description": "The capacity of the device.",
-          "type": "string"
-        },
-        "deviceModel": {
-          "description": "The model name.",
-          "type": "string"
-        },
-        "eid": {
-          "description": "The device’s EID (if available).",
-          "type": "string"
-        },
-        "imei": {
-          "description": "The device’s IMEI (if available).",
-          "type": "string"
-        },
-        "meid": {
-          "description": "The device’s MEID (if available).",
-          "type": "string"
-        },
-        "orderDateTime": {
-          "description": "The date and time of placing the device’s order.",
-          "type": "string",
-          "format": "date-time"
-        },
-        "orderNumber": {
-          "description": "The order number of the device.",
-          "type": "string"
-        },
-        "partNumber": {
-          "description": "The part number of the device.",
-          "type": "string"
-        },
-        "productFamily": {
-          "description": "The device’s Apple product family: iPhone, iPad,Mac, AppleTV, Watch, or Vision",
-          "enum": [ "iPhone", "iPad", "AppleTV", "Mac", "Watch", "Vision" ]
-        },
-        "productType": {
-          "description": "The device’s product type: (examples: iPhone14,3, iPad13,4, MacBookPro14,2)",
-          "examples": [ "iPhone14,3", "iPad13,4", "MacBookPro14,2" ],
-          "type": "string"
-        },
-        "purchaseSourceId": {
-          "description": "The unique ID of the purchase source type: Apple Customer Number or Reseller Number",
-          "type": "string"
-        },
-        "purchaseSourceType": {
-          "description": "The device’s purchase source type: APPLE, RESELLER, or MANUALLY_ADDED",
-          "enum": [ "APPLE", "RESELLER", "MANUALLY_ADDED" ]
-        },
-        "serialNumber": {
-          "description": "The device’s serial number.",
-          "type": "string"
-        },
-        "status": {
-          "description": "The devices status: ASSIGNED or UNASSIGNED. If ASSIGNED, use a separate API to get the information of the assigned server.",
-          "enum": [ "ASSIGNED", "UNASSIGNED" ]
-        },
-        "updatedDateTime": {
-          "description": "The date and time of the most-recent update for the device.",
-          "type": "string",
-          "format": "date-time"
-        },
-        "wifiMacAddress": {
-          "description": "The device’s Wi-Fi MAC address.",
-          "type": "string"
-        }
-      }
-    },
-    "OrgDevice.Relationships": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "OrgDevice.Relationships",
-      "description": "The relationships you include in the request, and those that you can operate on.",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdevice/relationships-data.dictionary",
-      "x-apple-developer-api-version": "1.1+",
-      "type": "object",
-      "properties": {
-        "assignedServer": {
-          "description": "The relationship representing a device and its assigned device management service.",
-          "$ref": "#/$defs/OrgDevice.Relationships.AssignedServer"
-        }
-      }
-    },
-    "OrgDevice.Relationships.AssignedServer": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "OrgDevice.Relationships.AssignedServer",
-      "description": "The links that describe the relationship between the resources.",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdevice/relationships-data.dictionary/assignedserver-data.dictionary",
-      "x-apple-developer-api-version": "1.1+",
-      "type": "object",
-      "properties": {
-        "links": {
-          "$ref": "RelationshipLinks.json"
-        }
-      }
+      "const": "orgDevices"
     }
   }
 }

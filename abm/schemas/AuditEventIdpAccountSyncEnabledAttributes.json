@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventIdpAccountSyncEnabledAttributes",
+  "description": "The attributes for an identity provider account sync enabled audit event.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventidpaccountsyncenabledattributes",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventidpaccountsyncenabledattributes.json",
+  "type": "object",
+  "properties": {
+    "eventDataIdpAccountSyncEnabled": {
+      "description": "The event data for this audit event type.",
+      "$ref": "AuditEventIdpAccountSyncEnabled.json"
+    }
+  }
+}

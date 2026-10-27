@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventDomainAddedAttributes",
+  "description": "The attributes for a domain added audit event.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventdomainaddedattributes",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventdomainaddedattributes.json",
+  "type": "object",
+  "properties": {
+    "eventDataDomainAdded": {
+      "description": "The event data for this audit event type.",
+      "$ref": "AuditEventDomainAdded.json"
+    }
+  }
+}

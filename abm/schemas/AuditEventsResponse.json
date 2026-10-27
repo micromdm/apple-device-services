@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventsResponse",
+  "description": "The response containing a list of audit events.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventsresponse",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventsresponse.json",
+  "type": "object",
+  "required": [ "data", "links" ],
+  "properties": {
+    "data": {
+      "description": "The list of audit event resources.",
+      "type": "array",
+      "items": {
+        "$ref": "AuditEvent.json"
+      }
+    },
+    "links": {
+      "description": "Navigational links that include the self-link.",
+      "$ref": "PagedDocumentLinks.json"
+    },
+    "meta": {
+      "description": "Paging information.",
+      "$ref": "PagingInformation.json"
+    }
+  }
+}

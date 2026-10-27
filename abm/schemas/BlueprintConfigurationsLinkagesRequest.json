@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BlueprintConfigurationsLinkagesRequest",
+  "description": "A request to get a list of Configuration resource linkages for a Blueprint.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/blueprintconfigurationslinkagesrequest",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/blueprintconfigurationslinkagesrequest.json",
+  "type": "object",
+  "required": [ "data" ],
+  "properties": {
+    "data": {
+      "description": "The resource data with updated attributes.",
+      "type": "array",
+      "items": {
+        "$ref": "BlueprintConfigurationsLinkagesRequest.Data.json"
+      }
+    }
+  }
+}

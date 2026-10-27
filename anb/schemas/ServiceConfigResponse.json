@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ServiceConfigResponse",
+  "description": "The service configuration for the Asset Management API.\n\nThe values in `limits` and `urls` are dynamic and can change without notice. Sync them every 5 minutes rather than hard-coding them into your device management service.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/serviceconfigresponse",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/serviceconfigresponse.json",
+  "type": "object",
+  "properties": {
+    "errorCodes": {
+      "description": "The set of possible error numbers and their human-readable explanations.",
+      "type": "array",
+      "items": {
+        "$ref": "ResponseErrorCode.json"
+      }
+    },
+    "limits": {
+      "description": "The set of current request limits.",
+      "$ref": "ServiceConfigResponse.Limits.json"
+    },
+    "notificationTypes": {
+      "description": "The set of supported notification types.",
+      "type": "array",
+      "items": {
+        "enum": [
+          "ASSET_COUNT",
+          "ASSET_MANAGEMENT",
+          "USER_MANAGEMENT",
+          "USER_ASSOCIATED",
+          "SUBSCRIPTION_MANAGEMENT",
+          "SUBSCRIPTION_COUNT",
+          "UNLIMITED_ASSET"
+        ]
+      }
+    },
+    "urls": {
+      "description": "The set of current service URLs.",
+      "$ref": "ServiceConfigResponse.Urls.json"
+    }
+  }
+}

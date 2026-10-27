@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Package",
+  "description": "The data structure that represents a package resource.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/package",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/package.json",
+  "type": "object",
+  "required": [ "id", "type" ],
+  "properties": {
+    "attributes": {
+      "description": "The resource’s attributes.",
+      "$ref": "Package.Attributes.json"
+    },
+    "id": {
+      "description": "The opaque resource ID that uniquely identifies the resource.",
+      "type": "string"
+    },
+    "links": {
+      "description": "Navigational links that include the self-link.",
+      "$ref": "ResourceLinks.json"
+    },
+    "type": {
+      "description": "The resource type.",
+      "const": "packages"
+    }
+  }
+}

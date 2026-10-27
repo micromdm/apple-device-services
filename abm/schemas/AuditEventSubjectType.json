@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventSubjectType",
+  "description": "Strings that represent the type of entity that was affected by an action.\n\nIntroduced in Apple Business API 2.6.\n\n- Possible Values\n  \n  - ORGANIZATION: Organization entity.\n  - USER: User entity.\n  - LOCATION: Location entity.\n  - DEVICE: Device entity.\n  - COLLECTION: Collection entity.\n  - DEVICE_MANAGEMENT_SETTING: Device management configuration.\n  - SUBSCRIPTION: Subscription entity.\n  - DOMAIN: Domain entity.\n  - API_USER: API account entity.\n  - ROLE: Role entity.\n  - IDP: Identity provider entity.\n  - INVITATION: Invitation entity.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventsubjecttype",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventsubjecttype.json",
+  "enum": [
+    "ORGANIZATION",
+    "USER",
+    "LOCATION",
+    "DEVICE",
+    "COLLECTION",
+    "DEVICE_MANAGEMENT_SETTING",
+    "SUBSCRIPTION",
+    "DOMAIN",
+    "API_USER"
+  ]
+}

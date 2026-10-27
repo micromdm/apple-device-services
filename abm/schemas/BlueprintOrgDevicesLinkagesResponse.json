@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BlueprintOrgDevicesLinkagesResponse",
+  "description": "A response that contains a list of device resource linkages for a Blueprint.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/blueprintorgdeviceslinkagesresponse",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/blueprintorgdeviceslinkagesresponse.json",
+  "type": "object",
+  "required": [ "data", "links" ],
+  "properties": {
+    "data": {
+      "description": "The resource linkage data containing type and id for each related device.",
+      "type": "array",
+      "items": {
+        "$ref": "BlueprintOrgDevicesLinkagesResponse.Data.json"
+      }
+    },
+    "links": {
+      "description": "Navigational links that include the self-link.",
+      "$ref": "PagedDocumentLinks.json"
+    },
+    "meta": {
+      "description": "Paging information.",
+      "$ref": "PagingInformation.json"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BlueprintPackagesLinkagesRequest",
+  "description": "A request to get a list of package resource linkages for a Blueprint.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/blueprintpackageslinkagesrequest",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/blueprintpackageslinkagesrequest.json",
+  "type": "object",
+  "required": [ "data" ],
+  "properties": {
+    "data": {
+      "description": "The resource data with updated attributes.",
+      "type": "array",
+      "items": {
+        "$ref": "BlueprintPackagesLinkagesRequest.Data.json"
+      }
+    }
+  }
+}

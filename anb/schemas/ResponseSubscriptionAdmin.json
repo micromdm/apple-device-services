@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ResponseSubscriptionAdmin",
+  "description": "An administrator for a subscription.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/responsesubscriptionadmin",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/responsesubscriptionadmin.json",
+  "type": "object",
+  "properties": {
+    "adamId": {
+      "description": "The Adam ID for the subscription that the user administers.",
+      "type": "integer"
+    },
+    "clientUserId": {
+      "description": "The client user identifier for the administrator.",
+      "type": "string"
+    },
+    "idHash": {
+      "description": "The hash of the user’s identifier.",
+      "type": "string"
+    },
+    "userStatus": {
+      "description": "The current association state of the user. The server includes this key only when the request sets the `includeUserState` query parameter to `true`.",
+      "type": "string"
+    }
+  }
+}

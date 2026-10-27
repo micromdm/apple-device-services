@@ -1,9 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "RelationshipLinks",
-  "description": "Links related to the response document, including self-links.",
+  "description": "Links related to the response document, including self-links.\n\nIntroduced in Apple Business API 2.6.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/relationshiplinks",
-  "x-apple-developer-api-version": "1.1+",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/relationshiplinks.json",
   "type": "object",
   "properties": {
     "include": {
@@ -11,12 +12,12 @@
       "format": "uri-reference"
     },
     "related": {
-      "description": "The link to the related documents.",
+      "description": "The link to the related documents (if applicable).",
       "type": "string",
       "format": "uri-reference"
     },
     "self": {
-      "description": "The link that produces the current document.",
+      "description": "The link that produces the current document (if applicable).",
       "type": "string",
       "format": "uri-reference"
     }

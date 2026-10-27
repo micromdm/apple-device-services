@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SubscriptionCountsBreakdown",
+  "description": "The breakdown of subscription counts by renewing and expiring status.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/subscriptioncountsbreakdown",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/subscriptioncountsbreakdown.json",
+  "type": "object",
+  "properties": {
+    "expiring": {
+      "description": "The count of expiring subscriptions.",
+      "type": "integer"
+    },
+    "renewing": {
+      "description": "The count of renewing subscriptions.",
+      "type": "integer"
+    }
+  }
+}

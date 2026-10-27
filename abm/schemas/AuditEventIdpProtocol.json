@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventIdpProtocol",
+  "description": "Strings that represent the federation protocol used by an identity provider.\n\nIntroduced in Apple Business API 2.6.\n\n- Possible Values\n  \n  - OIDC: OpenID Connect protocol.\n  - SAML: Security Assertion Markup Language protocol.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventidpprotocol",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventidpprotocol.json",
+  "enum": [ "OIDC", "SAML" ]
+}

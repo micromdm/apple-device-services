@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SubscriptionCounts",
+  "description": "The subscription assignment counts broken down by assigned and available.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/subscriptioncounts",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/subscriptioncounts.json",
+  "type": "object",
+  "properties": {
+    "assigned": {
+      "description": "The count of assigned subscription seats, broken down by renewal state.",
+      "$ref": "SubscriptionCountsBreakdown.json"
+    },
+    "available": {
+      "description": "The count of available subscription seats, broken down by renewal state.",
+      "$ref": "SubscriptionCountsBreakdown.json"
+    },
+    "total": {
+      "$ref": "SubscriptionCountsBreakdown.json"
+    }
+  }
+}

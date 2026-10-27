@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OrgDeviceActivityCreateRequest.Data.Attributes",
+  "description": "Attributes with values that you’re changing as part of the create request.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdeviceactivitycreaterequest/data-data.dictionary/attributes-data.dictionary",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/orgdeviceactivitycreaterequest/data-data.dictionary/attributes-data.dictionary.json",
+  "type": "object",
+  "required": [ "activityType" ],
+  "properties": {
+    "activityType": {
+      "description": "The type of activity you want to create.",
+      "$ref": "OrgDeviceActivityType.json"
+    },
+    "activityTypeMetadata": {
+      "$ref": "ActivityTypeMetadata.json"
+    }
+  }
+}

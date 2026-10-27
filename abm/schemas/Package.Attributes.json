@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Package.Attributes",
+  "description": "Attributes that describe a package resource.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/package/attributes-data.dictionary",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/package/attributes-data.dictionary.json",
+  "type": "object",
+  "properties": {
+    "bundleIds": {
+      "description": "The list of bundle identifiers contained in the package.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "createdDateTime": {
+      "description": "The date and time that the package was created.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "description": {
+      "description": "A short description of the package.",
+      "type": "string"
+    },
+    "hash": {
+      "description": "The hex string hash of the package file.",
+      "type": "string"
+    },
+    "name": {
+      "description": "The display name of the package.",
+      "type": "string"
+    },
+    "updatedDateTime": {
+      "description": "The date and time that the package was last updated.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "url": {
+      "description": "The HTTPS URL to download the package.",
+      "type": "string"
+    },
+    "version": {
+      "description": "The version string of the package.",
+      "type": "string"
+    }
+  }
+}

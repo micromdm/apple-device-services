@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MdmServerUpdateRequest.Data",
+  "description": "Introduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/mdmserverupdaterequest/data-data.dictionary",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/mdmserverupdaterequest/data-data.dictionary.json",
+  "type": "object",
+  "required": [ "id", "type" ],
+  "properties": {
+    "attributes": {
+      "$ref": "MdmServerUpdateRequest.Data.Attributes.json"
+    },
+    "id": {
+      "type": "string"
+    },
+    "type": {
+      "const": "mdmServers"
+    }
+  }
+}

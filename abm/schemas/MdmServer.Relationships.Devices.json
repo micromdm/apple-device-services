@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MdmServer.Relationships.Devices",
+  "description": "The data and links that describe the relationship between the resources.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/mdmserver/relationships-data.dictionary/devices-data.dictionary",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/mdmserver/relationships-data.dictionary/devices-data.dictionary.json",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "MdmServer.Relationships.Devices.Data.json"
+      }
+    },
+    "links": {
+      "$ref": "RelationshipLinks.json"
+    },
+    "meta": {
+      "$ref": "PagingInformation.json"
+    }
+  }
+}

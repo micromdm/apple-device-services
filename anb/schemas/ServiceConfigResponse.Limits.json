@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ServiceConfigResponse.Limits",
+  "description": "The set of current request limits.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/serviceconfigresponse/limits-data.dictionary",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/serviceconfigresponse/limits-data.dictionary.json",
+  "type": "object",
+  "additionalProperties": {
+    "type": "integer"
+  }
+}

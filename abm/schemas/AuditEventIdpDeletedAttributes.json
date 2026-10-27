@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventIdpDeletedAttributes",
+  "description": "The attributes for an identity provider deleted audit event.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventidpdeletedattributes",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventidpdeletedattributes.json",
+  "type": "object",
+  "properties": {
+    "eventDataIdpDeleted": {
+      "description": "The event data for this audit event type.",
+      "$ref": "AuditEventIdpDeleted.json"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ActivationLockType",
+  "description": "Strings that represent the type of Activation Lock on a device.\n\nIntroduced in Apple Business API 2.6.\n\n- Possible Values\n  \n  - MDM: The device is Activation Locked by its device management service.\n  - USER: The device is Activation Locked to a personal Apple Account.\n  - NONE: The device isn’t Activation Locked.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/activationlocktype",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/activationlocktype.json",
+  "enum": [ "MDM", "USER", "NONE" ]
+}

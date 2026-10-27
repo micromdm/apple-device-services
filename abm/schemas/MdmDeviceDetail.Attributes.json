@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MdmDeviceDetail.Attributes",
+  "description": "The attributes for a device management service enrolled device detail resource.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/mdmdevicedetail/attributes-data.dictionary",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/mdmdevicedetail/attributes-data.dictionary.json",
+  "type": "object",
+  "properties": {
+    "bluetoothMacAddress": {
+      "description": "The Bluetooth MAC address of the device.",
+      "type": "string"
+    },
+    "deviceEraseStatus": {
+      "description": "The erase status of the device.",
+      "$ref": "DeviceEraseStatus.json"
+    },
+    "deviceLockStatus": {
+      "description": "The lock status of the device.",
+      "$ref": "DeviceLockStatus.json"
+    },
+    "deviceModel": {
+      "description": "The model of the device.",
+      "type": "string"
+    },
+    "deviceName": {
+      "description": "The name of the device.",
+      "type": "string"
+    },
+    "ethernetMacAddress": {
+      "description": "The Ethernet MAC address of the device.",
+      "type": "string"
+    },
+    "imei": {
+      "description": "The IMEI numbers of the device.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "isFileVaultEnabled": {
+      "description": "A Boolean value indicating whether FileVault is enabled on the device.",
+      "type": "boolean"
+    },
+    "isFirewallEnabled": {
+      "description": "A Boolean value indicating whether the firewall is enabled on the device.",
+      "type": "boolean"
+    },
+    "lastCheckInDateTime": {
+      "description": "The date and time the device last checked in.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "lostModeStatus": {
+      "description": "The lost mode status of the device.",
+      "$ref": "LostModeStatus.json"
+    },
+    "meid": {
+      "description": "The Mobile Equipment Identifier numbers of the device.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "osVersion": {
+      "description": "The operating system version of the device.",
+      "type": "string"
+    },
+    "platform": {
+      "description": "The platform of the device.",
+      "type": "string"
+    },
+    "serialNumber": {
+      "description": "The serial number of the device.",
+      "type": "string"
+    },
+    "storageFreeCapacity": {
+      "description": "The free storage capacity of the device, in bytes.",
+      "type": "integer"
+    },
+    "storageTotalCapacity": {
+      "description": "The total storage capacity of the device, in bytes.",
+      "type": "integer"
+    },
+    "wifiMacAddress": {
+      "description": "The Wi-Fi MAC address of the device.",
+      "type": "string"
+    }
+  }
+}

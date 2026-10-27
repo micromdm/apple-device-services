@@ -1,11 +1,16 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "OrgDeviceActivityType",
-  "description": "Strings that represent organization device activities.",
-  "$comment": "The enum should be specified here (without the x- prefix) but go-jsonschema seems to have a problem generating when no type is specified and there is an enum at the top level.",
-  "x-apple-developer-api-discussion": "- Possible Values\n  - ASSIGN_DEVICES:\n  - UNASSIGN_DEVICES:",
+  "description": "Strings that represent organization device activities.\n\nIntroduced in Apple Business API 2.6.\n\n- Possible Values\n  \n  - ASSIGN_DEVICES: Assign devices to a device management service\n  - UNASSIGN_DEVICES: Unassign devices from a device management service\n  - ASSIGN_DEVICES_WITH_MDM_MIGRATION_DEADLINE: Assign devices to a device management service and schedule a device management service migration by the given deadline.\n  - UPDATE_MDM_MIGRATION_DEADLINE: Update the deadline for an in-progress device management service migration.\n  - CANCEL_MDM_MIGRATION: Cancel an in-progress device management service migration.\n  - RELEASE_DEVICES: Release devices from an organization",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdeviceactivitytype",
-  "x-apple-developer-api-version": "1.1+",
-  "x-enum": [ "ASSIGN_DEVICES", "UNASSIGN_DEVICES" ],
-  "type": "string"
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/orgdeviceactivitytype.json",
+  "enum": [
+    "ASSIGN_DEVICES",
+    "UNASSIGN_DEVICES",
+    "ASSIGN_DEVICES_WITH_MDM_MIGRATION_DEADLINE",
+    "UPDATE_MDM_MIGRATION_DEADLINE",
+    "CANCEL_MDM_MIGRATION",
+    "RELEASE_DEVICES"
+  ]
 }

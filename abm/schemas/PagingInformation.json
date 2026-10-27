@@ -1,40 +1,16 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "PagingInformation",
-  "description": "Paging information for data responses.",
+  "description": "Paging information for data responses.\n\nIntroduced in Apple Business API 2.6.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/paginginformation",
-  "x-apple-developer-api-version": "1.1+",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/paginginformation.json",
   "type": "object",
   "required": [ "paging" ],
   "properties": {
     "paging": {
       "description": "The paging information details.",
-      "$ref": "#/$defs/PagingInformation.Paging"
-    }
-  },
-  "$defs": {
-    "PagingInformation.Paging": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "PagingInformation.Paging",
-      "description": "Paging details, such as the total number of resources and the per-page limit.",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/paginginformation/paging-data.dictionary",
-      "x-apple-developer-api-version": "1.1+",
-      "type": "object",
-      "required": [ "limit" ],
-      "properties": {
-        "limit": {
-          "description": "The maximum number of resources to return per page.",
-          "type": "integer"
-        },
-        "nextCursor": {
-          "description": "The cursor to use for the next request, in case of pagination.",
-          "type": "string"
-        },
-        "total": {
-          "description": "The total number of resources to return.",
-          "type": "integer"
-        }
-      }
+      "$ref": "PagingInformation.Paging.json"
     }
   }
 }

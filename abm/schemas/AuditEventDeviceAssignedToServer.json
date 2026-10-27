@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventDeviceAssignedToServer",
+  "description": "The data structure that represents the event data for a device assigned to server audit event.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventdeviceassignedtoserver",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventdeviceassignedtoserver.json",
+  "type": "object",
+  "properties": {
+    "serialNumber": {
+      "description": "Serial number of the device, unique to that device.",
+      "type": "string"
+    },
+    "targetServerName": {
+      "description": "The name of the device management service the device was assigned to.",
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MdmServerUpdateRequest.Data.Attributes",
+  "description": "Introduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/mdmserverupdaterequest/data-data.dictionary/attributes-data.dictionary",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/mdmserverupdaterequest/data-data.dictionary/attributes-data.dictionary.json",
+  "type": "object",
+  "properties": {
+    "defaultProductFamilies": {
+      "type": "array",
+      "items": {
+        "$ref": "MdmServerProductFamily.json"
+      }
+    },
+    "enableMdmDisownFlag": {
+      "type": "boolean"
+    },
+    "serverCertificate": {
+      "$ref": "MdmServerCertificate.json"
+    },
+    "serverName": {
+      "type": "string"
+    }
+  }
+}

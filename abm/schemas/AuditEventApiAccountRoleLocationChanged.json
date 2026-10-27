@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventApiAccountRoleLocationChanged",
+  "description": "The data structure that represents the event data for an API account role location changed audit event.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventapiaccountrolelocationchanged",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventapiaccountrolelocationchanged.json",
+  "type": "object",
+  "properties": {
+    "apiAccountRoleLocationList": {
+      "description": "The list of role and location assignments for the API account.",
+      "type": "array",
+      "items": {
+        "$ref": "AuditEventAccountRoleLocation.json"
+      }
+    }
+  }
+}

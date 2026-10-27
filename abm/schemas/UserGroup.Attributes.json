@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UserGroup.Attributes",
+  "description": "Attributes that describe a user group resource.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/usergroup/attributes-data.dictionary",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/usergroup/attributes-data.dictionary.json",
+  "type": "object",
+  "properties": {
+    "createdDateTime": {
+      "description": "The date and time the user group was created.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "name": {
+      "description": "The name of the user group.",
+      "type": "string"
+    },
+    "ouId": {
+      "description": "The identifier of the organizational unit the group belongs to.",
+      "type": "string"
+    },
+    "status": {
+      "description": "The status of the group. See [UserGroupStatus](https://developer.apple.com/documentation/applebusinessapi/usergroupstatus) for possible values.",
+      "$ref": "UserGroupStatus.json"
+    },
+    "totalMemberCount": {
+      "description": "The total number of members in the group.",
+      "type": "integer"
+    },
+    "type": {
+      "description": "The type of group. See [UserGroupType](https://developer.apple.com/documentation/applebusinessapi/usergrouptype) for possible values.",
+      "$ref": "UserGroupType.json"
+    },
+    "updatedDateTime": {
+      "description": "The date and time the user group was last modified.",
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

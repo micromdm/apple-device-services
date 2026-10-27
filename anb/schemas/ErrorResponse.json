@@ -1,8 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "ErrorResponse",
-  "description": "The response that contains the error that occurs.",
+  "description": "The response that contains the error that occurs.\n\nIntroduced in VPP License Management 2.0.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/errorresponse",
+  "x-apple-developer-api-version": "2.0",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/errorresponse.json",
   "type": "object",
   "properties": {
     "errorInfo": {
@@ -15,7 +17,7 @@
     },
     "errorNumber": {
       "description": "The error number that represents the failure.",
-      "x-type": "int32",
+      "$comment": "Possibly an OpenAPI `int32` type.",
       "type": "integer"
     }
   }

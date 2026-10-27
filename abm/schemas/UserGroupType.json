@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UserGroupType",
+  "description": "Strings that represent user group types.\n\nIntroduced in Apple Business API 2.6.\n\n- Possible Values\n  \n  - STANDARD: A standard user group with manually assigned members.\n  - SMART: A smart user group with dynamically assigned members based on criteria.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/usergrouptype",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/usergrouptype.json",
+  "enum": [ "STANDARD", "SMART" ]
+}

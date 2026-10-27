@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventApiAccountKeyGenerated",
+  "description": "The data structure that represents the event data for an API account key generated audit event.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventapiaccountkeygenerated",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventapiaccountkeygenerated.json",
+  "type": "object",
+  "properties": {
+    "keyId": {
+      "description": "The identifier of the public key generated for the API Account.",
+      "type": "string"
+    }
+  }
+}

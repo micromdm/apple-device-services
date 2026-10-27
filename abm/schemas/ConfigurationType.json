@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ConfigurationType",
+  "description": "The type of Configuration profile.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/configurationtype",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/configurationtype.json",
+  "enum": [
+    "AIR_DROP",
+    "AIR_PRINT",
+    "APP_ACCESS",
+    "APPLE_INTELLIGENCE_SIRI",
+    "APPLICATION_LAYER_FIREWALL",
+    "AUTHENTICATION_SCREEN_LOCK",
+    "CERTIFICATE",
+    "CONFERENCE_ROOM_DISPLAY",
+    "CONTENT_CACHING",
+    "CUSTOM_PROFILE",
+    "CUSTOM_SETTING",
+    "DATA_MANAGEMENT",
+    "ENERGY_SAVER",
+    "FILE_VAULT",
+    "GATE_KEEPER",
+    "ICLOUD",
+    "LOGIN_WINDOW",
+    "MEDIA_MANAGEMENT",
+    "SOFTWARE_UPDATE",
+    "VPN",
+    "WEB_CLIP",
+    "WEB_FILTER",
+    "WIFI"
+  ]
+}

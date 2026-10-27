@@ -1,74 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "ErrorResponse",
-  "description": "The error details that an API returns in the response body whenever the API request isn’t successful.",
+  "description": "The error details that an API returns in the response body whenever the API request isn’t successful.\n\nIntroduced in Apple Business API 2.6.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/errorresponse",
-  "x-apple-developer-api-version": "1.1+",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/errorresponse.json",
   "type": "object",
   "properties": {
     "errors": {
       "description": "An array of one or more errors.",
       "type": "array",
       "items": {
-        "$ref": "#/$defs/ErrorResponse.Errors"
+        "$ref": "ErrorResponse.Errors.json"
       }
-    }
-  },
-  "$defs": {
-    "ErrorResponse.Errors": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "ErrorResponse.Errors",
-      "description": "The details about an error that returns when an API request isn’t successful.",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/errorresponse/errors-data.dictionary",
-      "x-apple-developer-api-version": "1.1+",
-      "type": "object",
-      "required": [ "code", "detail", "status", "title" ],
-      "properties": {
-        "code": {
-          "description": "A machine-readable code indicating the type of error. The code is a hierarchical value with levels of specificity separated by a period (.). This value is parseable for programmatic error handling in code.",
-          "type": "string"
-        },
-        "detail": {
-          "description": "A detailed explanation of the error. Don’t use this field for programmatic error handling.",
-          "type": "string"
-        },
-        "id": {
-          "description": "The unique ID of a specific instance of an error, request, and response. Use this ID when providing feedback to, or debugging issues with, Apple.",
-          "type": "string"
-        },
-        "links": {
-          "$ref": "ErrorLinks.json"
-        },
-        "meta": {
-          "$ref": "#/$defs/ErrorResponse.Errors.Meta"
-        },
-        "source": {
-          "description": "One of two possible types of values — source.Parameter when a query parameter produces the error, or source.JsonPointer when a problem with the entity produces the error.",
-          "oneOf": [
-            {
-              "$ref": "JsonPointer.json"
-            },
-            {
-              "$ref": "Parameter.json"
-            }
-          ]
-        },
-        "status": {
-          "description": "The HTTP status code of the error. This status code usually matches the response’s status code. However, if the request produces multiple errors, these two codes may differ.",
-          "type": "string"
-        },
-        "title": {
-          "description": "A summary of the error. Don’t use this field for programmatic error handling.",
-          "type": "string"
-        }
-      }
-    },
-    "ErrorResponse.Errors.Meta": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "ErrorResponse.Errors.Meta",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/errorresponse/errors-data.dictionary/meta-data.dictionary",
-      "x-apple-developer-api-version": "1.1+",
-      "type": "object"
     }
   }
 }

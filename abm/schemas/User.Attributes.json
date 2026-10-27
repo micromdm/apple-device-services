@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "User.Attributes",
+  "description": "Attributes that describe a user resource.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/user/attributes-data.dictionary",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/user/attributes-data.dictionary.json",
+  "type": "object",
+  "properties": {
+    "costCenter": {
+      "description": "The cost center the user belongs to in the organization.",
+      "type": "string"
+    },
+    "createdDateTime": {
+      "description": "The date and time that the user was created.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "department": {
+      "description": "The department the user belongs to in the organization.",
+      "type": "string"
+    },
+    "division": {
+      "description": "The division the user belongs to in the organization.",
+      "type": "string"
+    },
+    "email": {
+      "description": "The email address of the user.",
+      "type": "string"
+    },
+    "employeeNumber": {
+      "description": "The employee number of the user.",
+      "type": "string"
+    },
+    "firstName": {
+      "description": "The first name of the user.",
+      "type": "string"
+    },
+    "isExternalUser": {
+      "description": "Indicates if the user is an external user invited to the organization.",
+      "type": "boolean"
+    },
+    "jobTitle": {
+      "description": "The job title the user holds in the organization.",
+      "type": "string"
+    },
+    "lastName": {
+      "description": "The last name of the user.",
+      "type": "string"
+    },
+    "managedAppleAccount": {
+      "description": "The Apple Account of the user registered in the system.",
+      "type": "string"
+    },
+    "middleName": {
+      "description": "The middle name of the user.",
+      "type": "string"
+    },
+    "phoneNumbers": {
+      "description": "The phone numbers of the user.",
+      "type": "array",
+      "items": {
+        "$ref": "UserPhoneNumber.json"
+      }
+    },
+    "roleOuList": {
+      "description": "A list of role-organizational unit mappings for the user, where each item contains a `roleName` and `ouId` representing the role of a user at a particular organizational unit.",
+      "type": "array",
+      "items": {
+        "$ref": "UserRoleOuMapping.json"
+      }
+    },
+    "startDateTime": {
+      "description": "The date and time when the user started as part of the organization.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "description": "The status of the user. See [UserStatus](https://developer.apple.com/documentation/applebusinessapi/userstatus) for possible values.",
+      "$ref": "UserStatus.json"
+    },
+    "updatedDateTime": {
+      "description": "The date and time that the user was last updated.",
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

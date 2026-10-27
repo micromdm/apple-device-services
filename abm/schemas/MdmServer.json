@@ -1,113 +1,32 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "MdmServer",
-  "description": "The data structure that represents a device management service resource in an organization.",
+  "description": "The data structure that represents a device management service resource in an organization.\n\nIntroduced in Apple Business API 2.6.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/mdmserver",
-  "x-apple-developer-api-version": "1.1+",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/mdmserver.json",
   "type": "object",
-  "required": [ "type", "id" ],
+  "required": [ "id", "type" ],
   "properties": {
     "attributes": {
       "description": "The resource’s attributes.",
-      "$ref": "#/$defs/MdmServer.Attributes"
+      "$ref": "MdmServer.Attributes.json"
     },
     "id": {
       "description": "The opaque resource ID that uniquely identifies the resource.",
       "type": "string"
     },
+    "links": {
+      "description": "Navigational links that include the self-link.",
+      "$ref": "ResourceLinks.json"
+    },
     "relationships": {
       "description": "Navigational links to related data and included resource types and IDs.",
-      "$ref": "#/$defs/MdmServer.Relationships"
+      "$ref": "MdmServer.Relationships.json"
     },
     "type": {
       "description": "The resource type.",
-      "default": "mdmServers",
-      "type": "string"
-    }
-  },
-  "$defs": {
-    "MdmServer.Attributes": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "MdmServer.Attributes",
-      "description": "Attributes that describe a device management service resource.",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/mdmserver/attributes-data.dictionary",
-      "x-apple-developer-api-version": "1.1+",
-      "type": "object",
-      "properties": {
-        "createdDateTime": {
-          "description": "The date and time of the creation of the resource.",
-          "type": "string",
-          "format": "date-time"
-        },
-        "serverName": {
-          "description": "The device management service’s name.",
-          "type": "string"
-        },
-        "serverType": {
-          "description": "The type of device management service: MDM, APPLE_CONFIGURATOR, APPLE_MDM",
-          "enum": [ "MDM", "APPLE_CONFIGURATOR", "APPLE_MDM" ]
-        },
-        "updatedDateTime": {
-          "description": "The date and time of the most-recent update for the resource.",
-          "type": "string",
-          "format": "date-time"
-        }
-      }
-    },
-    "MdmServer.Relationships": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "MdmServer.Relationships",
-      "description": "The relationships you include in the request, and those that you can operate on.",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/mdmserver/relationships-data.dictionary",
-      "x-apple-developer-api-version": "1.1+",
-      "type": "object",
-      "properties": {
-        "devices": {
-          "description": "The devices in the device management service.",
-          "$ref": "#/$defs/MdmServer.Relationships.Devices"
-        }
-      }
-    },
-    "MdmServer.Relationships.Devices": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "MdmServer.Relationships.Devices",
-      "description": "The data and links that describe the relationship between the resources.",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/mdmserver/relationships-data.dictionary/devices-data.dictionary",
-      "x-apple-developer-api-version": "1.1+",
-      "type": "object",
-      "properties": {
-        "data": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/MdmServer.Relationships.Devices.Data"
-          }
-        },
-        "links": {
-          "$ref": "RelationshipLinks.json"
-        },
-        "meta": {
-          "$ref": "PagingInformation.json"
-        }
-      }
-    },
-    "MdmServer.Relationships.Devices.Data": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "MdmServer.Relationships.Devices.Data",
-      "description": "The type and ID of a related resource.",
-      "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/mdmserver/relationships-data.dictionary/devices-data.dictionary/data-data.dictionary",
-      "x-apple-developer-api-version": "1.1+",
-      "type": "object",
-      "required": [ "type", "id" ],
-      "properties": {
-        "id": {
-          "description": "The opaque resource ID that uniquely identifies the resource.",
-          "type": "string"
-        },
-        "type": {
-          "description": "The resource type.",
-          "default": "orgDevices"
-        }
-      }
+      "const": "mdmServers"
     }
   }
 }

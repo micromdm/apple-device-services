@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventDeviceAddedToOrg",
+  "description": "The data structure that represents the event data for a device added to organization audit event.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventdeviceaddedtoorg",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventdeviceaddedtoorg.json",
+  "type": "object",
+  "properties": {
+    "purchaseSourceId": {
+      "description": "The unique id for the purchase source.",
+      "type": "string"
+    },
+    "purchaseSourceType": {
+      "description": "The way the device was added into Apple Business.",
+      "$ref": "AuditEventPurchaseSourceType.json"
+    },
+    "serialNumber": {
+      "description": "Serial number of the device, unique to that device.",
+      "type": "string"
+    }
+  }
+}

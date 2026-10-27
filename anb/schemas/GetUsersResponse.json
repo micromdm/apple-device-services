@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GetUsersResponse",
+  "description": "The paginated response that contains the requested users.\n\nIntroduced in VPP License Management 2.0.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/getusersresponse",
+  "x-apple-developer-api-version": "2.0",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/getusersresponse.json",
+  "type": "object",
+  "properties": {
+    "currentPageIndex": {
+      "description": "The current page index of the paginated response.",
+      "type": "integer"
+    },
+    "mdmInfo": {
+      "description": "The current information for the provided token.\n\nThe response only includes this field when MDM sets a value using the [Client Config](https://developer.apple.com/documentation/devicemanagement/client-config-4szk1) endpoint.",
+      "$ref": "MdmInfo.json"
+    },
+    "nextPageIndex": {
+      "description": "The next page index in the paginated response.\n\nThe response only includes this field when  there is a next page.",
+      "type": "integer"
+    },
+    "size": {
+      "description": "The number of users on the current page.",
+      "type": "integer"
+    },
+    "tokenExpirationDate": {
+      "description": "The token expiration date in an ISO-8601 format.\n\nNote: The server shows all dates and times in UTC.",
+      "type": "string"
+    },
+    "totalPages": {
+      "description": "The total number of pages in the paginated response.",
+      "type": "integer"
+    },
+    "uId": {
+      "description": "The unique library identifier. When querying records using multiple tokens that may share libraries, use the `uId` field to filter duplicates and avoid double-counting records when different content managers upload duplicate tokens.",
+      "type": "string"
+    },
+    "users": {
+      "description": "The set of requested users.",
+      "type": "array",
+      "items": {
+        "$ref": "ResponseUser.json"
+      }
+    },
+    "versionId": {
+      "description": "The current version identifier. When traversing the paginated response, use `versionId` to identify when changes occur to underlying data.\n\nWhen any writes occur to the underlying data in a fetch, `versionId` updates.",
+      "type": "string"
+    }
+  }
+}

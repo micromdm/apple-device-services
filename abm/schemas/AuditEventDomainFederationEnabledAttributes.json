@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventDomainFederationEnabledAttributes",
+  "description": "The attributes for a domain federation enabled audit event.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventdomainfederationenabledattributes",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventdomainfederationenabledattributes.json",
+  "type": "object",
+  "properties": {
+    "eventDataDomainFederationEnabled": {
+      "description": "The event data for this audit event type.",
+      "$ref": "AuditEventDomainFederationEnabled.json"
+    }
+  }
+}

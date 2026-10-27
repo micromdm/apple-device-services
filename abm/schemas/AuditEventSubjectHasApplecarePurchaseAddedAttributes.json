@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventSubjectHasApplecarePurchaseAddedAttributes",
+  "description": "The attributes for a subject has AppleCare purchase added audit event.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventsubjecthasapplecarepurchaseaddedattributes",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventsubjecthasapplecarepurchaseaddedattributes.json",
+  "type": "object",
+  "properties": {
+    "eventDataSubjectHasAppleCarePurchaseAdded": {
+      "description": "The event data for this audit event type.",
+      "$ref": "AuditEventSubjectHasAppleCarePurchaseAdded.json"
+    }
+  }
+}

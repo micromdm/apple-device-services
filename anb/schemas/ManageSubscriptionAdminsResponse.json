@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ManageSubscriptionAdminsResponse",
+  "description": "The confirmation response that the server returns after adding or removing subscription administrators.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/managesubscriptionadminsresponse",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/managesubscriptionadminsresponse.json",
+  "type": "object",
+  "properties": {
+    "tokenExpirationDate": {
+      "description": "The token expiration date in an ISO-8601 format.\n\nNote: The server shows all dates and times in UTC.",
+      "type": "string"
+    },
+    "uId": {
+      "description": "The unique library identifier. When querying records using multiple tokens that may share libraries, use the `uId` field to filter duplicates and avoid double-counting records when different content managers upload duplicate tokens.",
+      "type": "string"
+    },
+    "versionId": {
+      "description": "The current version identifier.",
+      "type": "string"
+    }
+  }
+}

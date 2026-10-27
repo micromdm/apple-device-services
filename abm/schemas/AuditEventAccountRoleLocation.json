@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventAccountRoleLocation",
+  "description": "The data structure that represents a role and location assignment.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventaccountrolelocation",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventaccountrolelocation.json",
+  "type": "object",
+  "properties": {
+    "locationUniqueIdentifier": {
+      "description": "The unique identifier of a location (a user may have different roles at different locations).",
+      "type": "string"
+    },
+    "roleName": {
+      "description": "The name of the role (For example, Organization Administrator, IT Administrator).",
+      "type": "string"
+    }
+  }
+}

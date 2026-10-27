@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AppleCareCoverageResponse",
+  "description": "A response that contains a list of AppleCare coverage resources that belongs to an organization device.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/applecarecoverageresponse",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/applecarecoverageresponse.json",
+  "type": "object",
+  "required": [ "data", "links" ],
+  "properties": {
+    "data": {
+      "description": "The resource data.",
+      "type": "array",
+      "items": {
+        "$ref": "AppleCareCoverage.json"
+      }
+    },
+    "links": {
+      "description": "Navigational links that include the self-link.",
+      "$ref": "PagedDocumentLinks.json"
+    },
+    "meta": {
+      "description": "Paging information.",
+      "$ref": "PagingInformation.json"
+    }
+  }
+}

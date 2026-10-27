@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventExternalAccountDisassociatedAttributes",
+  "description": "The attributes for an external account disassociated audit event.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventexternalaccountdisassociatedattributes",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventexternalaccountdisassociatedattributes.json",
+  "type": "object",
+  "properties": {
+    "eventDataExternalAccountDisassociated": {
+      "description": "The event data for this audit event type.",
+      "$ref": "AuditEventExternalAccountDisassociated.json"
+    }
+  }
+}

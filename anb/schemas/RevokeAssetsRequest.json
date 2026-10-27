@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RevokeAssetsRequest",
+  "description": "The request for asset revocation.\n\nIntroduced in VPP License Management 2.0.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/revokeassetsrequest",
+  "x-apple-developer-api-version": "2.0",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/revokeassetsrequest.json",
+  "type": "object",
+  "properties": {
+    "clientUserIds": {
+      "description": "The set of identifiers for users in your organization.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "serialNumbers": {
+      "description": "The set of identifiers for devices in your organization.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

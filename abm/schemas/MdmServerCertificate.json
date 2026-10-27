@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MdmServerCertificate",
+  "description": "The X.509 certificate to associate with a device management service.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/mdmservercertificate",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/mdmservercertificate.json",
+  "type": "object",
+  "required": [ "name", "data" ],
+  "properties": {
+    "data": {
+      "description": "The Base64-encoded certificate data.",
+      "type": "string",
+      "contentEncoding": "base64"
+    },
+    "name": {
+      "description": "The certificate’s file name.",
+      "type": "string"
+    }
+  }
+}

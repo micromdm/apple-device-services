@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventCollectionCreatedAttributes",
+  "description": "The attributes for a collection created audit event.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventcollectioncreatedattributes",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventcollectioncreatedattributes.json",
+  "type": "object",
+  "properties": {
+    "eventDataCollectionCreated": {
+      "description": "The event data for this audit event type.",
+      "$ref": "AuditEventCollectionCreated.json"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ActivityTypeMetadata",
+  "description": "Additional metadata for an organization device activity, used by device management service migration activity types.\n\nIntroduced in Apple Business API 2.6.",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/activitytypemetadata",
+  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/activitytypemetadata.json",
+  "type": "object",
+  "properties": {
+    "mdmMigrationDeadlineDateTime": {
+      "description": "The deadline, in ISO 8601 format, by which a device needs to complete its device management service migration.",
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}
