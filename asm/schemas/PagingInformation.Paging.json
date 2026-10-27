@@ -17,7 +17,7 @@
       "type": "string"
     },
     "total": {
-      "description": "The total number of resources to return.",
+      "description": "**(Optional)** The total number of resources to return.",
       "type": "integer"
     }
   }

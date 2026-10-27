@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "UnlimitedResponseAsset",
-  "description": "An asset with an unlimited license that the organization owns.",
+  "description": "An asset with an unlimited license that the organization owns.\n\nThe server returns this object in the `unlimitedAssets` array of [GetAssetsResponse](https://developer.apple.com/documentation/devicemanagement/getassetsresponse) when the `unlimited` query parameter is set to `true`. This object omits the `availableCount`, `totalCount`, and `retiredCount` fields, which don’t apply to unlimited licenses.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/unlimitedresponseasset",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/unlimitedresponseasset.json",
   "type": "object",

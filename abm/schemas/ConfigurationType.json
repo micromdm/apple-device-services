@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "ConfigurationType",
-  "description": "The type of Configuration profile.\n\nApple Business API 2.6+",
+  "description": "The type of Configuration profile.\n\nApple Business API 2.6+\n\n- `CUSTOM_SETTING` - A custom Configuration profile (can be created/updated via API)\n- `AIR_DROP` - AirDrop settings\n- `AIR_PRINT` - AirPrint settings\n- `APP_ACCESS` - App access restrictions\n- `APPLE_INTELLIGENCE_SIRI` - Apple Intelligence and Siri settings\n- `APPLICATION_LAYER_FIREWALL` - Application layer firewall settings\n- `AUTHENTICATION_SCREEN_LOCK` - Authentication and screen lock settings\n- `CERTIFICATE` - Certificate management\n- `CONFERENCE_ROOM_DISPLAY` - Conference room display settings\n- `CONTENT_CACHING` - Content caching settings\n- `CUSTOM_PROFILE` - Custom profile\n- `DATA_MANAGEMENT` - Data management settings\n- `ENERGY_SAVER` - Energy saver settings\n- `FILE_VAULT` - FileVault encryption settings\n- `GATE_KEEPER` - Gatekeeper settings\n- `ICLOUD` - iCloud settings\n- `LOGIN_WINDOW` - Login window settings\n- `MEDIA_MANAGEMENT` - Media management settings\n- `SOFTWARE_UPDATE` - Software update settings\n- `VPN` - VPN settings\n- `WEB_CLIP` - Web clip settings\n- `WEB_FILTER` - Web filter settings\n- `WIFI` - Wi-Fi configuration\n\n> **Note:** Only `CUSTOM_SETTING` type Configuration can be created or updated via the API. All other types are read-only.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/configurationtype",
   "x-apple-developer-api-version": "2.6",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/configurationtype.json",

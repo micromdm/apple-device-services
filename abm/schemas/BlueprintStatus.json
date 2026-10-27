@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "BlueprintStatus",
-  "description": "The status of a Blueprint.\n\nApple Business API 2.6+",
+  "description": "The status of a Blueprint.\n\nApple Business API 2.6+\n\n- `ACTIVE` - The Blueprint is active and operational.\n- `TO_BE_DELETED` - The Blueprint is pending deletion.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/blueprintstatus",
   "x-apple-developer-api-version": "2.6",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/blueprintstatus.json",

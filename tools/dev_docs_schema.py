@@ -55,7 +55,8 @@ import urllib.request
 from collections.abc import Callable, Iterator
 from dataclasses import dataclass, field
 from email.utils import parsedate_to_datetime
-from pathlib import Path
+from http.client import HTTPException
+from pathlib import Path, PurePosixPath
 from typing import Any, NamedTuple
 
 # A JSON document or sub-document (loosely typed).
@@ -307,6 +308,14 @@ def reference_link(token: JSON, refs: JSON) -> str:
     return f"[{title}]({url})"
 
 
+# Markdown markers of the inline tokens that wrap other inline tokens.
+INLINE_MARKERS: dict[str, str] = {
+    "strong": "**",
+    "emphasis": "*",
+    "strikethrough": "~~",
+}
+
+
 def inline_text(tokens: list[JSON], refs: JSON) -> str:
     """Render an inline content token list as Markdown."""
     parts: list[str] = []
@@ -318,6 +327,11 @@ def inline_text(tokens: list[JSON], refs: JSON) -> str:
             parts.append(f"`{token.get('code', '')}`")
         elif kind == "reference":
             parts.append(reference_link(token, refs))
+        elif "inlineContent" in token:
+            # A token that wraps others — "**(Optional)**" — keeps its text.
+            marker = INLINE_MARKERS.get(kind, "")
+            text = inline_text(token["inlineContent"], refs)
+            parts.append(f"{marker}{text}{marker}")
     return "".join(parts)
 
 
@@ -333,6 +347,11 @@ def block_text(block: JSON, refs: JSON) -> str:
             # Indent a multi-line item's continuation beneath its bullet.
             items.append(f"- {text}".replace("\n", "\n  "))
         return "\n".join(items)
+    if kind == "aside":
+        # A "Note" or "Important" call-out becomes a Markdown blockquote.
+        name = block.get("name") or (block.get("style") or "note").capitalize()
+        text = content_text(block.get("content", []), refs)
+        return f"> **{name}:** {text}".replace("\n", "\n> ")
     # Headings and other blocks carry no body text here.
     return ""
 
@@ -347,33 +366,45 @@ def content_text(blocks: list[JSON], refs: JSON) -> str:
     return "\n\n".join(paragraphs).strip()
 
 
+def scalar_schema(name: str) -> dict[str, Any]:
+    """Map an Apple scalar type name to a JSON Schema object."""
+    if name in SPECIAL_TYPES:
+        return dict(SPECIAL_TYPES[name])
+    if name in STRING_FORMATS:
+        return {"type": "string", "format": name}
+    return {"type": SCALAR_TYPES.get(name, name)}
+
+
 def type_schema(tokens: list[JSON]) -> dict[str, Any]:
     """Map Apple's type tokens to a JSON Schema object.
 
     A referenced type becomes a ``$ref`` to the sibling schema file (the type
-    name is the file name without its extension), a union of referenced types
-    becomes an ``anyOf``, and everything else is a scalar or an array of one.
+    name is the file name without its extension), a scalar its JSON Schema
+    type, and a union of them — "(uri-reference | ErrorLinks.Associated)" —
+    an ``anyOf``. Brackets around the whole make it an array.
     """
-    names = [t.get("text", "") for t in tokens if t.get("kind") == "typeIdentifier"]
-    if len(names) > 1:
+    alternatives: list[dict[str, Any]] = []
+    for token in tokens:
+        if token.get("kind") == "typeIdentifier":
+            alternatives.append({"$ref": f"{token.get('text', '')}.json"})
+        elif token.get("kind") == "text":
+            # The punctuation of the declaration: brackets, parentheses, and
+            # the bars between the scalar alternatives of a union.
+            for name in token.get("text", "").split("|"):
+                name = name.strip(" []()")
+                if name:
+                    alternatives.append(scalar_schema(name))
+    if len(alternatives) > 1:
         # A union of types: "one or more of these". `anyOf` rather than
         # `oneOf`, since the alternatives are often permissive enough that a
         # value matches more than one of them.
-        return {"anyOf": [{"$ref": f"{name}.json"} for name in names]}
-    text = "".join(t.get("text", "") for t in tokens if t.get("kind") == "text")
-    if names:
-        ref = {"$ref": f"{names[0]}.json"}
-        return {"type": "array", "items": ref} if text.startswith("[") else ref
-
-    is_array = text.startswith("[") and text.endswith("]")
-    inner = text[1:-1] if is_array else text
-    if inner in SPECIAL_TYPES:
-        elem = dict(SPECIAL_TYPES[inner])
-    elif inner in STRING_FORMATS:
-        elem = {"type": "string", "format": inner}
+        elem: dict[str, Any] = {"anyOf": alternatives}
     else:
-        elem = {"type": SCALAR_TYPES.get(inner, inner)}
-    if is_array:
+        # No alternative at all is no constraint at all.
+        elem = alternatives[0] if alternatives else {}
+
+    text = "".join(t.get("text", "") for t in tokens if t.get("kind") == "text")
+    if text.strip().startswith("["):
         # An unconstrained element type adds no constraint, so `items` is
         # left out.
         return {"type": "array", "items": elem} if elem else {"type": "array"}
@@ -427,7 +458,7 @@ def property_schema(item: JSON, refs: JSON) -> dict[str, Any]:
 
 
 def properties(doc: JSON) -> list[tuple[str, JSON]]:
-    """Return an Apple document's properties, in Apple's order."""
+    """Return an Apple document's properties."""
     items: list[tuple[str, JSON]] = []
     for section in doc.get("primaryContentSections", []):
         if section.get("kind") != "properties":
@@ -474,11 +505,12 @@ def map_value(doc: JSON) -> dict[str, Any] | None:
 
 
 def introduced_text(doc: JSON) -> str:
-    """Render an Apple document's availability as a prose sentence.
+    """Render an Apple document's availability line.
 
     The availability lives in the metadata: every platform the document is
     available on names the version that introduced it — "Apple Business API
-    2.6" or "Device Assignment Services 5.0".
+    2.6+" or "Device Assignment Services 5.0+", the way the documentation
+    front-end shows it.
     """
     platforms = doc.get("metadata", {}).get("platforms") or []
     names = [
@@ -488,13 +520,13 @@ def introduced_text(doc: JSON) -> str:
     ]
     if not names:
         return ""
-    return ', '.join(names)
+    return ", ".join(names)
 
 
 def api_version(doc: JSON) -> str | None:
     """Return the version of the API a document was introduced in.
 
-    A document of one platform (the repositories' two namespaces are) names
+    A document of one platform (the repository's API namespaces are) names
     one version. The OS platforms of the wider Device Management namespace
     name several, so their versions are returned with the platform's own
     name — "iOS 7.0, macOS 10.9" — to stay distinct.
@@ -508,26 +540,29 @@ def api_version(doc: JSON) -> str | None:
     return ", ".join(f"{p.get('name')} {p['introducedAt']}" for p in versions)
 
 
-def discussion_text(doc: JSON, refs: JSON) -> str:
-    """Render a document's Discussion section as Markdown.
+# The headings of the content sections that hold prose about a type.
+PROSE_HEADINGS: set[str] = {"Discussion", "Overview", "Possible Values"}
 
-    The discussion is the content section whose first block is a
-    "Discussion" heading; the heading itself carries no prose. The prose of
-    an enum-like type's discussion is an unorderedList of one
-    "NAME: what it means" bullet per possible value — a plain-paragraph
-    one is prose about the type.
+
+def discussion_text(doc: JSON, refs: JSON) -> str:
+    """Render a document's prose sections as Markdown.
+
+    The prose is in the content sections headed "Discussion", "Overview" or
+    "Possible Values"; the heading itself carries no prose. Other sections
+    ("Example response") hold code, not prose about the type. The prose of
+    an enum-like type is an unorderedList of one "NAME: what it means"
+    bullet per possible value — a plain-paragraph one is prose about the
+    type.
     """
+    texts: list[str] = []
     for section in doc.get("primaryContentSections", []):
         if section.get("kind") != "content":
             continue
         blocks = section.get("content") or []
         heading = blocks[0] if blocks else {}
-        if (
-            heading.get("type") == "heading"
-            and heading.get("text") == "Discussion"
-        ):
-            return content_text(blocks[1:], refs)
-    return ""
+        if heading.get("type") == "heading" and heading.get("text") in PROSE_HEADINGS:
+            texts.append(content_text(blocks[1:], refs))
+    return "\n\n".join(text for text in texts if text)
 
 
 def document_uris(
@@ -607,12 +642,12 @@ def document_schema(doc: JSON, data_base: str = DATA_BASE) -> JSON:
 def write_schema(schema: JSON, path: str | Path) -> None:
     """Write a JSON Schema to a file or the standard output.
 
-    The output is plain JSON with two-space indentation. The repo's canonical
-    formatting comes from the ``jsonschema`` CLI's formatter, which the CI
-    checks with ``jsonschema fmt -c`` — run it over the schemas before
-    committing them.
+    The output is plain JSON with two-space indentation and sorted keys. The
+    repo's canonical formatting comes from the ``jsonschema`` CLI's
+    formatter, which the CI checks with ``jsonschema fmt -c`` — run it over
+    the schemas before committing them.
     """
-    text = json.dumps(schema, indent=2, ensure_ascii=False) + "\n"
+    text = json.dumps(schema, indent=2, ensure_ascii=False, sort_keys=True) + "\n"
     if str(path) == "-":
         sys.stdout.write(text)
         return
@@ -637,7 +672,14 @@ class Cache:
         self.unchanged = 0
 
     def path(self, name: str) -> Path:
-        """Return the path of a cached document."""
+        """Return the path of a cached document.
+
+        The names come from the URLs of Apple's documents, so a name that
+        would leave the cache is refused.
+        """
+        parts = PurePosixPath(name)
+        if parts.is_absolute() or ".." in parts.parts:
+            raise ValueError(f"{name}: not a name inside the cache")
         return self.root / name
 
     def etag_path(self, name: str) -> Path:
@@ -665,12 +707,14 @@ class Cache:
 
         The download is conditional: the ETag of the cached document is sent
         back, and a document that did not change costs a 304 and no bytes.
+        An ETag without its document is not sent: the 304 would leave
+        nothing to read.
         """
         url = self.url(name)
         destination = self.path(name)
         etag_file = self.etag_path(name)
         etag = ""
-        if etag_file.exists():
+        if etag_file.exists() and destination.exists():
             etag = etag_file.read_text(encoding="utf-8").strip()
 
         request = urllib.request.Request(url)
@@ -680,6 +724,9 @@ class Cache:
         try:
             with urllib.request.urlopen(request, timeout=TIMEOUT) as response:
                 body = response.read()
+                # Parse before storing: a body that is not a document must
+                # not be cached under an ETag that would keep it there.
+                document = parse_document(body.decode("utf-8"), url)
                 self._store(destination, etag_file, body, response.headers)
         except urllib.error.HTTPError as e:
             if e.code != 304:
@@ -691,25 +738,30 @@ class Cache:
                 raise ValueError(f"{name}: the server has it, the cache does not")
             return document
         self.fetched += 1
-        try:
-            return json.loads(body)
-        except json.JSONDecodeError as e:
-            raise ValueError(f"{url}: not valid JSON: {e}") from e
+        return document
 
     def _store(
         self, destination: Path, etag_file: Path, body: bytes, headers: Any
     ) -> None:
-        """Write a fetched document and its ETag to the cache."""
+        """Write a fetched document and its ETag to the cache.
+
+        The ETag of the previous document goes first and the document is
+        renamed into place whole, so an interrupted write never leaves a
+        partial document behind an ETag that would keep it there.
+        """
         destination.parent.mkdir(parents=True, exist_ok=True)
-        destination.write_bytes(body)
-        etag = headers.get("ETag")
-        if etag:
-            etag_file.write_text(etag, encoding="utf-8")
+        etag_file.unlink(missing_ok=True)
+        partial = destination.with_name(f".{destination.name}.partial")
+        partial.write_bytes(body)
         # Keep the timestamp the server gave the document.
         timestamp = headers.get("Last-Modified")
         if timestamp:
             moment = parsedate_to_datetime(timestamp).timestamp()
-            os.utime(destination, (moment, moment))
+            os.utime(partial, (moment, moment))
+        os.replace(partial, destination)
+        etag = headers.get("ETag")
+        if etag:
+            etag_file.write_text(etag, encoding="utf-8")
 
 
 # --------------------------------------------------------------------- walk
@@ -753,6 +805,7 @@ class Resolver:
         """Yield the documents of the walk, level by level."""
         self.names = {self.source: set()}
         self.titles = {}
+        self.missing = set()
         seen = {self.source}
         level = [self.source]
         while level:
@@ -839,10 +892,9 @@ def command_generate(args: argparse.Namespace) -> int:
     cache = Cache(args.cache_dir, args.data_base)
     source = source_name(args.source)
     schema_dir = Path(args.schema_dir)
-    schema_dir.mkdir(parents=True, exist_ok=True)
 
     resolver = Resolver(source, cache.read)
-    written = 0
+    writes: list[tuple[Path, JSON]] = []
     skipped = 0
     shared: dict[str, str] = {}
     for level in resolver.levels():
@@ -864,19 +916,28 @@ def command_generate(args: argparse.Namespace) -> int:
                     f"note: {name} is shared by {previous} and {document.name}",
                     file=sys.stderr,
                 )
-            write_schema(
-                document_schema(document.data, args.data_base), schema_dir / name
+            writes.append(
+                (schema_dir / name, document_schema(document.data, args.data_base))
             )
-            written += 1
 
     if resolver.missing:
+        # The walk stops at the documents that are not cached, so the types
+        # behind them are not known: nothing is written rather than a part.
         print(
-            f"note: {len(resolver.missing)} documents are not in the cache",
+            f"error: {len(resolver.missing)} documents are not in the cache; "
+            "fetch them before generating:",
             file=sys.stderr,
         )
+        for name in sorted(resolver.missing):
+            print(f"  {cache.path(name)}", file=sys.stderr)
+        return 1
+
+    schema_dir.mkdir(parents=True, exist_ok=True)
+    for path, schema in writes:
+        write_schema(schema, path)
     if skipped:
         print(f"note: {skipped} documents are not types", file=sys.stderr)
-    print(f"wrote {written} schemas to {schema_dir}", file=sys.stderr)
+    print(f"wrote {len(writes)} schemas to {schema_dir}", file=sys.stderr)
     return 0
 
 
@@ -1103,11 +1164,9 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         return args.func(args)
-    except Conflict as e:
-        print(f"error: {e}", file=sys.stderr)
-    except (OSError, TypeError, ValueError) as e:
-        print(f"error: {e}", file=sys.stderr)
-    except urllib.error.HTTPError as e:
+    except (Conflict, HTTPException, OSError, TypeError, ValueError) as e:
+        # urllib's errors are OSErrors; a connection that drops mid-response
+        # is an HTTPException (IncompleteRead).
         print(f"error: {e}", file=sys.stderr)
     return 1
 

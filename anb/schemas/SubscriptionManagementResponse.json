@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "SubscriptionManagementResponse",
-  "description": "A confirmation response that reports your device management service’s subscription management support.",
+  "description": "A confirmation response that reports your device management service’s subscription management support.\n\nThe server returns this object from [Enable Subscriptions](https://developer.apple.com/documentation/devicemanagement/enable-subscriptions) and [Disable Subscriptions](https://developer.apple.com/documentation/devicemanagement/disable-subscriptions). Read `subscriptionManagement` to confirm the state that the server recorded for the token.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/subscriptionmanagementresponse",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/subscriptionmanagementresponse.json",
   "type": "object",

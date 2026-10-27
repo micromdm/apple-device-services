@@ -19,3 +19,5 @@ jobs:
       - run: echo */schemas | xargs ./jsonschema lint
 
       - run: echo */schemas | xargs ./jsonschema fmt -c
+
+      - run: python3 tools/sortkeys.py --check */patches/*.json

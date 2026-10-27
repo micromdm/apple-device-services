@@ -109,15 +109,17 @@ The JSON document has a stable shape. Relevant fields:
 
 - `abstract[]` — the page description. It is one part of the schema's
   `description`, joined with the availability line of
-  `metadata.platforms[].introducedAt` and the prose of the Discussion section:
+  `metadata.platforms[].introducedAt` and the prose of the `content` sections
+  (headed "Discussion", "Overview" or "Possible Values"):
   `"\n\n".join(abstract, introduced, discussion)`, skipping the parts the
-  document does not have.
+  document does not have. "Note" and "Important" call-outs (`aside` blocks)
+  become Markdown blockquotes; tables and code listings are left out.
 - `metadata` — symbol identity:
   - `title` — the type name (maps to our `title`).
   - `platforms[]` — availability: each platform the document is available on
     names the version that introduced it (`name`, `introducedAt`). The version
-    is the description's availability line — "Introduced in Apple Business API
-    2.6." — and the `x-apple-developer-api-version` extension field, matching
+    is the description's availability line — "Apple Business API 2.6+" — and
+    the `x-apple-developer-api-version` extension field, matching
     the availability line the documentation front-end renders from the same
     field.
 
@@ -145,6 +147,8 @@ The JSON document has a stable shape. Relevant fields:
     - `{"kind":"typeIdentifier","identifier":"doc://…","text":"Foo.Bar"}` — a
       reference to a nested `*-data.dictionary` type (resolve via `references`,
       see below).
+    - `(uri-reference | `, `typeIdentifier`, `)` — a union of alternatives,
+      scalars and references alike (maps to `anyOf`).
   - `required` — boolean, but **unreliable**: meaningful in some namespaces
     (e.g. ANB), yet `false` for every property in others (e.g. DEP); see
     "Scope and limitations".
@@ -176,8 +180,10 @@ allowed values:
 The `values[].name` entries are authoritative — they are the type's allowed
 values, and they map directly to a JSON Schema `enum` (or `const`, see below).
 The per-value `content[]` is empty; the prose explaining each value lives in
-the "Possible Values" unordered list of the document's Discussion section, and
-it maps into the schema's `description` as one Markdown bullet per value.
+an unordered list of the document's `content` sections — a "Possible Values"
+list inside the Discussion section, or a section headed "Possible Values" of
+its own — and it maps into the schema's `description` as one Markdown bullet
+per value.
 
 Such a type alias becomes a schema of its own:
 
@@ -185,7 +191,7 @@ Such a type alias becomes a schema of its own:
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "ActivationLockType",
-  "description": "Strings that represent the type of Activation Lock on a device.\n\nIntroduced in Apple Business API 2.6.\n\n- Possible Values\n  \n  - MDM: The device is Activation Locked by its device management service.\n  - USER: The device is Activation Locked to a personal Apple Account.\n  - NONE: The device isn’t Activation Locked.",
+  "description": "Strings that represent the type of Activation Lock on a device.\n\nApple Business API 2.6+\n\n- Possible Values\n  \n  - MDM: The device is Activation Locked by its device management service.\n  - USER: The device is Activation Locked to a personal Apple Account.\n  - NONE: The device isn’t Activation Locked.",
   "x-apple-developer-api-version": "2.6",
   "enum": [ "MDM", "USER", "NONE" ]
 }
@@ -205,6 +211,7 @@ stream:
 | `text` | prose, including version gating | "This key is valid in X-Server-Protocol-Version 10 and later." |
 | `codeVoice` | literal / enum value | `iPad`, `added`, `modified` |
 | `reference` | cross-link (doc:// identifier) | `Get Replacement Details` |
+| `strong` | bold, wrapping other tokens (rendered `**…**`) | "**(Optional)**" |
 
 Some details are now structured fields rather than inline-token heuristics:
 

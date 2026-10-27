@@ -13,8 +13,8 @@ changed — fails the test, and nothing is written. (An "add" carries no
 test: RFC 6902 cannot test that a key is absent. The tool checks that
 itself — an add that would overwrite an existing value fails instead.)
 
-The applied schemas are written as plain two-space JSON. Canonical key
-order and formatting are the job of the steps that follow, the way the
+The applied schemas are written as plain two-space JSON with sorted keys.
+Canonical formatting is the job of the step that follows, the way the
 sync formats after generating.
 
 Requires the jsonpatch module.
@@ -34,13 +34,22 @@ class PatchError(Exception):
     """A patch that will not apply to its schema."""
 
 
-def path_exists(schema: object, path: str) -> bool:
-    """Return True if a JSON Pointer resolves in a schema."""
+def add_overwrites(schema: object, path: str) -> bool:
+    """Return True if an "add" at a JSON Pointer would overwrite a value.
+
+    Only an object member is overwritten: an add into an array inserts
+    ("/required/-" appends), and an add whose parent is missing fails on its
+    own.
+    """
+    parts = jsonpatch.JsonPointer(path).parts
+    if not parts:
+        # The whole document.
+        return True
     try:
-        jsonpatch.JsonPointer(path).resolve(schema)
+        parent = jsonpatch.JsonPointer.from_parts(parts[:-1]).resolve(schema)
     except jsonpatch.JsonPointerException:
         return False
-    return True
+    return isinstance(parent, dict) and parts[-1] in parent
 
 
 def apply_ops(ops: list, schema: object) -> object:
@@ -48,7 +57,7 @@ def apply_ops(ops: list, schema: object) -> object:
     working = schema
     for index, op in enumerate(ops, start=1):
         where = f"op {index} ({op.get('op')} {op.get('path')!r})"
-        if op.get("op") == "add" and path_exists(working, op.get("path", "")):
+        if op.get("op") == "add" and add_overwrites(working, op.get("path", "")):
             # RFC 6902 "add" overwrites the value of an existing key, so
             # refuse rather than clobber what is already in the schema.
             raise PatchError(f"{where}: add would overwrite an existing value")
@@ -99,7 +108,8 @@ def command_apply(args: argparse.Namespace) -> int:
 
     if not args.dry_run:
         for schema_path, schema in writes:
-            text = json.dumps(schema, indent=2, ensure_ascii=False) + "\n"
+            text = json.dumps(schema, indent=2, ensure_ascii=False, sort_keys=True)
+            text += "\n"
             schema_path.write_text(text, encoding="utf-8")
     verb = "would apply" if args.dry_run else "applied"
     print(f"{verb} {len(writes)} patches to {schemas}", file=sys.stderr)

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "MdmServer.Attributes",
-  "description": "Attributes that describe a device management service resource.\n\nApple School Manager API 1.7+",
+  "description": "Attributes that describe a device management service resource.\n\nApple School Manager API 1.7+\n\n> **Note:** You can add new attributes to a resource without a newer version of an API.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/mdmserver/attributes-data.dictionary",
   "x-apple-developer-api-version": "1.7",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/mdmserver/attributes-data.dictionary.json",

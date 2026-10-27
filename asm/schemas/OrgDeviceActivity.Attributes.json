@@ -1,14 +1,14 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "OrgDeviceActivity.Attributes",
-  "description": "Attributes that describe an organization device activity resource.\n\nApple School Manager API 1.7+",
+  "description": "Attributes that describe an organization device activity resource.\n\nApple School Manager API 1.7+\n\n> **Note:** You can add new attributes to a resource without a newer version of an API.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/orgdeviceactivity/attributes-data.dictionary",
   "x-apple-developer-api-version": "1.7",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/orgdeviceactivity/attributes-data.dictionary.json",
   "type": "object",
   "properties": {
     "completedDateTime": {
-      "description": "The date and time of the completion of organization device activity. This is available only when an activity is in a `COMPLETED` status.",
+      "description": "**(Optional)** The date and time of the completion of organization device activity. This is available only when an activity is in a `COMPLETED` status.",
       "type": "string",
       "format": "date-time"
     },
@@ -18,7 +18,7 @@
       "format": "date-time"
     },
     "downloadUrl": {
-      "description": "A presigned URL for downloading activity logs in a CSV format. This is available only when an activity is in a `COMPLETED` status.",
+      "description": "**(Optional)** A presigned URL for downloading activity logs in a CSV format. This is available only when an activity is in a `COMPLETED` status.",
       "type": "string"
     },
     "status": {

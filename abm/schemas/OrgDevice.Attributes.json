@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "OrgDevice.Attributes",
-  "description": "Attributes that describe an organization device resource.\n\nApple Business API 2.6+",
+  "description": "Attributes that describe an organization device resource.\n\nApple Business API 2.6+\n\n> **Note:** When additional attributes are added by Apple, they appear automatically, without requiring a newer version of the API.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdevice/attributes-data.dictionary",
   "x-apple-developer-api-version": "2.6",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/orgdevice/attributes-data.dictionary.json",

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "ConfigurationPlatform",
-  "description": "The platform that a Configuration targets.\n\nApple Business API 2.6+",
+  "description": "The platform that a Configuration targets.\n\nApple Business API 2.6+\n\n- `PLATFORM_MACOS` - macOS\n- `PLATFORM_IOS` - iOS and iPadOS\n- `PLATFORM_TVOS` - tvOS\n- `PLATFORM_VISIONOS` - visionOS",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/configurationplatform",
   "x-apple-developer-api-version": "2.6",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/configurationplatform.json",

@@ -12,7 +12,15 @@
       "format": "uri-reference"
     },
     "associated": {
-      "$ref": "ErrorLinks.Associated.json"
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        {
+          "$ref": "ErrorLinks.Associated.json"
+        }
+      ]
     }
   }
 }

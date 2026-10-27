@@ -1,50 +1,61 @@
 #!/usr/bin/env python3
-"""In-place sort of JSON files' keys in a directory."""
+"""Format JSON files in place: sorted keys, two-space indentation.
+
+    sortkeys.py FILE [FILE ...] [--check]
+
+With --check, nothing is written: the files that are not formatted are
+named, and the exit status is 1 if there are any.
+"""
 
 import argparse
-
 import json
+import sys
 from pathlib import Path
 
-def existing_file_path(path_str) -> Path:
-    path = Path(path_str)
-    if not path.exists():
-        raise argparse.ArgumentTypeError(f"{path_str}: does not exist")
-    if not path.is_file():
-        raise argparse.ArgumentTypeError(f"{path_str}: is not a file")
-    return path
 
-def main() -> None:
+def formatted(text: str, indent: int) -> str:
+    """Return the formatted text of a JSON document."""
+    data = json.loads(text)
+    return json.dumps(data, indent=indent, ensure_ascii=False, sort_keys=True) + "\n"
+
+
+def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Sort JSON keys in place across files."
+        description="Format JSON files in place: sorted keys, indentation."
     )
-    parser.add_argument(
-        "paths",
-        type=existing_file_path,
-        nargs="+",
-        help="JSON file",
-    )
+    parser.add_argument("paths", type=Path, nargs="+", metavar="FILE")
     parser.add_argument(
         "--indent",
         type=int,
         default=2,
-        help="Number of spaces for JSON indentation (default: 4)",
+        help="number of spaces of indentation (default: 2)",
     )
-    args: argparse.Namespace = parser.parse_args()
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="write nothing; fail if a file is not formatted",
+    )
+    args = parser.parse_args()
 
-    for file_path in args.paths:
+    status = 0
+    for path in args.paths:
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
-                # json.load can return dict, list, str, int, etc.
-                data: any = json.load(f)
-
-            with open(file_path, "w", encoding="utf-8") as f:
-                json.dump(data, f, indent=args.indent, sort_keys=True)
-                f.write("\n")
-
-        except (json.JSONDecodeError, PermissionError) as e:
-            print(f"skipped {file_path}: {e}")
+            # newline="": compare the bytes as they are, CRLF and all.
+            with path.open(encoding="utf-8", newline="") as fh:
+                text = fh.read()
+            result = formatted(text, args.indent)
+            if result == text:
+                continue
+            if args.check:
+                print(f"not formatted: {path}", file=sys.stderr)
+                status = 1
+            else:
+                path.write_text(result, encoding="utf-8")
+        except (OSError, ValueError) as e:
+            print(f"error: {path}: {e}", file=sys.stderr)
+            status = 1
+    return status
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

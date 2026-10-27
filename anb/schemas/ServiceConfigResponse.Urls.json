@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "ServiceConfigResponse.Urls",
-  "description": "The set of current service URLs.",
+  "description": "The set of current service URLs.\n\nEach key names an endpoint and each value is its current URL. These URLs are dynamic and can change without notice, so sync them every 5 minutes rather than hard-coding them into your device management service.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/serviceconfigresponse/urls-data.dictionary",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/serviceconfigresponse/urls-data.dictionary.json",
   "type": "object",

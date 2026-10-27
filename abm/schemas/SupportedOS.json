@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "SupportedOS",
-  "description": "The supported operating systems for an app.\n\nApple Business API 2.6+",
+  "description": "The supported operating systems for an app.\n\nApple Business API 2.6+\n\n- `SUPPORTED_OS_IOS` - iOS\n- `SUPPORTED_OS_IPADOS` - iPadOS\n- `SUPPORTED_OS_MACOS` - macOS\n- `SUPPORTED_OS_TVOS` - tvOS\n- `SUPPORTED_OS_WATCHOS` - watchOS\n- `SUPPORTED_OS_VISIONOS` - visionOS\n- `SUPPORTED_OS_UNSPECIFIED` - Unspecified",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/supportedos",
   "x-apple-developer-api-version": "2.6",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/supportedos.json",
