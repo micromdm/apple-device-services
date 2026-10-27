@@ -45,4 +45,8 @@ generate-asm:
 fetch-asm:
 	tools/dev_docs_schema.py fetch appleschoolmanagerapi.json
 
-.PHONY: all generate-dep fetch-dep generate-abm fetch-abm generate-anb fetch-anb generate-asm fetch-asm generate fetch
+format-other:
+	tools/sortkeys.py other/schemas/*.json
+	$(JSONSCHEMA) fmt other/schemas
+
+.PHONY: all generate-dep fetch-dep generate-abm fetch-abm generate-anb fetch-anb generate-asm fetch-asm generate fetch format-other

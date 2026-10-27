@@ -1,8 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "GDMF",
-  "description": "The response from the Apple Software Lookup Service at https://gdmf.apple.com/v2/pmv",
-  "x-apple-developer-api-uri": "https://support.apple.com/guide/deployment/device-management-deploy-software-updates-depafd2fad80/web",
+  "description": "The response from the Apple Software Lookup Service at https://gdmf.apple.com/v2/pmv, described in [Deploying software updates using declarative management](https://developer.apple.com/documentation/devicemanagement/deploying-software-updates-using-declarative-management).",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/deploying-software-updates-using-declarative-management",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/deploying-software-updates-using-declarative-management.json",
   "type": "object",
   "properties": {
     "AssetSets": {
@@ -13,14 +14,20 @@
       "description": "This list contains the latest releases available to the general public if they try to update or upgrade.",
       "$ref": "#/$defs/os"
     },
+    "PublicBackgroundSecurityImprovements": {
+      "description": "This list contains Background Security Improvement releases currently available for Apple devices. See [About Background Security Improvements for iOS, iPadOS, and macOS](https://support.apple.com/en-us/102657).",
+      "$ref": "#/$defs/os"
+    },
     "PublicRapidSecurityResponses": {
-      "description": "This list contains `Rapid Security Response` releases currently available for Apple devices.",
+      "description": "Deprecated: replaced by `PublicBackgroundSecurityImprovements`. This list contained Rapid Security Response releases (supplemental \"(a)\" releases on a base operating system version), which Apple last issued in 2023. Background Security Improvements, introduced in iOS, iPadOS, and macOS 26.1, are described by third parties as their renamed successor.",
+      "$comment": "No longer in Apple's documentation or the live response. Sources: https://support.apple.com/en-us/102657, https://tidbits.com/2026/03/17/apple-relaunches-background-security-improvements-with-webkit-patch/, https://addigy.com/blog/apple-releases-first-background-security-improvement-for-macos-ios-and-ipados/",
+      "deprecated": true,
       "$ref": "#/$defs/os"
     }
   },
   "$defs": {
     "os": {
-      "description": "Mapping of operating system to releases.",
+      "description": "Mapping of operating system platform to releases. `iOS` includes iPadOS, tvOS, and watchOS.",
       "type": "object",
       "propertyNames": {
         "enum": [ "iOS", "macOS", "visionOS" ]
@@ -35,6 +42,12 @@
     "release": {
       "description": "Describes a release.",
       "type": "object",
+      "required": [
+        "ProductVersion",
+        "Build",
+        "PostingDate",
+        "SupportedDevices"
+      ],
       "properties": {
         "Build": {
           "description": "Build number of the operating system.",
@@ -44,11 +57,19 @@
         "ExpirationDate": {
           "description": "The expiration date, typically set to 180 days after the posting date, defines the date the signing of the update expires. An expired update can’t be installed on devices anymore. When subsequent updates are made available, previous updates might have their expiration dates updated. If an expiration date isn’t provided, the update has yet to expire. An update has expired only when it has an expiration date in the past.",
           "examples": [ "2025-04-17" ],
-          "type": "string"
+          "type": "string",
+          "format": "date"
         },
         "PostingDate": {
           "description": "When the release was published.",
           "examples": [ "2025-01-06" ],
+          "type": "string",
+          "format": "date"
+        },
+        "PrerequisiteBuild": {
+          "description": "Build number of the operating system release a Background Security Improvement applies to.",
+          "$comment": "Not described by Apple's documentation; present in the Background Security Improvement entries of the live response.",
+          "examples": [ "23D8133" ],
           "type": "string"
         },
         "ProductVersion": {
@@ -56,8 +77,14 @@
           "examples": [ "18.2.1" ],
           "type": "string"
         },
+        "ProductVersionExtra": {
+          "description": "Background Security Improvement version identifier.",
+          "$comment": "Not described by Apple's documentation; present in the Background Security Improvement entries of the live response.",
+          "examples": [ "(a)" ],
+          "type": "string"
+        },
         "SupportedDevices": {
-          "description": "Supported devices for this release. The device list matches the ProductName value from the device, which is returned in a DeviceInformation response, the initial Authenticate request, or in the MachineInfo when the device tries to enroll.",
+          "description": "Supported devices for this release. The device list matches the `ProductName` or `PRODUCT` value from the device, which is returned in a DeviceInformation response, the initial Authenticate request, or in the MachineInfo when the device tries to enroll.",
           "examples": [
             [ "iPad11,1", "iPad11,2" ]
           ],
