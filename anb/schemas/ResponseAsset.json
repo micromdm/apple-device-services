@@ -13,10 +13,12 @@
     },
     "assignedCount": {
       "description": "The assigned amount of the asset.",
+      "x-format": "int32",
       "type": "integer"
     },
     "availableCount": {
       "description": "The available amount of the asset.",
+      "x-format": "int32",
       "type": "integer"
     },
     "deviceAssignable": {
@@ -33,6 +35,7 @@
     },
     "retiredCount": {
       "description": "The retired amount of the asset.",
+      "x-format": "int32",
       "type": "integer"
     },
     "revocable": {
@@ -48,6 +51,7 @@
     },
     "totalCount": {
       "description": "The total amount of the asset.",
+      "x-format": "int32",
       "type": "integer"
     }
   }

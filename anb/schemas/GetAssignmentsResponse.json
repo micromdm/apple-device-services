@@ -16,6 +16,7 @@
     },
     "currentPageIndex": {
       "description": "The current page index of the paginated response.",
+      "x-format": "int32",
       "type": "integer"
     },
     "mdmInfo": {
@@ -24,10 +25,12 @@
     },
     "nextPageIndex": {
       "description": "The next page index in the paginated response.\n\nThe response only includes this field when  there is a next page.",
+      "x-format": "int32",
       "type": "integer"
     },
     "size": {
       "description": "The number of assignments on the current page.",
+      "x-format": "int32",
       "type": "integer"
     },
     "tokenExpirationDate": {
@@ -36,6 +39,7 @@
     },
     "totalPages": {
       "description": "The total number of pages in the paginated response.",
+      "x-format": "int32",
       "type": "integer"
     },
     "uId": {

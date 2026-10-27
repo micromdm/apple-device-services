@@ -155,7 +155,10 @@ The JSON document has a stable shape. Relevant fields:
   - `attributes[]` — constraints (often empty). An entry with
     `kind: "allowedValues"` carries a structured enum as its `values` array
     (e.g. `{"kind":"allowedValues","values":["apps"]}` for `Apps.type`); this is
-    authoritative and maps to JSON Schema `enum`.
+    authoritative and maps to JSON Schema `enum`. Entries with `kind:
+    "maximum"`, `"minimum"` or `"default"` carry a `value` — a string even for
+    a number (`{"kind":"maximum","value":"1000"}` for `FetchDeviceRequest.limit`)
+    — and map to the keyword of the same name, typed like the property.
   - `content[]` — prose description as inline tokens (see below).
 - `references` — related symbols keyed by `doc://` identifier.
 - `schemaVersion` — version of the data format.
@@ -242,7 +245,16 @@ For a property item, the `type` token maps to JSON Schema as follows:
 | `{"kind":"text","text":"data"}` | `{"type":"string","contentEncoding":"base64"}` |
 | `{"kind":"text","text":"*"}` | no `type` at all — the value is unconstrained |
 | `{"kind":"text","text":"[*]"}` | `{"type":"array"}` — an array of unconstrained values |
+| `{"kind":"text","text":"int32"}` | `{"type":"integer","x-format":"int32"}` (likewise `int64`) |
 | `{"kind":"typeIdentifier","identifier":"doc://…","text":"Foo.Bar"}` | `$ref` to the sibling `Foo.Bar.json` schema file |
+
+The integer widths are OpenAPI's formats, kept as the `x-format` extension:
+the `jsonschema` linter refuses a `format` on anything but a string. The name
+of a schema file is the type's name with the characters a URI reference cannot
+hold bare replaced by underscores — `ErrorResponse.Errors.Meta.Any Key` is
+`ErrorResponse.Errors.Meta.Any_Key.json`, the way Apple's own identifiers spell
+it — since the `$ref` naming it must be a valid URI reference, and not every
+resolver decodes a percent-encoded one (go-jsonschema does not).
 
 Apple emits a few type names of its own that JSON Schema does not have:
 `byte` and `data` are base64-encoded blobs (OpenAPI's `format: byte`), and `*`
@@ -256,6 +268,7 @@ Two other per-property fields map directly, with the `required` caveat from
 |---|---|
 | `required: true` | top-level `"required": [...]` listing the property name |
 | `attributes[].allowedValues` | property-level `"enum": [...]` |
+| `attributes[]` `maximum` / `minimum` / `default` | property-level `"maximum"` / `"minimum"` / `"default"` |
 
 ### Enum and `const` conventions
 

@@ -7,6 +7,6 @@
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/errorresponse/errors-data.dictionary/meta-data.dictionary.json",
   "type": "object",
   "additionalProperties": {
-    "$ref": "ErrorResponse.Errors.Meta.Any Key.json"
+    "$ref": "ErrorResponse.Errors.Meta.Any_Key.json"
   }
 }

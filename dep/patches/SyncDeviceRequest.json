@@ -5,15 +5,5 @@
     "value": [
       "cursor"
     ]
-  },
-  {
-    "op": "add",
-    "path": "/properties/limit/default",
-    "value": 100
-  },
-  {
-    "op": "add",
-    "path": "/properties/limit/maximum",
-    "value": 1000
   }
 ]

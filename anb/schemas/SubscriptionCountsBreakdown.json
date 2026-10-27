@@ -8,10 +8,12 @@
   "properties": {
     "expiring": {
       "description": "The count of expiring subscriptions.",
+      "x-format": "int32",
       "type": "integer"
     },
     "renewing": {
       "description": "The count of renewing subscriptions.",
+      "x-format": "int32",
       "type": "integer"
     }
   }

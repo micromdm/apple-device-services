@@ -6,6 +6,7 @@
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/serviceconfigresponse/limits-data.dictionary.json",
   "type": "object",
   "additionalProperties": {
+    "x-format": "int32",
     "type": "integer"
   }
 }

@@ -13,6 +13,7 @@
     },
     "errorNumber": {
       "description": "The number that uniquely identifies an error.",
+      "x-format": "int32",
       "type": "integer"
     }
   }

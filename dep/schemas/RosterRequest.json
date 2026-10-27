@@ -13,7 +13,10 @@
     },
     "limit": {
       "description": "The maximum number of entries to return.",
-      "type": "integer"
+      "default": 1000,
+      "x-format": "int32",
+      "type": "integer",
+      "maximum": 1000
     }
   }
 }

@@ -48,6 +48,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import signal
 import sys
 import urllib.error
@@ -226,6 +227,19 @@ def source_name(source: str) -> str:
     return name
 
 
+def schema_file(title: str) -> str:
+    """Return the name of the schema file of a type.
+
+    The file is named after the type, the characters a URI reference cannot
+    hold bare replaced by underscores: "ErrorResponse.Errors.Meta.Any Key"
+    is "ErrorResponse.Errors.Meta.Any_Key.json", the way Apple's own
+    identifiers spell it. The ``$ref`` naming the file must be a valid URI
+    reference, and a percent-encoded one ("Any%20Key") is not decoded by
+    every resolver — go-jsonschema's is not.
+    """
+    return re.sub(r"[^A-Za-z0-9._-]", "_", title) + ".json"
+
+
 def schema_files(directory: Path) -> list[Path]:
     """Return the JSON schema files of a directory."""
     return sorted(
@@ -286,6 +300,11 @@ STRING_FORMATS: set[str] = {
     "date",
     "date-time",
 }
+
+# Apple type names that are widths of a JSON Schema ``integer`` or
+# ``number`` (OpenAPI's formats). They are kept as ``x-format``: the
+# ``jsonschema`` linter refuses a ``format`` on anything but a string.
+NUMBER_FORMATS: set[str] = {"int32", "int64", "float", "double"}
 
 # Apple type names JSON Schema does not have: ``byte`` and ``data`` are
 # base64-encoded blobs, ``*`` means "any value".
@@ -372,21 +391,24 @@ def scalar_schema(name: str) -> dict[str, Any]:
         return dict(SPECIAL_TYPES[name])
     if name in STRING_FORMATS:
         return {"type": "string", "format": name}
-    return {"type": SCALAR_TYPES.get(name, name)}
+    schema = {"type": SCALAR_TYPES.get(name, name)}
+    if name in NUMBER_FORMATS:
+        schema["x-format"] = name
+    return schema
 
 
 def type_schema(tokens: list[JSON]) -> dict[str, Any]:
     """Map Apple's type tokens to a JSON Schema object.
 
-    A referenced type becomes a ``$ref`` to the sibling schema file (the type
-    name is the file name without its extension), a scalar its JSON Schema
+    A referenced type becomes a ``$ref`` to the sibling schema file (see
+    ``schema_file``), a scalar its JSON Schema
     type, and a union of them — "(uri-reference | ErrorLinks.Associated)" —
     an ``anyOf``. Brackets around the whole make it an array.
     """
     alternatives: list[dict[str, Any]] = []
     for token in tokens:
         if token.get("kind") == "typeIdentifier":
-            alternatives.append({"$ref": f"{token.get('text', '')}.json"})
+            alternatives.append({"$ref": schema_file(token.get("text", ""))})
         elif token.get("kind") == "text":
             # The punctuation of the declaration: brackets, parentheses, and
             # the bars between the scalar alternatives of a union.
@@ -409,6 +431,27 @@ def type_schema(tokens: list[JSON]) -> dict[str, Any]:
         # left out.
         return {"type": "array", "items": elem} if elem else {"type": "array"}
     return elem
+
+
+def typed_value(value: Any, schema: dict[str, Any], name: str) -> Any:
+    """Return an attribute's value typed the way its schema is.
+
+    Apple writes the values of the ``default``, ``minimum`` and ``maximum``
+    attributes as strings — "100" for an integer — whatever their type.
+    """
+    kind = schema.get("type")
+    try:
+        if kind == "integer":
+            return int(value)
+        if kind == "number":
+            return float(value)
+        if kind == "boolean" and value in ("true", "false"):
+            return value == "true"
+        if kind == "string":
+            return str(value)
+    except (TypeError, ValueError):
+        pass
+    raise ValueError(f"{name}: the value {value!r} is not a {kind}")
 
 
 def allowed_values(item: JSON) -> list[Any]:
@@ -451,6 +494,17 @@ def property_schema(item: JSON, refs: JSON) -> dict[str, Any]:
         schema["description"] = description
     if "ISO 8601" in description:
         schema["format"] = "date-time"
+    for attribute in item.get("attributes", []):
+        # A bound constrains the values (an array's items); a default is
+        # the property's own. Typed before an enum drops the type.
+        keyword = attribute.get("kind")
+        if keyword in ("minimum", "maximum"):
+            slot = constraint_slot(schema)
+        elif keyword == "default":
+            slot = schema
+        else:
+            continue
+        slot[keyword] = typed_value(attribute.get("value"), slot, item.get("name"))
     values = allowed_values(item)
     if values:
         set_constraint(schema, values)
@@ -654,7 +708,7 @@ def write_schema(schema: JSON, path: str | Path) -> None:
     # The name of the file is the name of the type; flag it when the two
     # disagree, so a schema is never filed under the wrong name.
     title = schema.get("title")
-    if title and Path(path).name != f"{title}.json":
+    if title and Path(path).name != schema_file(title):
         print(f"warning: {path} holds the type {title!r}", file=sys.stderr)
     Path(path).write_text(text, encoding="utf-8")
 
@@ -907,7 +961,7 @@ def command_generate(args: argparse.Namespace) -> int:
             if not title:
                 skipped += 1
                 continue
-            name = f"{title}.json"
+            name = schema_file(title)
             previous = shared.setdefault(name, document.name)
             if previous != document.name:
                 # Several documents may share a name — Apple's endpoints do —
@@ -972,7 +1026,7 @@ def command_index(args: argparse.Namespace) -> int:
         for reference in references(doc):
             name = reference.name
             if reference.is_type:
-                entries.add((name, f"{reference.title}.json"))
+                entries.add((name, schema_file(reference.title)))
             else:
                 entries.add((name, ""))
     for name, file in sorted(entries):
@@ -1007,7 +1061,7 @@ def command_prune(args: argparse.Namespace) -> int:
                 continue
             title = document_title(document.data)
             if title:
-                wanted.add(f"{title}.json")
+                wanted.add(schema_file(title))
 
     if resolver.missing:
         # The walk stops at the documents that are not cached, so the types

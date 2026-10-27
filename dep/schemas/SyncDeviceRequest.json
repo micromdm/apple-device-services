@@ -15,6 +15,7 @@
     "limit": {
       "description": "The maximum number of entries to return. Optional.",
       "default": 100,
+      "x-format": "int32",
       "type": "integer",
       "maximum": 1000
     }

@@ -17,7 +17,7 @@
     },
     "errorNumber": {
       "description": "The error number that represents the failure.",
-      "$comment": "Possibly an OpenAPI `int32` type.",
+      "x-format": "int32",
       "type": "integer"
     }
   }

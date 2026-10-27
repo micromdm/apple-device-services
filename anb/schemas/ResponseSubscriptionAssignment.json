@@ -8,6 +8,7 @@
   "properties": {
     "adamId": {
       "description": "The Adam ID for the subscription.",
+      "x-format": "int64",
       "type": "integer"
     },
     "clientUserId": {

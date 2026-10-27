@@ -34,10 +34,12 @@
     },
     "numCompleted": {
       "description": "The number of tasks from the request that the server completed.",
+      "x-format": "int32",
       "type": "integer"
     },
     "numRequested": {
       "description": "The total number of tasks in the request.",
+      "x-format": "int32",
       "type": "integer"
     },
     "tokenExpirationDate": {

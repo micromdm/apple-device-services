@@ -12,6 +12,7 @@
     },
     "assignedCount": {
       "description": "The assigned amount of the asset.",
+      "x-format": "int32",
       "type": "integer"
     },
     "deviceAssignable": {

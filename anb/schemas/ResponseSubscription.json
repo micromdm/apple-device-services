@@ -8,6 +8,7 @@
   "properties": {
     "adamId": {
       "description": "The Adam ID for the subscription.",
+      "x-format": "int64",
       "type": "integer"
     },
     "counts": {
@@ -16,6 +17,7 @@
     },
     "parentAdamId": {
       "description": "The parent Adam ID for the subscription. This value can be `null`, so don’t require it when you parse a subscription record.",
+      "x-format": "int64",
       "type": "integer"
     },
     "periodEndDate": {
