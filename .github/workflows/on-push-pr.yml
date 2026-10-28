@@ -16,11 +16,4 @@ jobs:
           echo "e119043eb27c835b1b640f73924e7126733f17e85efc4c2e59ae19342acb8a6a  jsonschema.zip" | sha256sum -c -
           unzip -j jsonschema.zip '*/bin/jsonschema'
 
-      # The OpenAPI documents beside the schemas are not JSON Schemas.
-      - run: ./jsonschema lint */schemas $(for f in */schemas/OpenAPI.json; do echo "-i $f"; done)
-
-      - run: ./jsonschema fmt -c */schemas $(for f in */schemas/OpenAPI.json; do echo "-i $f"; done)
-
-      - run: python3 tools/sortkeys.py --check */patches/*.json
-
-      - run: python3 tools/sortkeys.py --check */schemas/OpenAPI.json
+      - run: make lint JSONSCHEMA=./jsonschema

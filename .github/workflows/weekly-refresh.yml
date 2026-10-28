@@ -1,0 +1,58 @@
+name: Weekly schema refresh
+on:
+  schedule:
+    - cron: "0 16 * * 1"  # Mondays 16:00 UTC
+  workflow_dispatch:  # allow manual runs (e.g. to test without waiting a week)
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: weekly-schema-refresh
+  cancel-in-progress: true
+jobs:
+  refresh:
+    if: github.repository == 'micromdm/apple-device-services'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      - run: python3 -m pip install --break-system-packages -r tools/requirements.txt
+
+      - run: |
+          curl -RLo /tmp/jsonschema.zip https://github.com/sourcemeta/jsonschema/releases/download/v12.10.1/jsonschema-12.10.1-linux-x86_64.zip
+          echo "e119043eb27c835b1b640f73924e7126733f17e85efc4c2e59ae19342acb8a6a  /tmp/jsonschema.zip" | sha256sum -c -
+          unzip -j /tmp/jsonschema.zip '*/bin/jsonschema' -d /tmp
+
+      - run: make fetch
+
+      # Generate twice and confirm the second run is a no-op: the Makefile
+      # must be idempotent, so any instability fails loudly here rather
+      # than landing in the PR.
+      - run: |
+          make generate JSONSCHEMA=/tmp/jsonschema
+          before=$(git status --porcelain | sha256sum)
+          make generate JSONSCHEMA=/tmp/jsonschema
+          after=$(git status --porcelain | sha256sum)
+          test "$before" = "$after"
+
+      # The auto-opened PR won't re-trigger CI (GITHUB_TOKEN pushes don't
+      # start workflow runs), so lint here before proposing anything.
+      # A patch conflict with Apple's updated docs fails the job instead
+      # of opening a PR: that failure is the maintainer's signal to go
+      # fix the patch by hand.
+      - run: make lint JSONSCHEMA=/tmp/jsonschema
+
+      - uses: peter-evans/create-pull-request@22a9089034f40e5a961c8808d113e2c98fb63676  # v7
+        with:
+          branch: automation/weekly-schema-refresh
+          commit-message: "chore: scheduled schema refresh from Apple developer docs"
+          title: Weekly schema refresh from Apple developer docs
+          body: |
+            Automated refresh (`make fetch` + `make generate`) of the generated schemas from Apple's developer documentation.
+
+            The generation pipeline (fetch, patches, formatting, lint) passed, so this should be a clean upstream change. Review the diff and merge to accept.
+
+            Note: stale-schema pruning runs for abm, anb, and asm, so this PR may delete schemas for types Apple retired. dep/ is excluded — it has two documentation roots and `prune` takes one source (see #25) — so dep deletions still need a maintainer's hand-run.
+
+            If this workflow ever fails instead of opening a PR, Apple's docs likely changed underneath one of our patches — see the [patches](README.md#patches) section — and a maintainer needs to update the patch by hand.
+          delete-branch: true
