@@ -10,7 +10,7 @@ fetch: fetch-anb fetch-abm fetch-dep fetch-asm
 
 generate-dep:
 	tools/dev_docs_schema.py generate devicemanagement/device-assignment.json devicemanagement/roster-management.json dep/schemas
-	# No prune here: dep/ has two roots and prune takes one source (see #25).
+	tools/dev_docs_schema.py prune devicemanagement/device-assignment.json devicemanagement/roster-management.json dep/schemas
 	rm dep/schemas/MachineInfo.json dep/schemas/SkipKeys.json
 	tools/sortkeys.py dep/patches/*.json
 	tools/apply_schema_patches.py dep/patches dep/schemas

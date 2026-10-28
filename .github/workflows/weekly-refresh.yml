@@ -51,8 +51,4 @@ jobs:
             Automated refresh (`make fetch` + `make generate`) of the generated schemas from Apple's developer documentation.
 
             The generation pipeline (fetch, patches, formatting, lint) passed, so this should be a clean upstream change. Review the diff and merge to accept.
-
-            Note: stale-schema pruning runs for abm, anb, and asm, so this PR may delete schemas for types Apple retired. dep/ is excluded — it has two documentation roots and `prune` takes one source (see #25) — so dep deletions still need a maintainer's hand-run.
-
-            If this workflow ever fails instead of opening a PR, Apple's docs likely changed underneath one of our patches — see the [patches](README.md#patches) section — and a maintainer needs to update the patch by hand.
           delete-branch: true

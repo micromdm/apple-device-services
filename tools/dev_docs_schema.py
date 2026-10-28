@@ -5,7 +5,7 @@
     dev_docs_schema.py generate SOURCE [SOURCE ...] SCHEMA_DIR
     dev_docs_schema.py generate-single FILE [-o OUTPUT]
     dev_docs_schema.py index FILE [FILE ...]
-    dev_docs_schema.py prune SOURCE SCHEMA_DIR [-n]
+    dev_docs_schema.py prune SOURCE [SOURCE ...] SCHEMA_DIR [-n]
 
 SOURCE names the document that starts the walk, relative to Apple's
 "/documentation/" path: "applebusinessapi.json" is the navigation page of the
@@ -26,7 +26,7 @@ The commands:
                     OpenAPI document of their endpoints (OpenAPI.json)
     generate-single convert one document into one schema
     index           list the documents a document names
-    prune           remove the schemas the source does not name
+    prune           remove the schemas the sources do not name
 
 A source names a document in the cache, the way ``fetch`` and ``generate``
 take one. ``index`` and ``generate-single`` take either: a document in the
@@ -1340,41 +1340,42 @@ def command_index(args: argparse.Namespace) -> int:
 
 
 def command_prune(args: argparse.Namespace) -> int:
-    """Remove the schemas a source document does not name.
+    """Remove the schemas the source documents do not name.
 
-    The walk is the one ``generate`` uses, so the two agree on the name of
+    The walks are the ones ``generate`` uses, so the two agree on the name of
     every type: the schemas that are kept are the ones ``generate`` writes.
-    The files that are removed are the ones the source does not name -- the
-    schemas of types Apple no longer documents, and the hand-written ones.
+    The files that are removed are the ones no source names -- the schemas of
+    types Apple no longer documents, and the hand-written ones.
 
-    A schema directory belongs to one root, the way the repository's
-    directories do. A directory that holds the schemas of several roots is
-    pruned by hand: the dry run names the files that would go.
+    Several sources may name one directory, the way dep/ holds both
+    device-assignment and roster-management: every source's types are kept.
     """
     cache = Cache(args.cache_dir, args.data_base)
-    source = source_name(args.source)
     schema_dir = Path(args.schema_dir)
     if not schema_dir.is_dir():
         print(f"error: not a directory: {schema_dir}", file=sys.stderr)
         return 1
 
-    resolver = Resolver(source, cache.read)
     wanted: set[str] = set()
-    for level in resolver.levels():
-        for document in level:
-            if is_endpoint(document.data):
-                wanted.add(OPENAPI_FILE)
-            if not is_type(document.data):
-                continue
-            title = document_title(document.data)
-            if title:
-                wanted.add(schema_file(title))
+    missing: set[str] = set()
+    for source in (source_name(s) for s in args.sources):
+        resolver = Resolver(source, cache.read)
+        for level in resolver.levels():
+            for document in level:
+                if is_endpoint(document.data):
+                    wanted.add(OPENAPI_FILE)
+                if not is_type(document.data):
+                    continue
+                title = document_title(document.data)
+                if title:
+                    wanted.add(schema_file(title))
+        missing |= resolver.missing
 
-    if resolver.missing:
-        # The walk stops at the documents that are not cached, so the types
+    if missing:
+        # The walks stop at the documents that are not cached, so the types
         # behind them are not known and their schemas would be removed.
         print(
-            f"error: {len(resolver.missing)} documents are not in the cache; "
+            f"error: {len(missing)} documents are not in the cache; "
             "fetch them before pruning",
             file=sys.stderr,
         )
@@ -1499,7 +1500,9 @@ def build_parser() -> argparse.ArgumentParser:
         parents=[common],
         help="remove the schemas a source does not name",
     )
-    prune.add_argument("source", help='e.g. "applebusinessapi.json"')
+    prune.add_argument(
+        "sources", nargs="+", metavar="SOURCE", help='e.g. "applebusinessapi.json"'
+    )
     prune.add_argument("schema_dir", help='e.g. "abm/schemas"')
     prune.add_argument(
         "-n",
