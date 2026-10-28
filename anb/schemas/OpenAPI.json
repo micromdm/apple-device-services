@@ -1,0 +1,1647 @@
+{
+  "components": {
+    "securitySchemes": {
+      "sToken": {
+        "description": "The organization's content token (sToken), downloaded from the Apps and Books section of Apple School Manager or Apple Business, sent in the `Authorization` header (`Authorization: Bearer {sToken}`). All endpoints except Service Config require it. See [Getting started with the management API](https://developer.apple.com/documentation/devicemanagement/getting-started-with-the-management-api).",
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "description": "Manage apps, books, and subscriptions for your students and employees.",
+    "title": "App, Book, and Subscription Management",
+    "version": "2.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/v2/assets": {
+      "get": {
+        "description": "Get the set of assets that your organization manages.\n\nVPP License Management 2.0+",
+        "operationId": "getAssets",
+        "parameters": [
+          {
+            "description": "The requested page index.",
+            "in": "query",
+            "name": "pageIndex",
+            "schema": {
+              "type": "integer",
+              "x-format": "int32"
+            }
+          },
+          {
+            "description": "The filter for the asset product type.",
+            "in": "query",
+            "name": "productType",
+            "schema": {
+              "enum": [
+                "App",
+                "Book"
+              ]
+            }
+          },
+          {
+            "description": "The filter for the asset product quality.",
+            "in": "query",
+            "name": "pricingParam",
+            "schema": {
+              "enum": [
+                "STDQ",
+                "PLUS"
+              ]
+            }
+          },
+          {
+            "description": "The filter for asset revocability.",
+            "in": "query",
+            "name": "revocable",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "The filter for asset device assignability.",
+            "in": "query",
+            "name": "deviceAssignable",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "The filter for the maximum inclusive assets available count.",
+            "in": "query",
+            "name": "maxAvailableCount",
+            "schema": {
+              "type": "integer",
+              "x-format": "int32"
+            }
+          },
+          {
+            "description": "The filter for the minimum inclusive assets available count.",
+            "in": "query",
+            "name": "minAvailableCount",
+            "schema": {
+              "type": "integer",
+              "x-format": "int32"
+            }
+          },
+          {
+            "description": "The filter for the maximum inclusive assets assigned count.",
+            "in": "query",
+            "name": "maxAssignedCount",
+            "schema": {
+              "type": "integer",
+              "x-format": "int32"
+            }
+          },
+          {
+            "description": "The filter for the minimum inclusive assets assigned count.",
+            "in": "query",
+            "name": "minAssignedCount",
+            "schema": {
+              "type": "integer",
+              "x-format": "int32"
+            }
+          },
+          {
+            "description": "The filter for the asset product unique identifier.",
+            "in": "query",
+            "name": "adamId",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "unlimited",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "GetAssetsResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The provided token is invalid. It may either be missing or expired."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An internal server error occurred. Try again later."
+          }
+        },
+        "summary": "Get Assets",
+        "tags": [
+          "Asset management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/get-assets-4ski1",
+        "x-apple-developer-api-version": "2.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/get-assets-4ski1.json"
+      }
+    },
+    "/v2/assets/associate": {
+      "post": {
+        "description": "Associate assets with client user IDs and serial numbers.\n\nVPP License Management 2.0+",
+        "operationId": "associateAssets",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "ManageAssetsRequest.json"
+              }
+            }
+          },
+          "description": "missing"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "EventResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The provided token is invalid. It may either be missing or expired."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An internal server error occurred. Try again later."
+          }
+        },
+        "summary": "Associate Assets",
+        "tags": [
+          "Asset management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/associate-assets",
+        "x-apple-developer-api-version": "2.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/associate-assets.json"
+      }
+    },
+    "/v2/assets/disassociate": {
+      "post": {
+        "description": "Disassociate assets from client user IDs and serial numbers.\n\nVPP License Management 2.0+",
+        "operationId": "disassociateAssets",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "ManageAssetsRequest.json"
+              }
+            }
+          },
+          "description": "missing"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "EventResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The provided token is invalid. It may either be missing or expired."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An internal server error occurred. Try again later."
+          }
+        },
+        "summary": "Disassociate Assets",
+        "tags": [
+          "Asset management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/disassociate-assets",
+        "x-apple-developer-api-version": "2.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/disassociate-assets.json"
+      }
+    },
+    "/v2/assets/revoke": {
+      "post": {
+        "description": "Revoke assets from client user IDs and serial numbers.\n\nVPP License Management 2.0+",
+        "operationId": "revokeAssets",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "RevokeAssetsRequest.json"
+              }
+            }
+          },
+          "description": "missing"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "EventResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The provided token is invalid. It may either be missing or expired."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An internal server error occurred. Try again later."
+          }
+        },
+        "summary": "Revoke Assets",
+        "tags": [
+          "Asset management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/revoke-assets",
+        "x-apple-developer-api-version": "2.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/revoke-assets.json"
+      }
+    },
+    "/v2/assignments": {
+      "get": {
+        "description": "Get the set of current assignments for users or devices.\n\nVPP License Management 2.0+",
+        "operationId": "getAssignments",
+        "parameters": [
+          {
+            "description": "The filter for the assignment product’s unique identifier.",
+            "in": "query",
+            "name": "adamId",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The filter for the unique identifier of assigned users in your organization.",
+            "in": "query",
+            "name": "clientUserId",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "excludeInactiveUsers",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "includeUserState",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "The requested page index.",
+            "in": "query",
+            "name": "pageIndex",
+            "schema": {
+              "type": "integer",
+              "x-format": "int32"
+            }
+          },
+          {
+            "in": "query",
+            "name": "pricingParam",
+            "schema": {
+              "enum": [
+                "STDQ",
+                "PLUS"
+              ]
+            }
+          },
+          {
+            "description": "The filter for the unique identifier of assigned devices in your organization.",
+            "in": "query",
+            "name": "serialNumber",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The filter for modified assignments since the specified version identifier.",
+            "in": "query",
+            "name": "sinceVersionId",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "GetAssignmentsResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The provided token is invalid. It may either be missing or expired."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An internal server error occurred. Try again later."
+          }
+        },
+        "summary": "Get Assignments",
+        "tags": [
+          "Asset management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/get-assignments-9wv1e",
+        "x-apple-developer-api-version": "2.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/get-assignments-9wv1e.json"
+      }
+    },
+    "/v2/client/config": {
+      "get": {
+        "description": "Read client-specific information from the server.\n\nVPP License Management 2.0+",
+        "operationId": "getClientConfig",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ClientConfigResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Client Config",
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/client-config-71glv",
+        "x-apple-developer-api-version": "2.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/client-config-71glv.json"
+      },
+      "post": {
+        "description": "Store client-specific information on the server.\n\nVPP License Management 2.0+",
+        "operationId": "updateClientConfig",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "ClientConfigRequest.json"
+              }
+            }
+          },
+          "description": "missing"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ClientConfigResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The provided token is invalid. It may either be missing or expired."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An internal server error occurred. Try again later."
+          }
+        },
+        "summary": "Client Config",
+        "tags": [
+          "Configuration management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/client-config-4szk1",
+        "x-apple-developer-api-version": "2.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/client-config-4szk1.json"
+      }
+    },
+    "/v2/service/config": {
+      "get": {
+        "description": "Provides the full list of web service URLs, notification types, request limits, and possible error codes.\n\nVPP License Management 2.0+\n\nSome request-parameter limits are dynamic and can change without notice. Read their current values from the `limits` section of [ServiceConfigResponse](https://developer.apple.com/documentation/devicemanagement/serviceconfigresponse).\n\nThe following keys are specific to [ManageAssetsRequest](https://developer.apple.com/documentation/devicemanagement/manageassetsrequest):\n\nThe following keys are specific to [RevokeAssetsRequest](https://developer.apple.com/documentation/devicemanagement/revokeassetsrequest):\n\nThe following keys are specific to user management requests:\n\nThe following keys are specific to subscription management requests:\n\nThe following keys are specific to [Client Config](https://developer.apple.com/documentation/devicemanagement/client-config-71glv):\n\nThe following keys are general to all requests:",
+        "operationId": "serviceConfig",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ServiceConfigResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An internal server error occurred. Try again later."
+          }
+        },
+        "security": [
+          {},
+          {
+            "sToken": []
+          }
+        ],
+        "summary": "Service Config",
+        "tags": [
+          "Configuration management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/service-config",
+        "x-apple-developer-api-version": "2.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/service-config.json"
+      }
+    },
+    "/v2/status": {
+      "get": {
+        "description": "Retrieve the status of an asynchronous event.\n\nVPP License Management 2.0+",
+        "operationId": "eventsStatus",
+        "parameters": [
+          {
+            "description": "The unique identifier for the asynchronous event.",
+            "in": "query",
+            "name": "eventId",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "StatusResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The provided token is invalid. It may either be missing or expired."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An internal server error occurred. Try again later."
+          }
+        },
+        "summary": "Event Status",
+        "tags": [
+          "Event management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/events-status",
+        "x-apple-developer-api-version": "2.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/events-status.json"
+      }
+    },
+    "/v2/subscriptions": {
+      "get": {
+        "description": "Get the subscriptions that your organization manages.",
+        "operationId": "getSubscriptions",
+        "parameters": [
+          {
+            "description": "The filter for subscriptions by parent Adam ID.",
+            "in": "query",
+            "name": "parentAdamId",
+            "schema": {
+              "items": {
+                "type": "integer",
+                "x-format": "int64"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "The filter for subscriptions by Adam ID.",
+            "in": "query",
+            "name": "adamId",
+            "schema": {
+              "items": {
+                "type": "integer",
+                "x-format": "int64"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "The cursor for pagination to fetch the next page of results.",
+            "in": "query",
+            "name": "cursor",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "GetSubscriptionsResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The provided token is invalid. It may either be missing or expired."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An internal server error occurred. Try again later."
+          }
+        },
+        "summary": "Get Subscriptions",
+        "tags": [
+          "Subscription management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/get-subscriptions",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/get-subscriptions.json"
+      }
+    },
+    "/v2/subscriptions/admins": {
+      "get": {
+        "description": "Get the administrators for subscriptions that your organization manages.",
+        "operationId": "getSubscriptionAdministrators",
+        "parameters": [
+          {
+            "description": "The filter for subscription administrators by Adam ID.",
+            "in": "query",
+            "name": "adamId",
+            "schema": {
+              "items": {
+                "type": "integer",
+                "x-format": "int64"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "When `true`, includes the user status for each administrator in the response.",
+            "in": "query",
+            "name": "includeUserState",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "The cursor for pagination to fetch the next page of results.",
+            "in": "query",
+            "name": "cursor",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "GetSubscriptionAdminsResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The provided token is invalid. It may either be missing or expired."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An internal server error occurred. Try again later."
+          }
+        },
+        "summary": "Get Subscription Administrators",
+        "tags": [
+          "Subscription management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/get-subscription-administrators",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/get-subscription-administrators.json"
+      }
+    },
+    "/v2/subscriptions/admins/add": {
+      "post": {
+        "description": "Add administrators for subscriptions.\n\nSend a POST request to designate users as administrators for specific subscriptions. The request body requires an `adamIds` array of subscription identifiers and a `clientUserIds` array of user identifiers. The server processes this request synchronously.",
+        "operationId": "addSubscriptionAdministrators",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "ManageSubscriptionAdminsRequest.json"
+              }
+            }
+          },
+          "description": "[ManageSubscriptionAdminsRequest](https://developer.apple.com/documentation/devicemanagement/managesubscriptionadminsrequest)"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ManageSubscriptionAdminsResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The provided token is invalid. It may either be missing or expired."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An internal server error occurred. Try again later."
+          }
+        },
+        "summary": "Add Subscription Administrators",
+        "tags": [
+          "Subscription management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/add-subscription-administrators",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/add-subscription-administrators.json"
+      }
+    },
+    "/v2/subscriptions/admins/remove": {
+      "post": {
+        "description": "Remove administrators from subscriptions.\n\nSend a POST request to revoke administrator access from users for specific subscriptions. The request body uses the same format as the Add endpoint.",
+        "operationId": "removeSubscriptionAdministrators",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "ManageSubscriptionAdminsRequest.json"
+              }
+            }
+          },
+          "description": "[ManageSubscriptionAdminsRequest](https://developer.apple.com/documentation/devicemanagement/managesubscriptionadminsrequest)"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ManageSubscriptionAdminsResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The provided token is invalid. It may either be missing or expired."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An internal server error occurred. Try again later."
+          }
+        },
+        "summary": "Remove Subscription Administrators",
+        "tags": [
+          "Subscription management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/remove-subscription-administrators",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/remove-subscription-administrators.json"
+      }
+    },
+    "/v2/subscriptions/assignments": {
+      "get": {
+        "description": "Get the subscription assignments for users in your organization.",
+        "operationId": "getSubscriptionAssignments",
+        "parameters": [
+          {
+            "description": "The filter for subscription assignments by parent Adam ID.",
+            "in": "query",
+            "name": "parentAdamId",
+            "schema": {
+              "items": {
+                "type": "integer",
+                "x-format": "int64"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "The filter for subscription assignments by Adam ID.",
+            "in": "query",
+            "name": "adamId",
+            "schema": {
+              "items": {
+                "type": "integer",
+                "x-format": "int64"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "The filter for subscription assignments by client user ID.",
+            "in": "query",
+            "name": "clientUserId",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "The cursor for pagination to fetch the next page of results.",
+            "in": "query",
+            "name": "cursor",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "GetSubscriptionAssignmentsResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The provided token is invalid. It may either be missing or expired."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An internal server error occurred. Try again later."
+          }
+        },
+        "summary": "Get Subscription Assignments",
+        "tags": [
+          "Subscription management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/get-subscription-assignments",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/get-subscription-assignments.json"
+      }
+    },
+    "/v2/subscriptions/associate": {
+      "post": {
+        "description": "Associate subscriptions with client user IDs.",
+        "operationId": "associateSubscriptions",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "ManageSubscriptionsRequest.json"
+              }
+            }
+          },
+          "description": "[ManageSubscriptionsRequest](https://developer.apple.com/documentation/devicemanagement/managesubscriptionsrequest)"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "EventResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The provided token is invalid. It may either be missing or expired."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An internal server error occurred. Try again later."
+          }
+        },
+        "summary": "Associate Subscriptions",
+        "tags": [
+          "Subscription management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/associate-subscriptions",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/associate-subscriptions.json"
+      }
+    },
+    "/v2/subscriptions/disable": {
+      "post": {
+        "description": "Declare that your device management service doesn’t support subscription management.\n\nSend a POST request to declare that your device management service doesn’t support subscriptions for the organizational unit that the token represents. Apple School Manager and Apple Business Manager use this declaration to indicate to content managers that the organizational unit doesn’t support subscriptions, rather than leaving its support status unstated.\n\nThis request takes no body. The server processes it synchronously and returns the resulting `subscriptionManagement` state.\n\n> **Important:** Disabling is a positive declaration that an organizational unit doesn’t support subscriptions. You can also use it to reverse an earlier [Enable Subscriptions](https://developer.apple.com/documentation/devicemanagement/enable-subscriptions) request, but only while the organizational unit has no subscriptions. If any subscriptions exist there, the request fails with error `9818` (`Subscriptions exist for the organizational unit, so subscription management can't be disabled.`). For more information, see [Handling error responses](https://developer.apple.com/documentation/devicemanagement/handling-error-responses).\n\nTo declare that an organizational unit supports subscriptions, use [Enable Subscriptions](https://developer.apple.com/documentation/devicemanagement/enable-subscriptions).",
+        "operationId": "disableSubscriptions",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "SubscriptionManagementResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The organizational unit has existing subscriptions, so subscription management can’t be disabled."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The provided token is invalid. It may either be missing or expired."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An internal server error occurred. Try again later."
+          }
+        },
+        "summary": "Disable Subscriptions",
+        "tags": [
+          "Subscription management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/disable-subscriptions",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/disable-subscriptions.json"
+      }
+    },
+    "/v2/subscriptions/disassociate": {
+      "post": {
+        "description": "Disassociate subscriptions from client user IDs.",
+        "operationId": "disassociateSubscriptions",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "ManageSubscriptionsRequest.json"
+              }
+            }
+          },
+          "description": "[ManageSubscriptionsRequest](https://developer.apple.com/documentation/devicemanagement/managesubscriptionsrequest)"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "EventResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The provided token is invalid. It may either be missing or expired."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An internal server error occurred. Try again later."
+          }
+        },
+        "summary": "Disassociate Subscriptions",
+        "tags": [
+          "Subscription management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/disassociate-subscriptions",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/disassociate-subscriptions.json"
+      }
+    },
+    "/v2/subscriptions/enable": {
+      "post": {
+        "description": "Declare that your device management service supports subscription management.\n\nSend a POST request to declare that your device management service supports subscription management. Until you enable subscription management for a token, content managers can’t purchase subscriptions into the organizational unit that the token represents.\n\nThis request takes no body. The server processes it synchronously and returns the resulting `subscriptionManagement` state.\n\n> **Note:** You can reverse this declaration with [Disable Subscriptions](https://developer.apple.com/documentation/devicemanagement/disable-subscriptions), but only while the organizational unit has no subscriptions. After content managers purchase subscriptions into it, disabling fails until no subscriptions remain.\n\nTo declare that an organizational unit doesn’t support subscriptions, use [Disable Subscriptions](https://developer.apple.com/documentation/devicemanagement/disable-subscriptions).",
+        "operationId": "enableSubscriptions",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "SubscriptionManagementResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The provided token is invalid. It may either be missing or expired."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An internal server error occurred. Try again later."
+          }
+        },
+        "summary": "Enable Subscriptions",
+        "tags": [
+          "Subscription management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/enable-subscriptions",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/enable-subscriptions.json"
+      }
+    },
+    "/v2/users": {
+      "get": {
+        "description": "Get information about a set of users.\n\nVPP License Management 2.0+",
+        "operationId": "getUsers",
+        "parameters": [
+          {
+            "description": "The filter for only the active users.",
+            "in": "query",
+            "name": "activeOnly",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "The filter for the unique identifier of a user in your organization.",
+            "in": "query",
+            "name": "clientUserId",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The requested page index.",
+            "in": "query",
+            "name": "pageIndex",
+            "schema": {
+              "type": "integer",
+              "x-format": "int32"
+            }
+          },
+          {
+            "description": "The filters for only the retired users.",
+            "in": "query",
+            "name": "retiredOnly",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "The filter for modified assignments since the specified version identifier.",
+            "in": "query",
+            "name": "sinceVersionId",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "GetUsersResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The provided token is invalid. It may either be missing or expired."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An internal server error occurred. Try again later."
+          }
+        },
+        "summary": "Get Users",
+        "tags": [
+          "User management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/get-users-4mwln",
+        "x-apple-developer-api-version": "2.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/get-users-4mwln.json"
+      }
+    },
+    "/v2/users/create": {
+      "post": {
+        "description": "Create users to assign apps, books, and subscriptions to.\n\nVPP License Management 2.0+",
+        "operationId": "createUsers",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "ManageUsersRequest.json"
+              }
+            }
+          },
+          "description": "missing"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "EventResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The provided token is invalid. It may either be missing or expired."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An internal server error occurred. Try again later."
+          }
+        },
+        "summary": "Create Users",
+        "tags": [
+          "User management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/create-users",
+        "x-apple-developer-api-version": "2.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/create-users.json"
+      }
+    },
+    "/v2/users/retire": {
+      "post": {
+        "description": "Retire users by client user IDs.\n\nVPP License Management 2.0+",
+        "operationId": "retireUsers",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "ManageUsersRequest.json"
+              }
+            }
+          },
+          "description": "missing"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "EventResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The provided token is invalid. It may either be missing or expired."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An internal server error occurred. Try again later."
+          }
+        },
+        "summary": "Retire Users",
+        "tags": [
+          "User management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/retire-users",
+        "x-apple-developer-api-version": "2.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/retire-users.json"
+      }
+    },
+    "/v2/users/update": {
+      "post": {
+        "description": "Update details for existing users.\n\nVPP License Management 2.0+",
+        "operationId": "updateUsers",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "ManageUsersRequest.json"
+              }
+            }
+          },
+          "description": "missing"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "EventResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The provided token is invalid. It may either be missing or expired."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An internal server error occurred. Try again later."
+          }
+        },
+        "summary": "Update Users",
+        "tags": [
+          "User management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/update-users",
+        "x-apple-developer-api-version": "2.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/update-users.json"
+      }
+    }
+  },
+  "security": [
+    {
+      "sToken": []
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://vpp.itunes.apple.com/mdm"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Configuration management"
+    },
+    {
+      "name": "Asset management"
+    },
+    {
+      "name": "Subscription management"
+    },
+    {
+      "name": "User management"
+    },
+    {
+      "name": "Event management"
+    }
+  ]
+}

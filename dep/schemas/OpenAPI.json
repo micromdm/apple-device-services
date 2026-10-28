@@ -1,0 +1,884 @@
+{
+  "components": {
+    "securitySchemes": {
+      "X-ADM-Auth-Session": {
+        "description": "The session token of the Automated Device Enrollment service. Each request must include an `X-ADM-Auth-Session` header; a missing or expired token gets an HTTP 401 Unauthorized response. A new token is requested from `https://mdmenrollment.apple.com/session` with an OAuth 1.0a-signed `GET`, which returns it as `auth_session_token`, and the service periodically issues a new one in its responses. See [Authenticating for Automated Device Enrollment](https://developer.apple.com/documentation/devicemanagement/authenticating-for-automated-device-enrollment).",
+        "in": "header",
+        "name": "X-ADM-Auth-Session",
+        "type": "apiKey"
+      }
+    }
+  },
+  "info": {
+    "description": "Manage devices for your students and employees.\n\nManage classes for your students and teachers.",
+    "title": "Device assignment / Roster management",
+    "version": "5.1"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/account": {
+      "get": {
+        "description": "Obtain the details for your account.\n\nDevice Assignment Services 5.0+\n\nEach Mobile Device Management server must be registered with Apple. This endpoint provides details about the server entity to identify it uniquely throughout your organization. Each server is identifiable by either its system-generated unique identifier or by a user-provided name assigned by one of the organization’s users. Both the identifier and server name must be unique within your organization.",
+        "operationId": "accountDetail",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "AccountDetail.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "summary": "Get Account Detail",
+        "tags": [
+          "Account management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/account-detail",
+        "x-apple-developer-api-version": "5.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/account-detail.json"
+      }
+    },
+    "/account-driven-enrollment/profile": {
+      "delete": {
+        "description": "Remove the Account-Driven Enrollment profile that the MDM server sets, which includes information about service discovery for account-driven enrollment.\n\nDevice Assignment Services 5.1+",
+        "operationId": "removeAccountDrivenEnrollmentProfile",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "- `ORG_NOT_SUPPORTED`: Indicates that the associated organization isn’t supported."
+          }
+        },
+        "summary": "Remove Account-Driven Enrollment Profile",
+        "tags": [
+          "Account-driven enrollment service discovery"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/remove-account-driven-enrollment-profile",
+        "x-apple-developer-api-version": "5.1",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/remove-account-driven-enrollment-profile.json"
+      },
+      "get": {
+        "description": "Fetch the Account-Driven Enrollment profile that the MDM server sets, which includes information about service discovery for account-driven enrollment.\n\nDevice Assignment Services 5.1+",
+        "operationId": "fetchAccountDrivenEnrollmentProfile",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "GetAccountDrivenEnrollmentProfileResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "description": "- `ORG_NOT_SUPPORTED`: Indicates that the associated organization isn’t supported."
+          },
+          "404": {
+            "description": "- `NOT_FOUND`: Indicates that the system can’t find the MDM Service Discovery URL."
+          }
+        },
+        "summary": "Fetch Account-Driven Enrollment Service Discovery",
+        "tags": [
+          "Account-driven enrollment service discovery"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/fetch-account-driven-enrollment-profile",
+        "x-apple-developer-api-version": "5.1",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/fetch-account-driven-enrollment-profile.json"
+      },
+      "post": {
+        "description": "The Account-Driven Enrollment profile defines key attributes related to service discovery for account-driven enrollment by MDM.\n\nDevice Assignment Services 5.1+\n\nThis profile includes the MDM Service Discovery URL, which redirects users to the MDM server to start the enrollment process during account-driven enrollment.",
+        "operationId": "assignAccountDrivenEnrollmentProfile",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "AccountDrivenEnrollmentProfileRequest.json"
+              }
+            }
+          },
+          "description": "The profile request for this account-driven enrollment."
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "- `MDM_SERVICE_DISCOVERY_URL_REQUIRED`: Indicates that the MDM Service Discovery URL is missing in the request.\n- `MDM_SERVICE_DISCOVERY_URL_NOT_VALID`: Indicates that the provided MDM Service Discovery URL may be incorrectly formatted or doesn’t belong to the required HTTPS scheme.\n- `ORG_NOT_SUPPORTED`: Indicates that the associated organization isn’t supported."
+          }
+        },
+        "summary": "Assign Account-Driven Enrollment Service Discovery",
+        "tags": [
+          "Account-driven enrollment service discovery"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/assign-account-driven-enrollment-profile",
+        "x-apple-developer-api-version": "5.1",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/assign-account-driven-enrollment-profile.json"
+      }
+    },
+    "/device/activationlock": {
+      "post": {
+        "description": "Enable activation lock on a remote device.\n\nDevice Assignment Services 5.0+\n\nFind My iPhone Activation Lock is a feature of iCloud and Automated Device Enrollment that makes it harder for anyone to use or resell a lost or stolen device. Activation Lock is a feature of iCloud, and MDM has the ability to allow users to enable the feature on supervised devices.\n\nThere are two ways to manage Activation Lock: the Activation Lock request is available for devices that appear in the Apple School Manager portal or Apple Business portal, or the Find My approach. Whichever method is the first to enable Activation Lock takes precedence.",
+        "operationId": "activationLockDevices",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "ActivationLockRequest.json"
+              }
+            }
+          },
+          "description": "Request enabling activation lock for a device."
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ActivationLockStatusResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "description": "- `MALFORMED_REQUEST_BODY`: The request body is malformed.\n- `USER_AGENT_INVALID:`  The `User-Agent` header is invalid.\n- `USER_AGENT_MISSING:`  The `User-Agent` header is missing or has no assigned value."
+          },
+          "401": {
+            "description": "The token has expired. The client should retry with a new auth token."
+          },
+          "403": {
+            "description": "The auth token is invalid."
+          }
+        },
+        "summary": "Activation Lock a Device",
+        "tags": [
+          "Device management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/activation-lock-devices",
+        "x-apple-developer-api-version": "5.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/activation-lock-devices.json"
+      }
+    },
+    "/device/replacementDetails": {
+      "get": {
+        "description": "Get information about the device that a replacement device replaces.\n\nThis endpoint returns the original device serial number and replacement date for a replacement device. Call this endpoint only when the device’s `is_replacement_device` field is `true` in the response from [Get a List of Devices](https://developer.apple.com/documentation/devicemanagement/fetch-devices), [Sync the List of Devices](https://developer.apple.com/documentation/devicemanagement/sync-devices), or [Get Device Details](https://developer.apple.com/documentation/devicemanagement/device-details). Calling it for a device whose `is_replacement_device` value is `false` returns HTTP 404 `DEVICE_NOT_FOUND`.\n\nThis request requires `X-Server-Protocol-Version` 10 or later.",
+        "operationId": "getReplacementDetails",
+        "parameters": [
+          {
+            "description": "The serial number of the replacement device.",
+            "in": "query",
+            "name": "device",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "GetReplacementDetailsResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "description": "- `DEVICE_ID_REQUIRED`: No device serial number was provided as a query parameter.\n- `USER_AGENT_INVALID:`  The `User-Agent` header is invalid.\n- `USER_AGENT_MISSING:`  The `User-Agent` header is missing or has no assigned value."
+          },
+          "404": {
+            "description": "- `DEVICE_NOT_FOUND`: No replacement record was found for the specified device. The serial number is invalid, the device isn’t a replacement device, or the device isn’t accessible by this MDM server."
+          }
+        },
+        "summary": "Get Replacement Details",
+        "tags": [
+          "Device management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/get-replacement-details",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/get-replacement-details.json"
+      }
+    },
+    "/devices": {
+      "post": {
+        "description": "Get the details on a set of devices.\n\nDevice Assignment Services 5.0+",
+        "operationId": "deviceDetails",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "DeviceListRequest.json"
+              }
+            }
+          },
+          "description": "The request for a list of devices."
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "DeviceListResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "description": "- `DEVICE_ID_REQUIRED`: No device IDs (serial numbers) were provided.\n- `USER_AGENT_INVALID:`  The `User-Agent` header is invalid.\n- `USER_AGENT_MISSING:`  The `User-Agent` header is missing or has no assigned value."
+          }
+        },
+        "summary": "Get Device Details",
+        "tags": [
+          "Device management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/device-details",
+        "x-apple-developer-api-version": "5.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/device-details.json"
+      }
+    },
+    "/devices/disown": {
+      "post": {
+        "description": "Notify Apple’s servers that your organization no longer owns the specified devices.\n\nDevice Assignment Services 5.0+",
+        "operationId": "disownDevices",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "DeviceListRequest.json"
+              }
+            }
+          },
+          "description": "The request for a list of devices."
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "DeviceStatusResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "description": "- `DEVICE_ID_REQUIRED`: The request did not contain any devices.\n- `USER_AGENT_INVALID:`  The `User-Agent` header is invalid.\n- `USER_AGENT_MISSING:`  The `User-Agent` header is missing or has no assigned value."
+          }
+        },
+        "summary": "Disown Devices",
+        "tags": [
+          "Device management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/disown-devices",
+        "x-apple-developer-api-version": "5.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/disown-devices.json"
+      }
+    },
+    "/devices/sync": {
+      "post": {
+        "description": "Get updates about the list of devices the server manages.\n\nDevice Assignment Services 5.0+\n\nThe sync service depends on a cursor returned by the fetch device service. It returns a list of all modifications (additions or deletions) since the specified cursor. The cursor passed to this endpoint should not be older than 7 days.\n\nThis service may return the same device more than once. You must resolve duplicates by matching on the device serial number and the `op_type` and `op_date` fields. The record with the latest `op_date` indicates the last known state of the device in ADE.",
+        "operationId": "syncDevices",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "SyncDeviceRequest.json"
+              }
+            }
+          },
+          "description": "The request to sync the list of devices."
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "FetchDeviceResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "description": "- `CURSOR_REQUIRED`: `The cursor value was not provided in the request body.`\n- `INVALID_CURSOR`: An invalid cursor value was provided.\n- `EXHAUSTED_CURSOR`: The cursor had returned all devices in previous calls.\n- `EXPIRED_CURSOR`: The provided cursor is older than 7 days.\n- `USER_AGENT_INVALID:`  The `User-Agent` header is invalid.\n- `USER_AGENT_MISSING:`  The `User-Agent` header is missing or has no assigned value."
+          }
+        },
+        "summary": "Sync the List of Devices",
+        "tags": [
+          "Device management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/sync-devices",
+        "x-apple-developer-api-version": "5.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/sync-devices.json"
+      }
+    },
+    "/os-beta-enrollment/tokens": {
+      "get": {
+        "description": "Retrieves the beta enrollment tokens available for the organization.\n\nDevice Assignment Services 5.1+",
+        "operationId": "getBetaEnrollmentTokens",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "GetSeedBuildTokenResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "403": {
+            "description": "No access - your organization doesn’t allow beta access."
+          }
+        },
+        "summary": "Get Beta Enrollment Tokens",
+        "tags": [
+          "Device management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/get-beta-enrollment-tokens",
+        "x-apple-developer-api-version": "5.1",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/get-beta-enrollment-tokens.json"
+      }
+    },
+    "/profile": {
+      "get": {
+        "description": "Get details about a profile.\n\nDevice Assignment Services 5.0+",
+        "operationId": "fetchProfile",
+        "parameters": [
+          {
+            "description": "The unique identifier for a profile.",
+            "in": "query",
+            "name": "profile_uuid",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "Profile.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "description": "- `PROFILE_UUID_REQUIRED`: The request did not contain a profile UUID.\n- `NOT_FOUND`: The requested profile UUID doesn’t match a known profile.\n- `USER_AGENT_INVALID:`  The `User-Agent` header is invalid.\n- `USER_AGENT_MISSING:`  The `User-Agent` header is missing or has no assigned value."
+          }
+        },
+        "summary": "Get a Profile",
+        "tags": [
+          "Profile management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/fetch-profile",
+        "x-apple-developer-api-version": "5.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/fetch-profile.json"
+      },
+      "post": {
+        "description": "Define a profile that can be distributed to the devices in your organization.\n\nDevice Assignment Services 5.0+\n\nThis service defines a profile with Apple’s servers that can then be assigned to specific devices. This command provides information about the MDM server that is assigned to manage one or more devices, information about the host that the managed devices can pair with, and various attributes that control the MDM association behavior of the device.",
+        "operationId": "defineProfile",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "Profile.json"
+              }
+            }
+          },
+          "description": "A profile’s properties and their values."
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "DefineProfileResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "description": "- `CONFIG_NAME_INVALID`: The `profile_name` field in the uploaded profile is either empty or has exceeded the maximum allowed length (125 UTF-8 characters).\n- `CONFIG_NAME_REQUIRED`: The configuration name is missing in the uploaded profile.\n- `CONFIG_URL_INVALID`: The URL field in the uploaded profile is either empty or has exceeded the maximum allowed length (2000 URL encoded characters). The syntax of the URL is defined by RFC 2396: Uniform Resource Identifiers (URI):  Generic Syntax, amended by RFC 2732: Format for Literal IPv6 Addresses in URLs.\n- `CONFIG_URL_REQUIRED`: The MDM server URL is missing in the uploaded profile.\n- `DEPARTMENT_INVALID`: The `department` field in the uploaded profile is either empty or has exceeded the maximum allowed length (125 UTF-8 characters).\n- `FLAGS_INVALID`: The flags have been set incorrectly; `is_mdm_removable` can be set to `false` only if flag `is_supervised` is set to `true`.\n- `LOCALE_INVALID`: The locale fields combination is invalid or unsupported.\n- `MAGIC_INVALID`: The magic field in the uploaded profile is either empty or has exceeded the maximum allowed length (256 UTF-8 characters).\n- `SUPPORT_EMAIL_INVALID`: The `support_email_address` field in the uploaded profile is either empty or has exceeded the maximum allowed length (250 UTF-8 characters).\n- `SUPPORT_PHONE_INVALID`: The `support_phone_number` field in the uploaded profile is either empty or has exceeded the maximum allowed length (50 UTF-8 characters).\n- `USER_AGENT_INVALID:`  The `User-Agent` header is invalid.\n- `USER_AGENT_MISSING:`  The `User-Agent` header is missing or has no assigned value."
+          }
+        },
+        "summary": "Define a Profile",
+        "tags": [
+          "Profile management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/define-profile",
+        "x-apple-developer-api-version": "5.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/define-profile.json"
+      }
+    },
+    "/profile/devices": {
+      "delete": {
+        "description": "Remove a profile from a list of devices.\n\nDevice Assignment Services 5.0+\n\nAfter this call, the devices in the list will have no profiles associated with them. However, if those devices have already obtained the profile, this has no effect until the device is wiped and activated again.",
+        "operationId": "clearDeviceProfile",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "ClearProfileRequest.json"
+              }
+            }
+          },
+          "description": "The request used to remove a profile from devices."
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ClearProfileResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "description": "- `DEVICE_ID_REQUIRED`: The request did not contain any device IDs.\n- `USER_AGENT_INVALID:`  The `User-Agent` header is invalid.\n- `USER_AGENT_MISSING:`  The `User-Agent` header is missing or has no assigned value."
+          }
+        },
+        "summary": "Remove a Profile",
+        "tags": [
+          "Profile management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/clear-device-profile",
+        "x-apple-developer-api-version": "5.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/clear-device-profile.json"
+      },
+      "post": {
+        "description": "Assign a profile to a list of devices.\n\nDevice Assignment Services 5.0+\n\nTo avoid performance issues, limit requests to 1000 devices at a time.\n\nWith X-Server-Protocol-Version 9 and later, the server may throttle profile assignment on a per-device basis. When the server throttles a device, its value in the `devices` dictionary is `THROTTLED` instead of `SUCCESS`.\n\nWith X-Server-Protocol-Version 10 and later, the response also includes `retry_after_seconds` when at least one device is throttled. Clients should wait for at least the indicated number of seconds before retrying assignment for the throttled devices.",
+        "operationId": "assignProfile",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "ProfileServiceRequest.json"
+              }
+            }
+          },
+          "description": "The request for assigning a profile to a set of devices."
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "AssignProfileResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "description": "- `DEVICE_ID_REQUIRED`: The request did not contain any device IDs.\n- `PROFILE_UUID_REQUIRED`: The request did not contain a profile ID.\n- `USER_AGENT_INVALID:`  The `User-Agent` header is invalid.\n- `USER_AGENT_MISSING:`  The `User-Agent` header is missing or has no assigned value."
+          },
+          "404": {
+            "description": "The profile with the specified UUID could not be found."
+          }
+        },
+        "summary": "Assign a Profile",
+        "tags": [
+          "Profile management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/assign-profile",
+        "x-apple-developer-api-version": "5.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/assign-profile.json"
+      }
+    },
+    "/roster/class": {
+      "post": {
+        "description": "Obtain a list of classes the server manages.\n\nDevice Assignment Services 5.0+",
+        "operationId": "fetchClassRoster",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "RosterRequest.json"
+              }
+            }
+          },
+          "description": "The object containing the request information."
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "RosterClassResponse.json"
+                }
+              }
+            },
+            "description": "The request was successful. The server returns a list of classes."
+          },
+          "400": {
+            "description": "The server was unable to process the request."
+          }
+        },
+        "summary": "Get the List of Classes",
+        "tags": [
+          "Class management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/fetch-class-roster",
+        "x-apple-developer-api-version": "5.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/fetch-class-roster.json"
+      }
+    },
+    "/roster/class/course": {
+      "post": {
+        "description": "Obtain a list of the courses the server manages.\n\nDevice Assignment Services 5.0+",
+        "operationId": "fetchCourseRoster",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "RosterRequest.json"
+              }
+            }
+          },
+          "description": "The object containing the request information."
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "RosterCourseResponse.json"
+                }
+              }
+            },
+            "description": "The request was successful. The server returns a list of courses."
+          },
+          "400": {
+            "description": "The server was unable to process the request."
+          }
+        },
+        "summary": "Get the List of Courses",
+        "tags": [
+          "Course management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/fetch-course-roster",
+        "x-apple-developer-api-version": "5.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/fetch-course-roster.json"
+      }
+    },
+    "/roster/class/course/sync": {
+      "post": {
+        "description": "Get updates about the list of courses the server manages.\n\nDevice Assignment Services 5.0+\n\nThis sync service uses a cursor returned by the full course-roster service. It returns a list of all modifications (additions or deletions) made since the cursor date, for up to 7 days.\n\nThis service may return the same course more than once. You can identify duplicates by matching their `unique_identifier` values.",
+        "operationId": "fetchCourseRosterSync",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "RosterRequest.json"
+              }
+            }
+          },
+          "description": "The object containing the request information."
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "RosterCourseResponse.json"
+                }
+              }
+            },
+            "description": "The request was successful. The server returns a list of courses."
+          },
+          "400": {
+            "description": "The server was unable to process the request."
+          }
+        },
+        "summary": "Sync the List of Courses",
+        "tags": [
+          "Course management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/fetch-course-roster-sync",
+        "x-apple-developer-api-version": "5.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/fetch-course-roster-sync.json"
+      }
+    },
+    "/roster/class/location": {
+      "post": {
+        "description": "Obtain a list of the locations the server manages.\n\nDevice Assignment Services 5.0+",
+        "operationId": "fetchLocationRoster",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "RosterRequest.json"
+              }
+            }
+          },
+          "description": "The object containing the request information."
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "RosterClassLocationResponse.json"
+                }
+              }
+            },
+            "description": "The request was successful. The server returns a list of locations."
+          },
+          "400": {
+            "description": "The server was unable to process the request."
+          }
+        },
+        "summary": "Get the List of Locations",
+        "tags": [
+          "Location management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/fetch-location-roster",
+        "x-apple-developer-api-version": "5.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/fetch-location-roster.json"
+      }
+    },
+    "/roster/class/location/sync": {
+      "post": {
+        "description": "Get updates about the list of locations the server manages.\n\nDevice Assignment Services 5.0+\n\nThis sync service uses a cursor returned by the full location-roster service. It returns a list of all modifications (additions or deletions) made since the cursor date, up to 7 days.\n\nThis service may return the same location more than once. You can identify duplicates by matching their `unique_identifier` values.",
+        "operationId": "fetchLocationRosterSync",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "RosterRequest.json"
+              }
+            }
+          },
+          "description": "The object containing the request information."
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "RosterClassLocationResponse.json"
+                }
+              }
+            },
+            "description": "The request was successful. The server returns a list of locations."
+          },
+          "400": {
+            "description": "The server was unable to process the request."
+          }
+        },
+        "summary": "Sync the Locations",
+        "tags": [
+          "Location management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/fetch-location-roster-sync",
+        "x-apple-developer-api-version": "5.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/fetch-location-roster-sync.json"
+      }
+    },
+    "/roster/class/person": {
+      "post": {
+        "description": "Obtain a list of people the server manages, across the organization.\n\nDevice Assignment Services 5.0+\n\nIn addition to instructors and students, this list may contain additional people who don’t belong to any class.",
+        "operationId": "fetchPersonRoster",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "RosterRequest.json"
+              }
+            }
+          },
+          "description": "The object containing the request information."
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "RosterPersonResponse.json"
+                }
+              }
+            },
+            "description": "The request was successful. The server returns a list of people."
+          },
+          "400": {
+            "description": "The server was unable to process the request."
+          }
+        },
+        "summary": "Get the List of People",
+        "tags": [
+          "People management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/fetch-person-roster",
+        "x-apple-developer-api-version": "5.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/fetch-person-roster.json"
+      }
+    },
+    "/roster/class/person/sync": {
+      "post": {
+        "description": "Get updates about the list of people the server manages.\n\nDevice Assignment Services 5.0+\n\nThis sync service uses a cursor returned by the full person-roster service. It returns a list of all modifications (additions or deletions) made since the cursor date, for up to 7 days.\n\nThis service may return the same person more than once. You can identify duplicates by matching their `unique_identifier` values.",
+        "operationId": "fetchPersonRosterSync",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "RosterRequest.json"
+              }
+            }
+          },
+          "description": "The object containing the request information."
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "RosterPersonResponse.json"
+                }
+              }
+            },
+            "description": "The request was successful. The server returns a list of people."
+          },
+          "400": {
+            "description": "The server was unable to process the request."
+          }
+        },
+        "summary": "Sync the List of People",
+        "tags": [
+          "People management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/fetch-person-roster-sync",
+        "x-apple-developer-api-version": "5.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/fetch-person-roster-sync.json"
+      }
+    },
+    "/roster/class/sync": {
+      "post": {
+        "description": "Get updates about the list of classes the server manages.\n\nDevice Assignment Services 5.0+\n\nThis sync service uses a cursor that is returned by the full class-roster service. It returns a list of all modifications (additions or deletions) made since the cursor date, for up to 7 days.\n\nThis service may return the same class more than once. You can identify duplicates by matching their `unique_identifier` values.",
+        "operationId": "fetchClassRosterSync",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "RosterRequest.json"
+              }
+            }
+          },
+          "description": "The object containing the request information."
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "RosterClassResponse.json"
+                }
+              }
+            },
+            "description": "The request was successful. The server returns a list of classes."
+          },
+          "400": {
+            "description": "The server was unable to process the request."
+          }
+        },
+        "summary": "Sync the List of Classes",
+        "tags": [
+          "Class management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/fetch-class-roster-sync",
+        "x-apple-developer-api-version": "5.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/fetch-class-roster-sync.json"
+      }
+    },
+    "/server/devices": {
+      "post": {
+        "description": "Get a list of devices that are managed by the server.\n\nDevice Assignment Services 5.0+\n\nThis request fetches a list of all devices that are assigned to this MDM server at the time of the request. This service should be used for loading an initial list of devices into the MDM server’s data store. Once the list of devices is loaded, [Sync the List of Devices](https://developer.apple.com/documentation/devicemanagement/sync-devices) to update the list.\n\nThis request provides a limited number of entries per request, using cursors to provide position information across requests.",
+        "operationId": "fetchDevices",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "FetchDeviceRequest.json"
+              }
+            }
+          },
+          "description": "The request for a list of devices."
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "FetchDeviceResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "description": "- `INVALID_CURSOR`: An invalid cursor value was provided.\n- `EXHAUSTED_CURSOR`: The cursor had returned all devices in previous calls.\n- `USER_AGENT_INVALID:`  The `User-Agent` header is invalid.\n- `USER_AGENT_MISSING:`  The `User-Agent` header is missing or has no assigned value."
+          }
+        },
+        "summary": "Get a List of Devices",
+        "tags": [
+          "Device management"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/fetch-devices",
+        "x-apple-developer-api-version": "5.0",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/fetch-devices.json"
+      }
+    }
+  },
+  "security": [
+    {
+      "X-ADM-Auth-Session": []
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://mdmenrollment.apple.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Device management"
+    },
+    {
+      "name": "Profile management"
+    },
+    {
+      "name": "Account-driven enrollment service discovery"
+    },
+    {
+      "name": "Account management"
+    },
+    {
+      "name": "Class management"
+    },
+    {
+      "name": "People management"
+    },
+    {
+      "name": "Course management"
+    },
+    {
+      "name": "Location management"
+    }
+  ]
+}

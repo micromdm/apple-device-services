@@ -1,0 +1,36 @@
+{
+  "info": {
+    "description": "The Apple Software Lookup Service lists the publicly available software updates, upgrades, and Background Security Improvements for Apple devices. See [Deploying software updates using declarative management](https://developer.apple.com/documentation/devicemanagement/deploying-software-updates-using-declarative-management).\n\nThe server's TLS certificate chains to [Apple Root CA](https://www.apple.com/certificateauthority/), which many system trust stores don't include.",
+    "title": "Apple Software Lookup Service",
+    "version": "2"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/v2/pmv": {
+      "get": {
+        "description": "Get the lists of available software releases, grouped by operating system platform.",
+        "operationId": "pmv",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "gdmf.json"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "Get Available Software Releases",
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/deploying-software-updates-using-declarative-management"
+      }
+    }
+  },
+  "security": [],
+  "servers": [
+    {
+      "url": "https://gdmf.apple.com"
+    }
+  ]
+}

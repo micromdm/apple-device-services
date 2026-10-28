@@ -1,0 +1,33 @@
+[
+  {
+    "op": "add",
+    "path": "/components",
+    "value": {
+      "securitySchemes": {
+        "OAuth2": {
+          "description": "OAuth 2 client credentials. The app creates a client assertion — a JSON web token it signs with its private key, with an `aud` of `https://account.apple.com/auth/oauth2/v2/token` — and exchanges it for an access token with a `POST` to the token URL (`grant_type=client_credentials`, `client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer`). The access token is attached as a bearer token in the `Authorization` header, and is valid for the number of seconds `expires_in` specifies. See [Implementing OAuth for the Apple School Manager and Apple Business API](https://developer.apple.com/documentation/apple-school-and-business-manager-api/implementing-oauth-for-the-apple-school-manager-and-apple-business-api).",
+          "flows": {
+            "clientCredentials": {
+              "scopes": {
+                "business.api": "Access the API (`business.api`)."
+              },
+              "tokenUrl": "https://account.apple.com/auth/oauth2/token"
+            }
+          },
+          "type": "oauth2"
+        }
+      }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/security",
+    "value": [
+      {
+        "OAuth2": [
+          "business.api"
+        ]
+      }
+    ]
+  }
+]

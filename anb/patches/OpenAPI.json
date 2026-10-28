@@ -1,0 +1,84 @@
+[
+  {
+    "op": "test",
+    "path": "/paths/~1v2~1assets/get/operationId",
+    "value": "getAssets4ski1"
+  },
+  {
+    "op": "replace",
+    "path": "/paths/~1v2~1assets/get/operationId",
+    "value": "getAssets"
+  },
+  {
+    "op": "test",
+    "path": "/paths/~1v2~1assignments/get/operationId",
+    "value": "getAssignments9wv1e"
+  },
+  {
+    "op": "replace",
+    "path": "/paths/~1v2~1assignments/get/operationId",
+    "value": "getAssignments"
+  },
+  {
+    "op": "test",
+    "path": "/paths/~1v2~1users/get/operationId",
+    "value": "getUsers4mwln"
+  },
+  {
+    "op": "replace",
+    "path": "/paths/~1v2~1users/get/operationId",
+    "value": "getUsers"
+  },
+  {
+    "op": "test",
+    "path": "/paths/~1v2~1client~1config/get/operationId",
+    "value": "clientConfig71glv"
+  },
+  {
+    "op": "replace",
+    "path": "/paths/~1v2~1client~1config/get/operationId",
+    "value": "getClientConfig"
+  },
+  {
+    "op": "test",
+    "path": "/paths/~1v2~1client~1config/post/operationId",
+    "value": "clientConfig4szk1"
+  },
+  {
+    "op": "replace",
+    "path": "/paths/~1v2~1client~1config/post/operationId",
+    "value": "updateClientConfig"
+  },
+  {
+    "op": "add",
+    "path": "/components",
+    "value": {
+      "securitySchemes": {
+        "sToken": {
+          "description": "The organization's content token (sToken), downloaded from the Apps and Books section of Apple School Manager or Apple Business, sent in the `Authorization` header (`Authorization: Bearer {sToken}`). All endpoints except Service Config require it. See [Getting started with the management API](https://developer.apple.com/documentation/devicemanagement/getting-started-with-the-management-api).",
+          "scheme": "bearer",
+          "type": "http"
+        }
+      }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/security",
+    "value": [
+      {
+        "sToken": []
+      }
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1v2~1service~1config/get/security",
+    "value": [
+      {},
+      {
+        "sToken": []
+      }
+    ]
+  }
+]

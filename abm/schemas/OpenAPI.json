@@ -1,0 +1,6030 @@
+{
+  "components": {
+    "securitySchemes": {
+      "OAuth2": {
+        "description": "OAuth 2 client credentials. The app creates a client assertion — a JSON web token it signs with its private key, with an `aud` of `https://account.apple.com/auth/oauth2/v2/token` — and exchanges it for an access token with a `POST` to the token URL (`grant_type=client_credentials`, `client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer`). The access token is attached as a bearer token in the `Authorization` header, and is valid for the number of seconds `expires_in` specifies. See [Implementing OAuth for the Apple School Manager and Apple Business API](https://developer.apple.com/documentation/apple-school-and-business-manager-api/implementing-oauth-for-the-apple-school-manager-and-apple-business-api).",
+        "flows": {
+          "clientCredentials": {
+            "scopes": {
+              "business.api": "Access the API (`business.api`)."
+            },
+            "tokenUrl": "https://account.apple.com/auth/oauth2/token"
+          }
+        },
+        "type": "oauth2"
+      }
+    }
+  },
+  "info": {
+    "description": "Automate device management activities, view device information, and manage users and user groups in Apple Business.",
+    "title": "Apple Business API",
+    "version": "2.6"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/v1/apps": {
+      "get": {
+        "description": "Get a list of apps for an organization using the built-in device management in Apple Business.\n\nApple Business API 2.6+\n\n> **Important:** This endpoint requires the built-in device management service to be turned on for the organization. If you need to manage apps without the built-in device management, use the [Apps and Books for Organizations](https://developer.apple.com/documentation/devicemanagement/apps-and-books-for-organizations) API instead.",
+        "operationId": "getApps",
+        "parameters": [
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[apps]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "name",
+                  "bundleId",
+                  "websiteUrl",
+                  "version",
+                  "supportedOS",
+                  "isCustomApp",
+                  "appStoreUrl"
+                ]
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "The number of resources to return (maximum 1000).",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "AppsResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Apps",
+        "tags": [
+          "Apps and Packages"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-apps",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-apps.json"
+      }
+    },
+    "/v1/apps/{id}": {
+      "get": {
+        "description": "Get information about a specific app for an organization using the built-in device management in Apple Business.\n\nApple Business API 2.6+\n\n> **Important:** This endpoint requires the built-in device management service to be turned on for the organization. If you need to manage apps without the built-in device management, use the [Apps and Books for Organizations](https://developer.apple.com/documentation/devicemanagement/apps-and-books-for-organizations) API instead.",
+        "operationId": "getAppInformation",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[apps]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "name",
+                  "bundleId",
+                  "websiteUrl",
+                  "version",
+                  "supportedOS",
+                  "isCustomApp",
+                  "appStoreUrl"
+                ]
+              },
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "AppResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get App Information",
+        "tags": [
+          "Apps and Packages"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-app-information",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-app-information.json"
+      }
+    },
+    "/v1/auditEvents": {
+      "get": {
+        "description": "Get a list of audit events in an organization that satisfies the query criteria.\n\nApple Business API 2.6+",
+        "operationId": "getAuditEvents",
+        "parameters": [
+          {
+            "description": "ISO8601 formatted start timestamp of query time range.",
+            "in": "query",
+            "name": "filter[startTimestamp]",
+            "required": true,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "ISO8601 formatted end timestamp of query time range.",
+            "in": "query",
+            "name": "filter[endTimestamp]",
+            "required": true,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Id of actor of event. Note that only one actor id in query is supported.",
+            "in": "query",
+            "name": "filter[actorId]",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Id of subject of event. Note that only one subject id in query is supported.",
+            "in": "query",
+            "name": "filter[subjectId]",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Type of event. Note that only one type in query is supported.",
+            "in": "query",
+            "name": "filter[type]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "DEVICE_ADDED_TO_ORG",
+                  "DEVICE_REMOVED_FROM_ORG",
+                  "DEVICE_ASSIGNED_TO_SERVER",
+                  "DEVICE_UNASSIGNED_FROM_SERVER",
+                  "SUBJECT_HAS_ICLOUD_STORAGE_PURCHASE_ADDED",
+                  "SUBJECT_HAS_ICLOUD_STORAGE_PURCHASE_REMOVED",
+                  "SUBJECT_HAS_APPLECARE_PURCHASE_ADDED",
+                  "SUBJECT_HAS_APPLECARE_PURCHASE_REMOVED",
+                  "DEVICE_IS_ERASED",
+                  "CONFIG_SETTINGS_CREATED",
+                  "CONFIG_SETTINGS_UPDATED",
+                  "CONFIG_SETTINGS_DELETED",
+                  "COLLECTION_CREATED",
+                  "COLLECTION_UPDATED",
+                  "COLLECTION_DELETED",
+                  "SUBSCRIPTION_CREATED",
+                  "SUBSCRIPTION_UPDATED",
+                  "SUBSCRIPTION_DELETED",
+                  "ACCOUNT_ROLE_LOCATION_CHANGED",
+                  "ACCOUNT_ADDED",
+                  "ACCOUNT_DELETED",
+                  "EXTERNAL_ACCOUNT_ASSOCIATED",
+                  "EXTERNAL_ACCOUNT_DISASSOCIATED",
+                  "DOMAIN_ADDED",
+                  "DOMAIN_REMOVED",
+                  "DOMAIN_VERIFIED",
+                  "API_ACCOUNT_CREATED_WITH_KEY",
+                  "API_ACCOUNT_CREATED_WITHOUT_KEY",
+                  "API_ACCOUNT_DELETED",
+                  "API_ACCOUNT_KEY_REVOKED",
+                  "API_ACCOUNT_KEY_GENERATED",
+                  "API_ACCOUNT_ROLE_LOCATION_CHANGED",
+                  "API_ACCOUNT_NAME_CHANGED",
+                  "ROLE_CREATED",
+                  "ROLE_UPDATED",
+                  "TERMS_ACCEPTED",
+                  "DOMAIN_FEDERATION_ENABLED",
+                  "DOMAIN_FEDERATION_DISABLED",
+                  "BATCH_PASSWORD_RESET_INITIATED",
+                  "EXTERNAL_ACCOUNT_INVITED",
+                  "ACCOUNT_IMAGE_SET",
+                  "ACCOUNT_IMAGE_REPLACED",
+                  "ACCOUNT_IMAGE_REMOVED",
+                  "IDP_CREATED",
+                  "IDP_UPDATED",
+                  "IDP_DELETED",
+                  "IDP_ACCOUNT_SYNC_ENABLED",
+                  "IDP_ACCOUNT_SYNC_DISABLED",
+                  "APPLE_SERVICES_SETTINGS_UPDATED",
+                  "ACCOUNT_PASSWORD_CHANGED"
+                ]
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "The number of included related resources to return.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "fields[auditEvents]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "eventDateTime",
+                  "type",
+                  "category",
+                  "actorType",
+                  "actorId",
+                  "actorName",
+                  "subjectType",
+                  "subjectId",
+                  "subjectName",
+                  "outcome",
+                  "groupId",
+                  "eventDataPropertyKey",
+                  "eventDataDeviceAddedToOrg",
+                  "eventDataDeviceRemovedFromOrg",
+                  "eventDataDeviceAssignedToServer",
+                  "eventDataDeviceIsErased",
+                  "eventDataDeviceUnassignedFromServer",
+                  "eventDataSubjectHasICloudStoragePurchaseAdded",
+                  "eventDataSubjectHasICloudStoragePurchaseRemoved",
+                  "eventDataSubjectHasAppleCarePurchaseAdded",
+                  "eventDataSubjectHasAppleCarePurchaseRemoved",
+                  "eventDataConfigSettingsCreated",
+                  "eventDataConfigSettingsUpdated",
+                  "eventDataConfigSettingsDeleted",
+                  "eventDataCollectionCreated",
+                  "eventDataCollectionUpdated",
+                  "eventDataCollectionDeleted",
+                  "eventDataSubscriptionCreated",
+                  "eventDataSubscriptionUpdated",
+                  "eventDataSubscriptionDeleted",
+                  "eventDataAccountRoleLocationChanged",
+                  "eventDataAccountAdded",
+                  "eventDataAccountDeleted",
+                  "eventDataExternalAccountAssociated",
+                  "eventDataExternalAccountDisassociated",
+                  "eventDataDomainAdded",
+                  "eventDataDomainRemoved",
+                  "eventDataDomainVerified",
+                  "eventDataApiAccountCreatedWithKey",
+                  "eventDataApiAccountCreatedWithoutKey",
+                  "eventDataApiAccountDeleted",
+                  "eventDataApiAccountKeyGenerated",
+                  "eventDataApiAccountKeyRevoked",
+                  "eventDataApiAccountNameChanged",
+                  "eventDataApiAccountRoleLocationChanged",
+                  "eventDataRoleCreated",
+                  "eventDataRoleUpdated",
+                  "eventDataTermsAccepted",
+                  "eventDataDomainFederationEnabled",
+                  "eventDataDomainFederationDisabled",
+                  "eventDataBatchPasswordResetInitiated",
+                  "eventDataExternalAccountInvited",
+                  "eventDataAccountImageSet",
+                  "eventDataAccountImageReplaced",
+                  "eventDataAccountImageRemoved",
+                  "eventDataIdpCreated",
+                  "eventDataIdpUpdated",
+                  "eventDataIdpDeleted",
+                  "eventDataIdpAccountSyncEnabled",
+                  "eventDataIdpAccountSyncDisabled",
+                  "eventDataAppleServicesSettingsUpdated",
+                  "eventDataAccountPasswordChanged"
+                ]
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "AuditEventsResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Audit Events",
+        "tags": [
+          "Audit Events"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-audit-events",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-audit-events.json"
+      }
+    },
+    "/v1/blueprints": {
+      "get": {
+        "description": "Get a list of Blueprints in an organization.\n\nApple Business API 2.6+",
+        "operationId": "getBlueprints",
+        "parameters": [
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[blueprints]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "name",
+                  "description",
+                  "status",
+                  "createdDateTime",
+                  "updatedDateTime",
+                  "appLicenseDeficient",
+                  "apps",
+                  "packages",
+                  "configurations",
+                  "orgDevices",
+                  "users",
+                  "userGroups"
+                ]
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "The number of resources to return (maximum 1000).",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Related resources to include in the response. Possible values: `apps`, `configurations`, `packages`, `orgDevices`, `users`, `userGroups`.",
+            "in": "query",
+            "name": "include",
+            "schema": {
+              "items": {
+                "enum": [
+                  "apps",
+                  "packages",
+                  "configurations",
+                  "orgDevices",
+                  "users",
+                  "userGroups"
+                ]
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Maximum number of related apps to include.",
+            "in": "query",
+            "name": "limit[apps]",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Maximum number of related configurations to include.",
+            "in": "query",
+            "name": "limit[configurations]",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Maximum number of related packages to include.",
+            "in": "query",
+            "name": "limit[packages]",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Maximum number of related devices to include.",
+            "in": "query",
+            "name": "limit[orgDevices]",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Maximum number of related users to include.",
+            "in": "query",
+            "name": "limit[users]",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Maximum number of related user groups to include.",
+            "in": "query",
+            "name": "limit[userGroups]",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "BlueprintsResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Blueprints",
+        "tags": [
+          "Blueprints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-blueprints",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-blueprints.json"
+      },
+      "post": {
+        "description": "Create a new Blueprint in an organization.\n\nApple Business API 2.6+\n\n> **Note:** Any invalid resource IDs will be dropped from the request during Blueprint creation.",
+        "operationId": "createABlueprint",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "BlueprintCreateRequest.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "BlueprintResponse.json"
+                }
+              }
+            },
+            "description": "Created"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request entity error(s)."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unprocessable request entity error(s)."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Create a Blueprint",
+        "tags": [
+          "Blueprints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/create-a-blueprint",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/create-a-blueprint.json"
+      }
+    },
+    "/v1/blueprints/{id}": {
+      "delete": {
+        "description": "Delete a Blueprint from an organization.\n\nApple Business API 2.6+",
+        "operationId": "deleteABlueprint",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request entity error(s)."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Delete a Blueprint",
+        "tags": [
+          "Blueprints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/delete-a-blueprint",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/delete-a-blueprint.json"
+      },
+      "get": {
+        "description": "Get information about a specific Blueprint in an organization.\n\nApple Business API 2.6+",
+        "operationId": "getBlueprintInformation",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[blueprints]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "name",
+                  "description",
+                  "status",
+                  "createdDateTime",
+                  "updatedDateTime",
+                  "appLicenseDeficient",
+                  "apps",
+                  "packages",
+                  "configurations",
+                  "orgDevices",
+                  "users",
+                  "userGroups"
+                ]
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Related resources to include in the response. Possible values: `apps`, `configurations`, `packages`, `orgDevices`, `users`, `userGroups`.",
+            "in": "query",
+            "name": "include",
+            "schema": {
+              "items": {
+                "enum": [
+                  "apps",
+                  "packages",
+                  "configurations",
+                  "orgDevices",
+                  "users",
+                  "userGroups"
+                ]
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Maximum number of related apps to include.",
+            "in": "query",
+            "name": "limit[apps]",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Maximum number of related configurations to include.",
+            "in": "query",
+            "name": "limit[configurations]",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Maximum number of related packages to include.",
+            "in": "query",
+            "name": "limit[packages]",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Maximum number of related devices to include.",
+            "in": "query",
+            "name": "limit[orgDevices]",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Maximum number of related users to include.",
+            "in": "query",
+            "name": "limit[users]",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Maximum number of related user groups to include.",
+            "in": "query",
+            "name": "limit[userGroups]",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "BlueprintResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Blueprint Information",
+        "tags": [
+          "Blueprints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-blueprint-information",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-blueprint-information.json"
+      },
+      "patch": {
+        "description": "Update an existing Blueprint in an organization.\n\nApple Business API 2.6+\n\n> **Note:** Only the fields included in the request are updated. Any omitted fields retain their existing values.\n\n> **Note:** Any invalid resource IDs will be dropped from the request during Blueprint update.",
+        "operationId": "updateABlueprint",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "BlueprintUpdateRequest.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "BlueprintResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request entity error(s)."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unprocessable request entity error(s)."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Update a Blueprint",
+        "tags": [
+          "Blueprints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/update-a-blueprint",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/update-a-blueprint.json"
+      }
+    },
+    "/v1/blueprints/{id}/relationships/apps": {
+      "delete": {
+        "description": "Remove apps from a Blueprint.\n\nApple Business API 2.6+",
+        "operationId": "removeAppsFromABlueprint",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "BlueprintAppsLinkagesRequest.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request entity error(s)."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unprocessable request entity error(s)."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Remove Apps from a Blueprint",
+        "tags": [
+          "Blueprints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/remove-apps-from-a-blueprint",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/remove-apps-from-a-blueprint.json"
+      },
+      "get": {
+        "description": "Get a list of app IDs associated with a Blueprint.\n\nApple Business API 2.6+",
+        "operationId": "getAllAppIdsForABlueprint",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The number of included related resources to return.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "BlueprintAppsLinkagesResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get App IDs for a Blueprint",
+        "tags": [
+          "Blueprints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-all-app-ids-for-a-blueprint",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-all-app-ids-for-a-blueprint.json"
+      },
+      "post": {
+        "description": "Add apps to a Blueprint.\n\nApple Business API 2.6+",
+        "operationId": "addAppsToABlueprint",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "BlueprintAppsLinkagesRequest.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request entity error(s)."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unprocessable request entity error(s)."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Add Apps to a Blueprint",
+        "tags": [
+          "Blueprints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/add-apps-to-a-blueprint",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/add-apps-to-a-blueprint.json"
+      }
+    },
+    "/v1/blueprints/{id}/relationships/configurations": {
+      "delete": {
+        "description": "Remove Configurations from a Blueprint.\n\nApple Business API 2.6+",
+        "operationId": "removeConfigurationsFromABlueprint",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "BlueprintConfigurationsLinkagesRequest.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request entity error(s)."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unprocessable request entity error(s)."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Remove Configurations from a Blueprint",
+        "tags": [
+          "Blueprints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/remove-configurations-from-a-blueprint",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/remove-configurations-from-a-blueprint.json"
+      },
+      "get": {
+        "description": "Get a list of Configuration IDs associated with a Blueprint.\n\nApple Business API 2.6+",
+        "operationId": "getAllConfigurationIdsForABlueprint",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The number of included related resources to return.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "BlueprintConfigurationsLinkagesResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Configuration IDs for a Blueprint",
+        "tags": [
+          "Blueprints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-all-configuration-ids-for-a-blueprint",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-all-configuration-ids-for-a-blueprint.json"
+      },
+      "post": {
+        "description": "Add Configurations to a Blueprint.\n\nApple Business API 2.6+",
+        "operationId": "addConfigurationsToABlueprint",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "BlueprintConfigurationsLinkagesRequest.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request entity error(s)."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unprocessable request entity error(s)."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Add Configurations to a Blueprint",
+        "tags": [
+          "Blueprints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/add-configurations-to-a-blueprint",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/add-configurations-to-a-blueprint.json"
+      }
+    },
+    "/v1/blueprints/{id}/relationships/orgDevices": {
+      "delete": {
+        "description": "Remove devices from a Blueprint.\n\nApple Business API 2.6+",
+        "operationId": "removeOrgDevicesFromABlueprint",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "BlueprintOrgDevicesLinkagesRequest.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request entity error(s)."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unprocessable request entity error(s)."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Remove Devices from a Blueprint",
+        "tags": [
+          "Blueprints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/remove-org-devices-from-a-blueprint",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/remove-org-devices-from-a-blueprint.json"
+      },
+      "get": {
+        "description": "Get a list of device IDs associated with a Blueprint.\n\nApple Business API 2.6+",
+        "operationId": "getAllOrgdeviceIdsForABlueprint",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The number of included related resources to return.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "BlueprintOrgDevicesLinkagesResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Device IDs for a Blueprint",
+        "tags": [
+          "Blueprints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-all-orgdevice-ids-for-a-blueprint",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-all-orgdevice-ids-for-a-blueprint.json"
+      },
+      "post": {
+        "description": "Add devices to a Blueprint.\n\nApple Business API 2.6+",
+        "operationId": "addOrgDevicesToABlueprint",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "BlueprintOrgDevicesLinkagesRequest.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request entity error(s)."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unprocessable request entity error(s)."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Add Devices to a Blueprint",
+        "tags": [
+          "Blueprints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/add-org-devices-to-a-blueprint",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/add-org-devices-to-a-blueprint.json"
+      }
+    },
+    "/v1/blueprints/{id}/relationships/packages": {
+      "delete": {
+        "description": "Remove packages from a Blueprint.\n\nApple Business API 2.6+",
+        "operationId": "removePackagesFromABlueprint",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "BlueprintPackagesLinkagesRequest.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request entity error(s)."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unprocessable request entity error(s)."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Remove Packages from a Blueprint",
+        "tags": [
+          "Blueprints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/remove-packages-from-a-blueprint",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/remove-packages-from-a-blueprint.json"
+      },
+      "get": {
+        "description": "Get a list of package IDs associated with a Blueprint.\n\nApple Business API 2.6+",
+        "operationId": "getAllPackageIdsForABlueprint",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The number of included related resources to return.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "BlueprintPackagesLinkagesResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Package IDs for a Blueprint",
+        "tags": [
+          "Blueprints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-all-package-ids-for-a-blueprint",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-all-package-ids-for-a-blueprint.json"
+      },
+      "post": {
+        "description": "Add packages to a Blueprint.\n\nApple Business API 2.6+",
+        "operationId": "addPackagesToABlueprint",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "BlueprintPackagesLinkagesRequest.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request entity error(s)."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unprocessable request entity error(s)."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Add Packages to a Blueprint",
+        "tags": [
+          "Blueprints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/add-packages-to-a-blueprint",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/add-packages-to-a-blueprint.json"
+      }
+    },
+    "/v1/blueprints/{id}/relationships/userGroups": {
+      "delete": {
+        "description": "Remove user groups from a Blueprint.\n\nApple Business API 2.6+",
+        "operationId": "removeUserGroupsFromABlueprint",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "BlueprintUserGroupsLinkagesRequest.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request entity error(s)."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unprocessable request entity error(s)."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Remove User Groups from a Blueprint",
+        "tags": [
+          "Blueprints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/remove-user-groups-from-a-blueprint",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/remove-user-groups-from-a-blueprint.json"
+      },
+      "get": {
+        "description": "Get a list of user group IDs associated with a Blueprint.\n\nApple Business API 2.6+",
+        "operationId": "getAllUserGroupIdsForABlueprint",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The number of included related resources to return.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "BlueprintUserGroupsLinkagesResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get User Group IDs for a Blueprint",
+        "tags": [
+          "Blueprints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-all-user-group-ids-for-a-blueprint",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-all-user-group-ids-for-a-blueprint.json"
+      },
+      "post": {
+        "description": "Add user groups to a Blueprint.\n\nApple Business API 2.6+",
+        "operationId": "addUserGroupsToABlueprint",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "BlueprintUserGroupsLinkagesRequest.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request entity error(s)."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unprocessable request entity error(s)."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Add User Groups to a Blueprint",
+        "tags": [
+          "Blueprints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/add-user-groups-to-a-blueprint",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/add-user-groups-to-a-blueprint.json"
+      }
+    },
+    "/v1/blueprints/{id}/relationships/users": {
+      "delete": {
+        "description": "Remove users from a Blueprint.\n\nApple Business API 2.6+",
+        "operationId": "removeUsersFromABlueprint",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "BlueprintUsersLinkagesRequest.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request entity error(s)."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unprocessable request entity error(s)."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Remove Users from a Blueprint",
+        "tags": [
+          "Blueprints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/remove-users-from-a-blueprint",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/remove-users-from-a-blueprint.json"
+      },
+      "get": {
+        "description": "Get a list of user IDs associated with a Blueprint.\n\nApple Business API 2.6+",
+        "operationId": "getAllUserIdsForABlueprint",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The number of included related resources to return.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "BlueprintUsersLinkagesResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get User IDs for a Blueprint",
+        "tags": [
+          "Blueprints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-all-user-ids-for-a-blueprint",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-all-user-ids-for-a-blueprint.json"
+      },
+      "post": {
+        "description": "Add users to a Blueprint.\n\nApple Business API 2.6+",
+        "operationId": "addUsersToABlueprint",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "BlueprintUsersLinkagesRequest.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request entity error(s)."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unprocessable request entity error(s)."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Add Users to a Blueprint",
+        "tags": [
+          "Blueprints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/add-users-to-a-blueprint",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/add-users-to-a-blueprint.json"
+      }
+    },
+    "/v1/configurations": {
+      "get": {
+        "description": "Get a list of Configurations in an organization.\n\nApple Business API 2.6+\n\n> **Note:** This API will return `null` for `customSettingsValues` for all configuration types, including of type `CUSTOM_SETTING`. To get the `customSettingsValues` for `CUSTOM_SETTING` Configurations, see [Get Configuration Information](https://developer.apple.com/documentation/applebusinessapi/get-configuration-information).",
+        "operationId": "getConfigurations",
+        "parameters": [
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[configurations]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "type",
+                  "name",
+                  "configuredForPlatforms",
+                  "customSettingsValues",
+                  "createdDateTime",
+                  "updatedDateTime"
+                ]
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "The number of resources to return (maximum 1000).",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ConfigurationsResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Configurations",
+        "tags": [
+          "Configurations"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-configurations",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-configurations.json"
+      },
+      "post": {
+        "description": "Create a new custom Configuration in an organization.\n\nApple Business API 2.6+\n\n> **Important:** Only Configurations with type `CUSTOM_SETTING` can be created with the API.\n\n> **Note:** `configurationProfile` is required. `filename` is optional — if omitted, a default filename is generated from the Configuration ID. `configuredForPlatforms` is optional — if omitted, supported platforms are auto-detected from the payload content in the Configuration profile. The profile must be compatible with the resolved platforms.",
+        "operationId": "createAConfiguration",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "ConfigurationCreateRequest.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ConfigurationResponse.json"
+                }
+              }
+            },
+            "description": "Created"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request entity error(s)."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unprocessable request entity error(s)."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Create a Configuration",
+        "tags": [
+          "Configurations"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/create-a-configuration",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/create-a-configuration.json"
+      }
+    },
+    "/v1/configurations/{id}": {
+      "delete": {
+        "description": "Delete a Configuration from an organization.\n\nApple Business API 2.6+",
+        "operationId": "deleteAConfiguration",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request entity error(s)."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Delete a Configuration",
+        "tags": [
+          "Configurations"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/delete-a-configuration",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/delete-a-configuration.json"
+      },
+      "get": {
+        "description": "Get information about a specific Configuration in an organization.\n\nApple Business API 2.6+\n\n> **Note:** Use this API to retrieve the `customSettingsValues` for a `CUSTOM_SETTING` Configuration.",
+        "operationId": "getConfigurationInformation",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[configurations]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "type",
+                  "name",
+                  "configuredForPlatforms",
+                  "customSettingsValues",
+                  "createdDateTime",
+                  "updatedDateTime"
+                ]
+              },
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ConfigurationResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Configuration Information",
+        "tags": [
+          "Configurations"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-configuration-information",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-configuration-information.json"
+      },
+      "patch": {
+        "description": "Update an existing custom Configuration in an organization.\n\nApple Business API 2.6+\n\n> **Important:** Only Configurations with type `CUSTOM_SETTING` can be updated via the API.\n\n> **Note:** If a `filename` is provided, it must end in `.mobileconfig`. A provided `configurationProfile` is validated and must be compatible with the resolved `configuredForPlatforms` (either from the request or the existing value on the Configuration).\n\n> **Note:** Only the fields included in the request are updated. One of `name`, `configuredForPlatforms`, `configurationProfile`, or `filename` must be included, and any omitted fields retain their existing values.",
+        "operationId": "updateAConfiguration",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "ConfigurationUpdateRequest.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ConfigurationResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request entity error(s)."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unprocessable request entity error(s)."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Update a Configuration",
+        "tags": [
+          "Configurations"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/update-a-configuration",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/update-a-configuration.json"
+      }
+    },
+    "/v1/mdmDevices": {
+      "get": {
+        "description": "Get a list of devices enrolled in Apple Device Management service.\n\nApple Business API 2.6+",
+        "operationId": "getAppleMdmEnrolledDevices",
+        "parameters": [
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[mdmDevices]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "serialNumber",
+                  "deviceName",
+                  "productFamily",
+                  "enrolledUserId",
+                  "details"
+                ]
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "The number of included related resources to return.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "MdmDevicesResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Devices Enrolled in Apple Device Management Service",
+        "tags": [
+          "Devices"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-apple-mdm-enrolled-devices",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-apple-mdm-enrolled-devices.json"
+      }
+    },
+    "/v1/mdmDevices/{id}/details": {
+      "get": {
+        "description": "Get detailed information about a device enrolled in Apple Device Management service.\n\nApple Business API 2.6+",
+        "operationId": "getTheDetailsForAppleMdmEnrolledDevice",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[mdmDeviceDetails]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "serialNumber",
+                  "deviceName",
+                  "deviceModel",
+                  "osVersion",
+                  "platform",
+                  "imei",
+                  "meid",
+                  "wifiMacAddress",
+                  "bluetoothMacAddress",
+                  "ethernetMacAddress",
+                  "lastCheckInDateTime",
+                  "isFirewallEnabled",
+                  "isFileVaultEnabled",
+                  "storageFreeCapacity",
+                  "storageTotalCapacity",
+                  "deviceLockStatus",
+                  "deviceEraseStatus",
+                  "lostModeStatus"
+                ]
+              },
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "MdmDeviceDetailResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Details for a Device Enrolled in Apple Device Management Service",
+        "tags": [
+          "Devices"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-the-details-for-apple-mdm-enrolled-device",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-the-details-for-apple-mdm-enrolled-device.json"
+      }
+    },
+    "/v1/mdmServers": {
+      "get": {
+        "description": "Get a list of device management services in an organization.\n\nApple Business API 2.6+",
+        "operationId": "getMdmServers",
+        "parameters": [
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[mdmServers]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "serverName",
+                  "enableMdmDisownFlag",
+                  "defaultProductFamilies",
+                  "status",
+                  "serverType",
+                  "deviceCount",
+                  "lastConnectedDateTime",
+                  "lastConnectedIp",
+                  "createdDateTime",
+                  "updatedDateTime",
+                  "devices"
+                ]
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "The number of included related resources to return.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "MdmServersResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Device Management Services",
+        "tags": [
+          "Device Management Services"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-mdm-servers",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-mdm-servers.json"
+      },
+      "post": {
+        "description": "Create a new device management service in an organization.\n\nApple Business API 2.6+\n\n> **Note:** The `serverName` and `serverCertificate` attributes are required.",
+        "operationId": "createAnMdmserver",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "MdmServerCreateRequest.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "MdmServerResponse.json"
+                }
+              }
+            },
+            "description": "Created"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request entity error(s)."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unprocessable request entity error(s)."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Create a Device Management Service",
+        "tags": [
+          "Device Management Services"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/create-an-mdmserver",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/create-an-mdmserver.json"
+      }
+    },
+    "/v1/mdmServers/{id}": {
+      "delete": {
+        "description": "Delete a device management service from an organization.\n\nApple Business API 2.6+\n\n> **Note:** A device management service that has devices assigned to it can’t be deleted. Unassign all devices before deleting.",
+        "operationId": "deleteAnMdmserver",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Delete a Device Management Service",
+        "tags": [
+          "Device Management Services"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/delete-an-mdmserver",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/delete-an-mdmserver.json"
+      },
+      "get": {
+        "description": "Get the information for a specific device management service.\n\nApple Business API 2.6+",
+        "operationId": "getMdmserverInformation",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The fields to return for the resource.",
+            "in": "query",
+            "name": "fields[mdmServers]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "serverName",
+                  "enableMdmDisownFlag",
+                  "defaultProductFamilies",
+                  "status",
+                  "serverType",
+                  "deviceCount",
+                  "lastConnectedDateTime",
+                  "lastConnectedIp",
+                  "createdDateTime",
+                  "updatedDateTime",
+                  "devices"
+                ]
+              },
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "MdmServerResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Device Management Service Information",
+        "tags": [
+          "Device Management Services"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-mdmserver-information",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-mdmserver-information.json"
+      },
+      "patch": {
+        "description": "Update an existing device management service in an organization.\n\nApple Business API 2.6+\n\n> **Note:** Only the fields included in the request are updated. Any omitted fields retain their existing values.",
+        "operationId": "updateAnMdmserver",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "MdmServerUpdateRequest.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "MdmServerResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request entity error(s)."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unprocessable request entity error(s)."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Update a Device Management Service",
+        "tags": [
+          "Device Management Services"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/update-an-mdmserver",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/update-an-mdmserver.json"
+      }
+    },
+    "/v1/mdmServers/{id}/relationships/devices": {
+      "get": {
+        "description": "Get a list of device serial numbers assigned to a device management service.\n\nApple Business API 2.6+",
+        "operationId": "getAllDeviceIdsForAnMdmserver",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The number of included related resources to return.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "MdmServerDevicesLinkagesResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get the Device Serial Numbers for a Device Management Service",
+        "tags": [
+          "Device Management Services"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-all-device-ids-for-an-mdmserver",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-all-device-ids-for-an-mdmserver.json"
+      }
+    },
+    "/v1/orgDeviceActivities": {
+      "post": {
+        "description": "Assign or unassign devices to a device management service, manage a device management service migration for devices, or release devices from an organization.\n\nApple Business API 2.6+",
+        "operationId": "createAnOrgdeviceactivity",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "OrgDeviceActivityCreateRequest.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "OrgDeviceActivityResponse.json"
+                }
+              }
+            },
+            "description": "Created"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The request conflicts with the current state of one or more of the given resources — for example, an invalid device management service ID, an invalid device serial number, or a migration deadline outside the allowed range."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": ""
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Assign or Unassign Devices to a Device Management Service or Release Devices",
+        "tags": [
+          "Device Management Services"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/create-an-orgdeviceactivity",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/create-an-orgdeviceactivity.json"
+      }
+    },
+    "/v1/orgDeviceActivities/{id}": {
+      "get": {
+        "description": "Get information for an organization device activity that a device management action, such as assign or unassign, creates.\n\nApple Business API 2.6+\n\n> **Note:** This API supports fetching organization device activity information that the system creates for device management actions, such as assigning or unassigning devices to the device management service in the past 30 days.",
+        "operationId": "getOrgdeviceactivityInformation",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[orgDeviceActivities]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "status",
+                  "subStatus",
+                  "createdDateTime",
+                  "completedDateTime",
+                  "downloadUrl"
+                ]
+              },
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "OrgDeviceActivityResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Organization Device Activity Information",
+        "tags": [
+          "Device Management Services"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-orgdeviceactivity-information",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-orgdeviceactivity-information.json"
+      }
+    },
+    "/v1/orgDevices": {
+      "get": {
+        "description": "Get a list of devices in an organization that enroll using Automated Device Enrollment.\n\nApple Business API 2.6+",
+        "operationId": "getOrgDevices",
+        "parameters": [
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[orgDevices]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "serialNumber",
+                  "addedToOrgDateTime",
+                  "releasedFromOrgDateTime",
+                  "updatedDateTime",
+                  "deviceModel",
+                  "productFamily",
+                  "productType",
+                  "deviceCapacity",
+                  "partNumber",
+                  "orderNumber",
+                  "color",
+                  "status",
+                  "orderDateTime",
+                  "imei",
+                  "meid",
+                  "eid",
+                  "purchaseSourceId",
+                  "purchaseSourceType",
+                  "wifiMacAddress",
+                  "bluetoothMacAddress",
+                  "ethernetMacAddress",
+                  "assignedServer",
+                  "appleCareCoverage"
+                ]
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "The number of included related resources to return.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "OrgDevicesResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Organization Devices",
+        "tags": [
+          "Devices"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-org-devices",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-org-devices.json"
+      }
+    },
+    "/v1/orgDevices/{id}": {
+      "get": {
+        "description": "Get information about a device in an organization.\n\nApple Business API 2.6+",
+        "operationId": "getOrgdeviceInformation",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[orgDevices]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "serialNumber",
+                  "addedToOrgDateTime",
+                  "releasedFromOrgDateTime",
+                  "updatedDateTime",
+                  "deviceModel",
+                  "productFamily",
+                  "productType",
+                  "deviceCapacity",
+                  "partNumber",
+                  "orderNumber",
+                  "color",
+                  "status",
+                  "orderDateTime",
+                  "imei",
+                  "meid",
+                  "eid",
+                  "purchaseSourceId",
+                  "purchaseSourceType",
+                  "wifiMacAddress",
+                  "bluetoothMacAddress",
+                  "ethernetMacAddress",
+                  "assignedServer",
+                  "appleCareCoverage"
+                ]
+              },
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "OrgDeviceResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Device Information",
+        "tags": [
+          "Devices"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-orgdevice-information",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-orgdevice-information.json"
+      }
+    },
+    "/v1/orgDevices/{id}/activationLockStatus": {
+      "get": {
+        "description": "Get the Activation Lock status of an organization device.\n\nApple Business API 2.6+\n\n> **Note:** The request can also fail with an unexpected server error if the device reports an internal-only lock state that isn’t valid for a managed device.",
+        "operationId": "getTheActivationLockStatusInformationForAnOrgdevice",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource. For example, the device’s serial number.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[activationLockStatus]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "isLocked",
+                  "lockType"
+                ]
+              },
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ActivationLockStatusResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The org doesn’t manage a device with the requested serial number."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get the Activation Lock Status for a Device",
+        "tags": [
+          "Endpoints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-the-activation-lock-status-information-for-an-orgdevice",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-the-activation-lock-status-information-for-an-orgdevice.json"
+      }
+    },
+    "/v1/orgDevices/{id}/appleCareCoverage": {
+      "get": {
+        "description": "Get a list of AppleCare coverage resources for an organization device.\n\nApple Business API 2.6+",
+        "operationId": "getAllApplecareCoverageForAnOrgdevice",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource. For example, the device’s serial number.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[appleCareCoverage]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "status",
+                  "paymentType",
+                  "description",
+                  "agreementNumber",
+                  "startDateTime",
+                  "endDateTime",
+                  "isRenewable",
+                  "isCanceled",
+                  "contractCancelDateTime"
+                ]
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "The number of included related resources to return.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "AppleCareCoverageResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get AppleCare coverage Information for a Device",
+        "tags": [
+          "Devices"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-all-applecare-coverage-for-an-orgdevice",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-all-applecare-coverage-for-an-orgdevice.json"
+      }
+    },
+    "/v1/orgDevices/{id}/assignedServer": {
+      "get": {
+        "description": "Get the assigned device management service information for a device.\n\nApple Business API 2.6+",
+        "operationId": "getTheAssignedServerInformationForAnOrgdevice",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[mdmServers]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "serverName",
+                  "serverType",
+                  "createdDateTime",
+                  "updatedDateTime",
+                  "devices"
+                ]
+              },
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "MdmServerResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get the Assigned Device Management Service Information for a Device",
+        "tags": [
+          "Device Management Services"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-the-assigned-server-information-for-an-orgdevice",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-the-assigned-server-information-for-an-orgdevice.json"
+      }
+    },
+    "/v1/orgDevices/{id}/relationships/assignedServer": {
+      "get": {
+        "description": "Get the assigned device management service ID information for a device.\n\nApple Business API 2.6+",
+        "operationId": "getTheAssignedServerIdForAnOrgdevice",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "OrgDeviceAssignedServerLinkageResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get the Assigned Device Management Service ID for a Device",
+        "tags": [
+          "Device Management Services"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-the-assigned-server-id-for-an-orgdevice",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-the-assigned-server-id-for-an-orgdevice.json"
+      }
+    },
+    "/v1/organizationalUnits": {
+      "get": {
+        "description": "Get a list of organizational units in an organization.\n\nApple Business API 2.6+",
+        "operationId": "getOrganizationalUnits",
+        "parameters": [
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[organizationalUnits]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "name",
+                  "description",
+                  "createdDateTime",
+                  "updatedDateTime",
+                  "users"
+                ]
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "The number of included related resources to return.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "OrganizationalUnitsResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Organizational Units",
+        "tags": [
+          "Organizational Units"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-organizational-units",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-organizational-units.json"
+      }
+    },
+    "/v1/organizationalUnits/{id}": {
+      "get": {
+        "description": "Get information about a specific organizational unit in an organization.\n\nApple Business API 2.6+",
+        "operationId": "getOrganizationalunitInformation",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[organizationalUnits]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "name",
+                  "description",
+                  "createdDateTime",
+                  "updatedDateTime",
+                  "users"
+                ]
+              },
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "OrganizationalUnitResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Organizational Unit Information",
+        "tags": [
+          "Organizational Units"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-organizationalunit-information",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-organizationalunit-information.json"
+      }
+    },
+    "/v1/organizationalUnits/{id}/relationships/users": {
+      "get": {
+        "description": "Get a list of user IDs for an organizational unit in an organization.\n\nApple Business API 2.6+",
+        "operationId": "getAllUserIdsForAnOrganizationalunit",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The number of included related resources to return.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "OrganizationalUnitUsersLinkagesResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get User IDs for an Organizational Unit",
+        "tags": [
+          "Organizational Units"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-all-user-ids-for-an-organizationalunit",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-all-user-ids-for-an-organizationalunit.json"
+      }
+    },
+    "/v1/packages": {
+      "get": {
+        "description": "Get a list of packages for an organization using Apple Business’s built-in device management.\n\nApple Business API 2.6+",
+        "operationId": "getPackages",
+        "parameters": [
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[packages]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "name",
+                  "url",
+                  "hash",
+                  "bundleIds",
+                  "description",
+                  "version",
+                  "createdDateTime",
+                  "updatedDateTime"
+                ]
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "The number of resources to return (maximum 1000).",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "PackagesResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Packages",
+        "tags": [
+          "Apps and Packages"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-packages",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-packages.json"
+      }
+    },
+    "/v1/packages/{id}": {
+      "get": {
+        "description": "Get information about a specific package for an organization using Apple Business’s built-in device management.\n\nApple Business API 2.6+",
+        "operationId": "getPackageInformation",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[packages]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "name",
+                  "url",
+                  "hash",
+                  "bundleIds",
+                  "description",
+                  "version",
+                  "createdDateTime",
+                  "updatedDateTime"
+                ]
+              },
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "PackageResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Package Information",
+        "tags": [
+          "Apps and Packages"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-package-information",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-package-information.json"
+      }
+    },
+    "/v1/userGroups": {
+      "get": {
+        "description": "Get a list of user groups in an organization.\n\nApple Business API 2.6+",
+        "operationId": "getUserGroups",
+        "parameters": [
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[userGroups]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "ouId",
+                  "name",
+                  "type",
+                  "totalMemberCount",
+                  "createdDateTime",
+                  "updatedDateTime",
+                  "status",
+                  "users"
+                ]
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "The number of included related resources to return.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "UserGroupsResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get User Groups",
+        "tags": [
+          "UserGroups"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-user-groups",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-user-groups.json"
+      }
+    },
+    "/v1/userGroups/{id}": {
+      "get": {
+        "description": "Get information about a specific user group in an organization.\n\nApple Business API 2.6+",
+        "operationId": "getUsergroupInformation",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[userGroups]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "ouId",
+                  "name",
+                  "type",
+                  "totalMemberCount",
+                  "createdDateTime",
+                  "updatedDateTime",
+                  "status",
+                  "users"
+                ]
+              },
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "UserGroupResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get User Group Information",
+        "tags": [
+          "UserGroups"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-usergroup-information",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-usergroup-information.json"
+      }
+    },
+    "/v1/userGroups/{id}/relationships/users": {
+      "get": {
+        "description": "Get a list of user IDs for a user group in an organization.\n\nApple Business API 2.6+",
+        "operationId": "getAllUserIdsForAUserGroup",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The number of included related resources to return.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "UserGroupUsersLinkagesResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get User IDs for a User Group",
+        "tags": [
+          "UserGroups"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-all-user-ids-for-a-user-group",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-all-user-ids-for-a-user-group.json"
+      }
+    },
+    "/v1/users": {
+      "get": {
+        "description": "Get a list of users in an organization.\n\nApple Business API 2.6+",
+        "operationId": "getUsers",
+        "parameters": [
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[users]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "firstName",
+                  "lastName",
+                  "middleName",
+                  "status",
+                  "managedAppleAccount",
+                  "isExternalUser",
+                  "roleOuList",
+                  "email",
+                  "employeeNumber",
+                  "costCenter",
+                  "division",
+                  "department",
+                  "jobTitle",
+                  "startDateTime",
+                  "createdDateTime",
+                  "updatedDateTime",
+                  "phoneNumbers"
+                ]
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "The number of included related resources to return.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "UsersResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Users",
+        "tags": [
+          "Users"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-users",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-users.json"
+      }
+    },
+    "/v1/users/{id}": {
+      "get": {
+        "description": "Get information about a specific user in an organization.\n\nApple Business API 2.6+",
+        "operationId": "getUserInformation",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[users]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "firstName",
+                  "lastName",
+                  "middleName",
+                  "status",
+                  "managedAppleAccount",
+                  "isExternalUser",
+                  "roleOuList",
+                  "email",
+                  "employeeNumber",
+                  "costCenter",
+                  "division",
+                  "department",
+                  "jobTitle",
+                  "startDateTime",
+                  "createdDateTime",
+                  "updatedDateTime",
+                  "phoneNumbers"
+                ]
+              },
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "UserResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get User Information",
+        "tags": [
+          "Users"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-user-information",
+        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-user-information.json"
+      }
+    }
+  },
+  "security": [
+    {
+      "OAuth2": [
+        "business.api"
+      ]
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://api-business.apple.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Devices"
+    },
+    {
+      "name": "Device Management Services"
+    },
+    {
+      "name": "Users"
+    },
+    {
+      "name": "UserGroups"
+    },
+    {
+      "name": "Organizational Units"
+    },
+    {
+      "name": "Apps and Packages"
+    },
+    {
+      "name": "Blueprints"
+    },
+    {
+      "name": "Configurations"
+    },
+    {
+      "name": "Audit Events"
+    },
+    {
+      "name": "Endpoints"
+    }
+  ]
+}

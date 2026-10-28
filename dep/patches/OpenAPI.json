@@ -1,0 +1,25 @@
+[
+  {
+    "op": "add",
+    "path": "/components",
+    "value": {
+      "securitySchemes": {
+        "X-ADM-Auth-Session": {
+          "description": "The session token of the Automated Device Enrollment service. Each request must include an `X-ADM-Auth-Session` header; a missing or expired token gets an HTTP 401 Unauthorized response. A new token is requested from `https://mdmenrollment.apple.com/session` with an OAuth 1.0a-signed `GET`, which returns it as `auth_session_token`, and the service periodically issues a new one in its responses. See [Authenticating for Automated Device Enrollment](https://developer.apple.com/documentation/devicemanagement/authenticating-for-automated-device-enrollment).",
+          "in": "header",
+          "name": "X-ADM-Auth-Session",
+          "type": "apiKey"
+        }
+      }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/security",
+    "value": [
+      {
+        "X-ADM-Auth-Session": []
+      }
+    ]
+  }
+]

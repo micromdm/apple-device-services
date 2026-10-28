@@ -329,15 +329,19 @@ A `symbol` page is one of two flavors, distinguished by `metadata.symbolKind`:
 
 - `dictionary` — a data type; it has a `properties` section (see above).
 - `httpRequest` — a web service endpoint; instead of `properties` it has
-  `restEndpoint`, `restBody`, and `restResponses` sections:
+  `restEndpoint`, `restParameters`, `restBody`, and `restResponses` sections:
 
   - `restEndpoint` — the HTTP method, base URL, and path as `tokens[]`
-    (`kind` of `method`, `baseURL`, `path`).
-  - `restBody` — the request body; `bodyContentType[]` holds a
-    `typeIdentifier` token naming the request data dictionary.
+    (`kind` of `method`, `baseURL`, `path`, and `parameter` for a path
+    parameter such as `{id}`).
+  - `restParameters` — one section per `source` (`query` or `path`), its
+    `items[]` shaped like properties: `name`, `required`, `type[]`,
+    `attributes[]`, and `content[]`.
+  - `restBody` — the request body; `mimeType` and a `bodyContentType[]`
+    holding a `typeIdentifier` token naming the request data dictionary.
   - `restResponses` — one entry per response code (`items[].status`,
-    `items[].reason`); each item's `type[]` holds a `typeIdentifier` naming
-    the response data dictionary.
+    `items[].reason`); a typed response has a `mimeType`, and its `type[]`
+    holds a `typeIdentifier` naming the response data dictionary.
 
 The `typeIdentifier` carries an `identifier` (`doc://…` URI, resolvable via the
 page's `references` map to the dictionary's `url`) and a `preciseIdentifier`
@@ -345,6 +349,34 @@ page's `references` map to the dictionary's `url`) and a `preciseIdentifier`
 `metadata.externalID`. The request/response dictionaries are themselves fetched
 with the same `/documentation/` → `/tutorials/data/documentation/` + `.json`
 transform.
+
+### Mapping endpoints to OpenAPI
+
+The endpoint pages of a walk become an [OpenAPI 3.1](https://spec.openapis.org/oas/v3.1.0)
+document, `OpenAPI.json`, beside the schemas. OpenAPI 3.1 schemas are JSON
+Schema 2020-12, so the document references the schema files as they are
+(`"$ref": "Profile.json"`). Only Apple's structured data goes in:
+
+| Apple data | OpenAPI |
+|---|---|
+| `restEndpoint` method, path and `parameter` tokens | `paths["/v1/orgDevices/{id}"].get` |
+| `restEndpoint` `baseURL` | `servers[].url` (per operation if they differ) |
+| the page's URL slug (`fetch-devices`) | `operationId` (`fetchDevices`) |
+| `metadata.title` | `summary` |
+| abstract, availability and prose | `description`, as for a schema |
+| `restParameters` `source` and `items[]` | `parameters[]` (`in`, `name`, `required`, `schema`) |
+| `restBody` | `requestBody.content[mimeType].schema` |
+| `restResponses` `status`, prose or `reason`, `mimeType`, `type[]` | `responses[status]` |
+| topic section of the source page listing the endpoint | `tags` |
+| newest `metadata.platforms[].introducedAt` of the endpoints | `info.version` |
+| source page `title` and `abstract` | `info.title`, `info.description` |
+
+Some page slugs carry a suffix Apple adds to tell same-named pages apart
+(`get-assets-4ski1`), and it carries into the `operationId`.
+
+Authentication is not in the endpoint pages — it's described in prose
+articles — so security schemes are added by patches, the way other curated
+detail is: `dep/patches/OpenAPI.json` adds the `X-ADM-Auth-Session` header.
 
 ## The index / navigation pages
 

@@ -29,6 +29,10 @@ Each schema directory has a `patches/` folder beside it, with a [JSON Patch](htt
 
 A patch checks the values it changes before changing them. If Apple's documentation changes underneath a patch, generation fails instead of quietly overwriting the new content, and the patch needs updating. To change a schema, edit its patch, not the generated file.
 
+## OpenAPI
+
+Each schema directory also has an `OpenAPI.json`: an [OpenAPI 3.1](https://spec.openapis.org/oas/v3.1.0) document describing the service's endpoints — paths, parameters, request bodies, and responses — that references the schemas beside it. The API documents are generated from Apple's documentation along with the schemas, and patched the same way (authentication, for example, isn't in Apple's endpoint data); the GDMF one in `other/schemas` is written by hand.
+
 ## Contributing
 
 These schemas are only as complete as Apple's documentation and our patches, so they're almost guaranteed to be missing something. So: **your help needed!** If something you need is missing or wrong, PRs are welcome. For a generated schema, add or update its [patch](#patches) rather than editing the schema itself, or improve the [generation tool](tools/dev_docs_schema.py) if Apple's documentation already has what's needed.

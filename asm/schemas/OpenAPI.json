@@ -1,0 +1,1184 @@
+{
+  "components": {
+    "securitySchemes": {
+      "OAuth2": {
+        "description": "OAuth 2 client credentials. The app creates a client assertion — a JSON web token it signs with its private key, with an `aud` of `https://account.apple.com/auth/oauth2/v2/token` — and exchanges it for an access token with a `POST` to the token URL (`grant_type=client_credentials`, `client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer`). The access token is attached as a bearer token in the `Authorization` header, and is valid for the number of seconds `expires_in` specifies. See [Implementing OAuth for the Apple School Manager and Apple Business API](https://developer.apple.com/documentation/apple-school-and-business-manager-api/implementing-oauth-for-the-apple-school-manager-and-apple-business-api).",
+        "flows": {
+          "clientCredentials": {
+            "scopes": {
+              "school.api": "Access the API (`school.api`)."
+            },
+            "tokenUrl": "https://account.apple.com/auth/oauth2/token"
+          }
+        },
+        "type": "oauth2"
+      }
+    }
+  },
+  "info": {
+    "description": "Automate device management activities and view device information in Apple School Manager.",
+    "title": "Apple School Manager API",
+    "version": "1.7"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/v1/mdmServers": {
+      "get": {
+        "description": "Get a list of device management services in an organization.\n\nApple School Manager API 1.7+",
+        "operationId": "getDeviceManagementServices",
+        "parameters": [
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[mdmServers]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "serverName",
+                  "enableMdmDisownFlag",
+                  "defaultProductFamilies",
+                  "status",
+                  "serverType",
+                  "deviceCount",
+                  "lastConnectedDateTime",
+                  "lastConnectedIp",
+                  "createdDateTime",
+                  "updatedDateTime",
+                  "devices"
+                ]
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "The number of included related resources to return.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "MdmServersResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Device Management Services",
+        "tags": [
+          "Device Management Services"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/get-device-management-services",
+        "x-apple-developer-api-version": "1.7",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/get-device-management-services.json"
+      }
+    },
+    "/v1/mdmServers/{id}": {
+      "get": {
+        "description": "Get the information for a specific device management service.\n\nApple School Manager API 1.7+",
+        "operationId": "getMdmserverInformation",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The fields to return for the resource.",
+            "in": "query",
+            "name": "fields[mdmServers]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "serverName",
+                  "enableMdmDisownFlag",
+                  "defaultProductFamilies",
+                  "status",
+                  "serverType",
+                  "deviceCount",
+                  "lastConnectedDateTime",
+                  "lastConnectedIp",
+                  "createdDateTime",
+                  "updatedDateTime",
+                  "devices"
+                ]
+              },
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "MdmServerResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Device Management Service Information",
+        "tags": [
+          "Device Management Services"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/get-mdmserver-information",
+        "x-apple-developer-api-version": "1.7",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/get-mdmserver-information.json"
+      }
+    },
+    "/v1/mdmServers/{id}/relationships/devices": {
+      "get": {
+        "description": "Apple School Manager API 1.7+",
+        "operationId": "getAllDeviceIdsForADeviceManagementService",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "MdmServerDevicesLinkagesResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "summary": "Get All Device IDs for a Device Management Service",
+        "tags": [
+          "Device Management Services"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/get-all-device-ids-for-a-device-management-service",
+        "x-apple-developer-api-version": "1.7",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/get-all-device-ids-for-a-device-management-service.json"
+      }
+    },
+    "/v1/orgDeviceActivities": {
+      "post": {
+        "description": "Assign or unassign devices to a device management service, or manage a device management service for devices.\n\nApple School Manager API 1.7+",
+        "operationId": "createAnOrgdeviceactivity",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "OrgDeviceActivityCreateRequest.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "OrgDeviceActivityResponse.json"
+                }
+              }
+            },
+            "description": "Created"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The request conflicts with the current state of one or more of the given resources — for example, an invalid device management service ID, an invalid device serial number, or a migration deadline outside the allowed range."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": ""
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Assign or Unassign Devices to a Device Management Service",
+        "tags": [
+          "Device Management Services"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/create-an-orgdeviceactivity",
+        "x-apple-developer-api-version": "1.7",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/create-an-orgdeviceactivity.json"
+      }
+    },
+    "/v1/orgDeviceActivities/{id}": {
+      "get": {
+        "description": "Get information for an organization device activity that a device management action, such as assigning or unassigning, creates.\n\nApple School Manager API 1.7+\n\n> **Note:** This API supports fetching organization device activity information that the system creates for device management actions, such as assigning or unassigning devices to the device management service in the past 30 days.",
+        "operationId": "getOrgdeviceactivityInformation",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[orgDeviceActivities]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "status",
+                  "subStatus",
+                  "createdDateTime",
+                  "completedDateTime",
+                  "downloadUrl"
+                ]
+              },
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "OrgDeviceActivityResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Organization Device Activity Information",
+        "tags": [
+          "Device Management Services"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/get-orgdeviceactivity-information",
+        "x-apple-developer-api-version": "1.7",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/get-orgdeviceactivity-information.json"
+      }
+    },
+    "/v1/orgDevices": {
+      "get": {
+        "description": "Get a list of devices in an organization that enroll using Automated Device Enrollment.\n\nApple School Manager API 1.7+",
+        "operationId": "getOrgDevices",
+        "parameters": [
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[orgDevices]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "serialNumber",
+                  "addedToOrgDateTime",
+                  "releasedFromOrgDateTime",
+                  "updatedDateTime",
+                  "deviceModel",
+                  "productFamily",
+                  "productType",
+                  "deviceCapacity",
+                  "partNumber",
+                  "orderNumber",
+                  "color",
+                  "status",
+                  "orderDateTime",
+                  "imei",
+                  "meid",
+                  "eid",
+                  "wifiMacAddress",
+                  "bluetoothMacAddress",
+                  "ethernetMacAddress",
+                  "purchaseSourceId",
+                  "purchaseSourceType",
+                  "assignedServer",
+                  "appleCareCoverage"
+                ]
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "The number of included related resources to return.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "OrgDevicesResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Organization Devices",
+        "tags": [
+          "Devices"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/get-org-devices",
+        "x-apple-developer-api-version": "1.7",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/get-org-devices.json"
+      }
+    },
+    "/v1/orgDevices/{id}": {
+      "get": {
+        "description": "Get information about a device in an organization.\n\nApple School Manager API 1.7+",
+        "operationId": "getOrgdeviceInformation",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[orgDevices]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "serialNumber",
+                  "addedToOrgDateTime",
+                  "releasedFromOrgDateTime",
+                  "updatedDateTime",
+                  "deviceModel",
+                  "productFamily",
+                  "productType",
+                  "deviceCapacity",
+                  "partNumber",
+                  "orderNumber",
+                  "color",
+                  "status",
+                  "orderDateTime",
+                  "imei",
+                  "meid",
+                  "eid",
+                  "wifiMacAddress",
+                  "bluetoothMacAddress",
+                  "ethernetMacAddress",
+                  "purchaseSourceId",
+                  "purchaseSourceType",
+                  "assignedServer",
+                  "appleCareCoverage"
+                ]
+              },
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "OrgDeviceResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get Device Information",
+        "tags": [
+          "Devices"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/get-orgdevice-information",
+        "x-apple-developer-api-version": "1.7",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/get-orgdevice-information.json"
+      }
+    },
+    "/v1/orgDevices/{id}/activationLockStatus": {
+      "get": {
+        "description": "Get the Activation Lock status of an organization device.\n\nApple School Manager API 1.7+\n\n> **Note:** The request can also fail with an unexpected server error if the device reports an internal-only lock state that isn’t valid for a managed device.",
+        "operationId": "getTheActivationLockStatusInformationForAnOrgdevice",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource. For example, the device’s serial number.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[activationLockStatus]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "isLocked",
+                  "lockType"
+                ]
+              },
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ActivationLockStatusResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "The org doesn’t manage a device with the requested serial number."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get the Activation Lock Status for a Device",
+        "tags": [
+          "Endpoints"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/get-the-activation-lock-status-information-for-an-orgdevice",
+        "x-apple-developer-api-version": "1.7",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/get-the-activation-lock-status-information-for-an-orgdevice.json"
+      }
+    },
+    "/v1/orgDevices/{id}/appleCareCoverage": {
+      "get": {
+        "description": "Get a list of AppleCare coverage resources for an organization device.\n\nApple School Manager API 1.7+",
+        "operationId": "getAllApplecareCoverageForAnOrgdevice",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource. For example, the device’s serial number.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[appleCareCoverage]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "status",
+                  "paymentType",
+                  "description",
+                  "agreementNumber",
+                  "startDateTime",
+                  "endDateTime",
+                  "isRenewable",
+                  "isCanceled",
+                  "contractCancelDateTime"
+                ]
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "The number of included related resources to return.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "maximum": 1000,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "AppleCareCoverageResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get AppleCare Coverage Information for a Device",
+        "tags": [
+          "Devices"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/get-all-applecare-coverage-for-an-orgdevice",
+        "x-apple-developer-api-version": "1.7",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/get-all-applecare-coverage-for-an-orgdevice.json"
+      }
+    },
+    "/v1/orgDevices/{id}/assignedServer": {
+      "get": {
+        "description": "Get the assigned device management service information for a device.\n\nApple School Manager API 1.7+",
+        "operationId": "getTheAssignedDeviceManagementServiceInformationForAnOrgdevice",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The fields to return for included related types.",
+            "in": "query",
+            "name": "fields[mdmServers]",
+            "schema": {
+              "items": {
+                "enum": [
+                  "serverName",
+                  "serverType",
+                  "createdDateTime",
+                  "updatedDateTime",
+                  "devices"
+                ]
+              },
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "MdmServerResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get the Assigned Device Management Service Information for a Device",
+        "tags": [
+          "Device Management Services"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/get-the-assigned-device-management-service-information-for-an-orgdevice",
+        "x-apple-developer-api-version": "1.7",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/get-the-assigned-device-management-service-information-for-an-orgdevice.json"
+      }
+    },
+    "/v1/orgDevices/{id}/relationships/assignedServer": {
+      "get": {
+        "description": "Get the assigned device management service ID information for a device.\n\nApple School Manager API 1.7+",
+        "operationId": "getTheAssignedDeviceManagementServiceIdForAnOrgdevice",
+        "parameters": [
+          {
+            "description": "The unique identifier for the resource.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "OrgDeviceAssignedServerLinkageResponse.json"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "An error occurred with your request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Request not authorized."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ErrorResponse.json"
+                }
+              }
+            },
+            "description": "**Too Many Requests**"
+          }
+        },
+        "summary": "Get the Assigned Device Management Service ID for a Device",
+        "tags": [
+          "Device Management Services"
+        ],
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/get-the-assigned-device-management-service-id-for-an-orgdevice",
+        "x-apple-developer-api-version": "1.7",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/get-the-assigned-device-management-service-id-for-an-orgdevice.json"
+      }
+    }
+  },
+  "security": [
+    {
+      "OAuth2": [
+        "school.api"
+      ]
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://api-school.apple.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Devices"
+    },
+    {
+      "name": "Device Management Services"
+    },
+    {
+      "name": "Endpoints"
+    }
+  ]
+}

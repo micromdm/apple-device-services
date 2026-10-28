@@ -2,7 +2,7 @@
 """Fetch Apple's developer documentation JSON and turn it into JSON Schemas.
 
     dev_docs_schema.py fetch SOURCE [--single]
-    dev_docs_schema.py generate SOURCE SCHEMA_DIR
+    dev_docs_schema.py generate SOURCE [SOURCE ...] SCHEMA_DIR
     dev_docs_schema.py generate-single FILE [-o OUTPUT]
     dev_docs_schema.py index FILE [FILE ...]
     dev_docs_schema.py prune SOURCE SCHEMA_DIR [-n]
@@ -22,10 +22,11 @@ The commands:
 
     fetch           download the documents the source names into the cache;
                     with --single, the source document alone
-    generate        write a schema for every type the source names
+    generate        write a schema for every type the sources name, and an
+                    OpenAPI document of their endpoints (OpenAPI.json)
     generate-single convert one document into one schema
     index           list the documents a document names
-    prune            remove the schemas the source does not name
+    prune           remove the schemas the source does not name
 
 A source names a document in the cache, the way ``fetch`` and ``generate``
 take one. ``index`` and ``generate-single`` take either: a document in the
@@ -635,35 +636,43 @@ def document_uris(
     return None, None
 
 
+def document_description(doc: JSON, refs: JSON) -> str:
+    """Render a document's description: abstract, availability and prose."""
+    parts = (
+        inline_text(doc.get("abstract", []), refs),
+        introduced_text(doc),
+        discussion_text(doc, refs),
+    )
+    return "\n\n".join(part for part in parts if part)
+
+
+def document_extensions(doc: JSON, data_base: str = DATA_BASE) -> JSON:
+    """Return the ``x-apple-developer-*`` fields that point back at a document."""
+    fields: JSON = {}
+    version = api_version(doc)
+    if version:
+        fields["x-apple-developer-api-version"] = version
+    api_uri, data_uri = document_uris(doc, data_base)
+    if api_uri:
+        fields["x-apple-developer-api-uri"] = api_uri
+    if data_uri:
+        fields["x-apple-developer-data-uri"] = data_uri
+    return fields
+
+
 def document_schema(doc: JSON, data_base: str = DATA_BASE) -> JSON:
     """Build the JSON Schema for an Apple type document."""
     meta = doc.get("metadata", {})
     refs = doc.get("references", {})
-    abstract = inline_text(doc.get("abstract", []), refs)
 
     schema: JSON = {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "title": meta.get("title"),
     }
-    description = "\n\n".join(
-        part
-        for part in (
-            abstract,
-            introduced_text(doc),
-            discussion_text(doc, refs),
-        )
-        if part
-    )
+    description = document_description(doc, refs)
     if description:
         schema["description"] = description
-    version = api_version(doc)
-    if version:
-        schema["x-apple-developer-api-version"] = version
-    api_uri, data_uri = document_uris(doc, data_base)
-    if api_uri:
-        schema["x-apple-developer-api-uri"] = api_uri
-    if data_uri:
-        schema["x-apple-developer-data-uri"] = data_uri
+    schema.update(document_extensions(doc, data_base))
 
     values = possible_values(doc)
     if values is not None:
@@ -714,6 +723,259 @@ def write_schema(schema: JSON, path: str | Path) -> None:
     if title and Path(path).name != schema_file(title):
         print(f"warning: {path} holds the type {title!r}", file=sys.stderr)
     Path(path).write_text(text, encoding="utf-8")
+
+
+# ------------------------------------------------------------------- openapi
+
+# The version of the OpenAPI Specification the documents are written in.
+# The schemas of OpenAPI 3.1 are JSON Schema 2020-12, so its documents
+# reference the schema files as they are.
+OPENAPI_VERSION = "3.1.0"
+
+# The file of the OpenAPI document, beside the schemas it references.
+OPENAPI_FILE = "OpenAPI.json"
+
+# Apple's parameter sources that are OpenAPI parameter locations.
+PARAMETER_SOURCES: set[str] = {"query", "path", "header", "cookie"}
+
+
+def is_endpoint(doc: JSON) -> bool:
+    """Return True if a document describes an endpoint (an ``httpRequest``)."""
+    return (doc.get("metadata") or {}).get("symbolKind") == "httpRequest"
+
+
+class Endpoint(NamedTuple):
+    """The URL of an endpoint."""
+
+    method: str  # "get"
+    server: str  # "https://api-business.apple.com"
+    path: str  # "/v1/orgDevices/{id}"
+
+
+def endpoint(doc: JSON) -> Endpoint | None:
+    """Return the method, server and path of an endpoint document.
+
+    Apple tokenizes the URL: a ``method`` ("GET"), a ``baseURL``
+    ("https://api-business.apple.com/"), then ``path`` ("v1/orgDevices/")
+    and ``parameter`` ("{id}") tokens. OpenAPI joins the server and the
+    path, which starts with the slash.
+    """
+    for section in doc.get("primaryContentSections", []):
+        if section.get("kind") != "restEndpoint":
+            continue
+        method = server = ""
+        path: list[str] = []
+        for token in section.get("tokens", []):
+            kind = token.get("kind")
+            if kind == "method":
+                method = token.get("text", "")
+            elif kind == "baseURL":
+                server = token.get("text", "")
+            elif kind in ("path", "parameter"):
+                path.append(token.get("text", ""))
+        if method and server:
+            return Endpoint(
+                method.lower(), server.rstrip("/"), "/" + "".join(path).lstrip("/")
+            )
+    return None
+
+
+def operation_id(name: str) -> str:
+    """Return the ``operationId`` of the endpoint document with a cache name.
+
+    The id is the last segment of Apple's URL in camel case: "fetchDevices"
+    for "devicemanagement/fetch-devices.json" ("Get a List of Devices"). The
+    URL is more stable than the title.
+    """
+    slug = name.removesuffix(".json").rsplit("/", 1)[-1]
+    words = [word for word in re.split(r"[^A-Za-z0-9]+", slug) if word]
+    return words[0].lower() + "".join(w[:1].upper() + w[1:] for w in words[1:])
+
+
+def operation_parameters(doc: JSON, refs: JSON) -> list[JSON]:
+    """Return the OpenAPI parameters of an endpoint document."""
+    parameters: list[JSON] = []
+    for section in doc.get("primaryContentSections", []):
+        if section.get("kind") != "restParameters":
+            continue
+        source = section.get("source")
+        if source not in PARAMETER_SOURCES:
+            raise ValueError(f"{document_title(doc)}: parameters in {source!r}")
+        for item in section.get("items", []):
+            # A parameter is described the way a property is.
+            schema = property_schema(item, refs)
+            parameter: JSON = {"name": item.get("name"), "in": source}
+            description = schema.pop("description", None)
+            if description:
+                parameter["description"] = description
+            if item.get("required"):
+                parameter["required"] = True
+            parameter["schema"] = schema
+            parameters.append(parameter)
+    return parameters
+
+
+def request_body(doc: JSON, refs: JSON) -> JSON | None:
+    """Return the OpenAPI request body of an endpoint document, if it has one."""
+    for section in doc.get("primaryContentSections", []):
+        if section.get("kind") != "restBody":
+            continue
+        body: JSON = {}
+        description = content_text(section.get("content", []), refs)
+        if description:
+            body["description"] = description
+        mime_type = section.get("mimeType")
+        if mime_type:
+            schema = type_schema(section.get("bodyContentType", []))
+            body["content"] = {mime_type: {"schema": schema}}
+        return body
+    return None
+
+
+def operation_responses(doc: JSON, refs: JSON) -> JSON:
+    """Return the OpenAPI responses of an endpoint document, by status code.
+
+    A response's description is its prose, or else Apple's reason phrase
+    ("Bad Request"): OpenAPI requires one.
+    """
+    responses: JSON = {}
+    for section in doc.get("primaryContentSections", []):
+        if section.get("kind") != "restResponses":
+            continue
+        for item in section.get("items", []):
+            status = str(item.get("status"))
+            if status in responses:
+                raise ValueError(f"{document_title(doc)}: two {status} responses")
+            description = content_text(item.get("content", []), refs)
+            response: JSON = {"description": description or item.get("reason", "")}
+            mime_type = item.get("mimeType")
+            if mime_type and item.get("type"):
+                schema = type_schema(item["type"])
+                response["content"] = {mime_type: {"schema": schema}}
+            responses[status] = response
+    return responses
+
+
+def operation(name: str, doc: JSON, data_base: str = DATA_BASE) -> JSON:
+    """Build the OpenAPI operation of an endpoint document."""
+    refs = doc.get("references", {})
+    op: JSON = {"operationId": operation_id(name), "summary": document_title(doc)}
+    description = document_description(doc, refs)
+    if description:
+        op["description"] = description
+    op.update(document_extensions(doc, data_base))
+    parameters = operation_parameters(doc, refs)
+    if parameters:
+        op["parameters"] = parameters
+    body = request_body(doc, refs)
+    if body:
+        op["requestBody"] = body
+    responses = operation_responses(doc, refs)
+    if responses:
+        op["responses"] = responses
+    return op
+
+
+def version_key(version: str) -> tuple[int, ...]:
+    """Return a sort key that orders versions numerically ("5.10" > "5.9")."""
+    return tuple(int(number) for number in re.findall(r"\d+", version))
+
+
+def external_refs(node: Any) -> set[str]:
+    """Return the ``$ref``s of a document that name other files."""
+    found: set[str] = set()
+    if isinstance(node, dict):
+        ref = node.get("$ref")
+        if isinstance(ref, str) and not ref.startswith("#"):
+            found.add(ref.split("#", 1)[0])
+        for value in node.values():
+            found |= external_refs(value)
+    elif isinstance(node, list):
+        for item in node:
+            found |= external_refs(item)
+    return found
+
+
+def endpoint_tags(roots: list[JSON]) -> tuple[dict[str, str], list[str]]:
+    """Return the tag of each document, by cache name, and the tags in order.
+
+    The tags are the topic sections of the source documents — "Devices",
+    "Blueprints" — the way Apple groups the endpoints on the page of an API.
+    An endpoint the source documents do not list has none.
+    """
+    tags: dict[str, str] = {}
+    order: list[str] = []
+    for root in roots:
+        refs = root.get("references") or {}
+        for section in root.get("topicSections") or []:
+            title = section.get("title")
+            for identifier in section.get("identifiers") or []:
+                url = (refs.get(identifier) or {}).get("url")
+                if title and url:
+                    tags.setdefault(cache_name(url), title)
+                    if title not in order:
+                        order.append(title)
+    return tags, order
+
+
+def openapi_document(
+    roots: list[JSON], endpoints: dict[str, JSON], data_base: str = DATA_BASE
+) -> JSON:
+    """Build the OpenAPI document of the endpoints a walk found.
+
+    The roots are the documents the walks started at; the endpoints are the
+    endpoint documents, by cache name. The types the operations name are
+    referenced as the sibling schema files.
+    """
+    paths: dict[str, JSON] = {}
+    servers: dict[str, list[JSON]] = {}
+    ids: dict[str, str] = {}
+    versions: list[str] = []
+    tags, tag_order = endpoint_tags(roots)
+    for name in sorted(endpoints):
+        doc = endpoints[name]
+        url = endpoint(doc)
+        if url is None:
+            raise ValueError(f"{name}: an endpoint without a URL")
+        op = operation(name, doc, data_base)
+        if name in tags:
+            op["tags"] = [tags[name]]
+        previous = ids.setdefault(op["operationId"], name)
+        if previous != name:
+            raise Conflict(f"{previous} and {name} are both {op['operationId']}")
+        methods = paths.setdefault(url.path, {})
+        if url.method in methods:
+            raise Conflict(f"{url.method.upper()} {url.path} is documented twice")
+        methods[url.method] = op
+        servers.setdefault(url.server, []).append(op)
+        version = api_version(doc)
+        if version:
+            versions.append(version)
+
+    if len(servers) > 1:
+        # Operations on several hosts: each names its own.
+        for server, ops in servers.items():
+            for op in ops:
+                op["servers"] = [{"url": server}]
+    info: JSON = {
+        "title": " / ".join(filter(None, map(document_title, roots))),
+        # The latest version any operation was introduced in: the version of
+        # the API that has all of them.
+        "version": max(versions, key=version_key) if versions else "",
+    }
+    description = "\n\n".join(
+        filter(None, (inline_text(r.get("abstract", []), {}) for r in roots))
+    )
+    if description:
+        info["description"] = description
+    document: JSON = {"openapi": OPENAPI_VERSION, "info": info, "paths": paths}
+    # The sections that list endpoints; "Objects and data types" lists types.
+    used = {tags[name] for name in endpoints if name in tags}
+    if used:
+        document["tags"] = [{"name": tag} for tag in tag_order if tag in used]
+    if len(servers) == 1:
+        document["servers"] = [{"url": next(iter(servers))}]
+    return document
 
 
 # --------------------------------------------------------------------- cache
@@ -945,56 +1207,96 @@ def command_fetch(args: argparse.Namespace) -> int:
 
 
 def command_generate(args: argparse.Namespace) -> int:
-    """Write a schema for every type a source document names."""
-    cache = Cache(args.cache_dir, args.data_base)
-    source = source_name(args.source)
-    schema_dir = Path(args.schema_dir)
+    """Write a schema for every type the sources name, and an OpenAPI document.
 
-    resolver = Resolver(source, cache.read)
-    writes: list[tuple[Path, JSON]] = []
+    The endpoints the sources name become the operations of an OpenAPI
+    document, written beside the schemas as ``OpenAPI.json``; the types they
+    reference are the schemas.
+    """
+    cache = Cache(args.cache_dir, args.data_base)
+    schema_dir = Path(args.schema_dir)
+    if schema_dir.exists() and not schema_dir.is_dir():
+        # The last argument is the schema directory, the way ``cp`` takes
+        # its destination: never write into a file.
+        print(f"error: not a directory: {schema_dir}", file=sys.stderr)
+        return 1
+
+    writes: dict[Path, JSON] = {}
+    roots: list[JSON] = []
+    endpoints: dict[str, JSON] = {}
+    missing: set[str] = set()
     skipped = 0
     shared: dict[str, str] = {}
-    for level in resolver.levels():
-        for document in level:
-            if not is_type(document.data):
-                # Endpoints and articles are not types.
-                skipped += 1
-                continue
-            title = document_title(document.data)
-            if not title:
-                skipped += 1
-                continue
-            name = schema_file(title)
-            previous = shared.setdefault(name, document.name)
-            if previous != document.name:
-                # Several documents may share a name — Apple's endpoints do —
-                # but only one of them can become a schema.
-                print(
-                    f"note: {name} is shared by {previous} and {document.name}",
-                    file=sys.stderr,
+    for source in (source_name(s) for s in args.sources):
+        resolver = Resolver(source, cache.read)
+        for level in resolver.levels():
+            for document in level:
+                if document.name == source:
+                    roots.append(document.data)
+                if is_endpoint(document.data):
+                    endpoints.setdefault(document.name, document.data)
+                    continue
+                if not is_type(document.data):
+                    # Articles and navigation pages are not types.
+                    skipped += 1
+                    continue
+                title = document_title(document.data)
+                if not title:
+                    skipped += 1
+                    continue
+                name = schema_file(title)
+                if name == OPENAPI_FILE:
+                    raise Conflict(f"{document.name} would overwrite {OPENAPI_FILE}")
+                previous = shared.setdefault(name, document.name)
+                if previous != document.name:
+                    # Several documents may share a name, but only one of them
+                    # can become a schema.
+                    print(
+                        f"note: {name} is shared by {previous} and {document.name}",
+                        file=sys.stderr,
+                    )
+                writes[schema_dir / name] = document_schema(
+                    document.data, args.data_base
                 )
-            writes.append(
-                (schema_dir / name, document_schema(document.data, args.data_base))
-            )
+        missing |= resolver.missing
 
-    if resolver.missing:
+    if missing:
         # The walk stops at the documents that are not cached, so the types
         # behind them are not known: nothing is written rather than a part.
         print(
-            f"error: {len(resolver.missing)} documents are not in the cache; "
+            f"error: {len(missing)} documents are not in the cache; "
             "fetch them before generating:",
             file=sys.stderr,
         )
-        for name in sorted(resolver.missing):
+        for name in sorted(missing):
             print(f"  {cache.path(name)}", file=sys.stderr)
         return 1
 
+    if endpoints:
+        document = openapi_document(roots, endpoints, args.data_base)
+        # Every type an operation references has to be a schema.
+        unresolved = sorted(
+            ref
+            for ref in external_refs(document)
+            if schema_dir / ref not in writes and not (schema_dir / ref).exists()
+        )
+        if unresolved:
+            print(f"error: {OPENAPI_FILE} references missing files:", file=sys.stderr)
+            for ref in unresolved:
+                print(f"  {ref}", file=sys.stderr)
+            return 1
+        writes[schema_dir / OPENAPI_FILE] = document
+
     schema_dir.mkdir(parents=True, exist_ok=True)
-    for path, schema in writes:
+    for path, schema in writes.items():
         write_schema(schema, path)
     if skipped:
         print(f"note: {skipped} documents are not types", file=sys.stderr)
-    print(f"wrote {len(writes)} schemas to {schema_dir}", file=sys.stderr)
+    print(
+        f"wrote {len(writes) - bool(endpoints)} schemas and "
+        f"{len(endpoints)} operations to {schema_dir}",
+        file=sys.stderr,
+    )
     return 0
 
 
@@ -1060,6 +1362,8 @@ def command_prune(args: argparse.Namespace) -> int:
     wanted: set[str] = set()
     for level in resolver.levels():
         for document in level:
+            if is_endpoint(document.data):
+                wanted.add(OPENAPI_FILE)
             if not is_type(document.data):
                 continue
             title = document_title(document.data)
@@ -1147,9 +1451,11 @@ def build_parser() -> argparse.ArgumentParser:
     generate = commands.add_parser(
         "generate",
         parents=[common],
-        help="write a schema for every type a source names",
+        help="write a schema for every type the sources name, and an OpenAPI document",
     )
-    generate.add_argument("source", help='e.g. "applebusinessapi.json"')
+    generate.add_argument(
+        "sources", nargs="+", metavar="SOURCE", help='e.g. "applebusinessapi.json"'
+    )
     generate.add_argument("schema_dir", help='e.g. "abm/schemas"')
     generate.set_defaults(func=command_generate)
 
