@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "OrgDeviceActivity.Attributes",
-  "description": "Attributes that describe an organization device activity resource.\n\nApple School Manager API 1.7+\n\n> **Note:** You can add new attributes to a resource without a newer version of an API.",
+  "description": "Attributes that describe an organization device activity resource.\n\nApple School Manager API 1.8+\n\n> **Note:** You can add new attributes to a resource without a newer version of an API.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/orgdeviceactivity/attributes-data.dictionary",
-  "x-apple-developer-api-version": "1.7",
+  "x-apple-developer-api-version": "1.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/orgdeviceactivity/attributes-data.dictionary.json",
   "type": "object",
   "properties": {

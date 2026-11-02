@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "MdmServerResponse",
-  "description": "A response that contains a single device management service resource.\n\nApple Business API 2.6+",
+  "description": "A response that contains a single device management service resource.\n\nApple Business API 2.7+",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/mdmserverresponse",
-  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-api-version": "2.7",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/mdmserverresponse.json",
   "type": "object",
   "required": [ "data", "links" ],

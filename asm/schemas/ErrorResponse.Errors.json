@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "ErrorResponse.Errors",
-  "description": "The details about an error that returns when an API request isn’t successful.\n\nApple School Manager API 1.7+",
+  "description": "The details about an error that returns when an API request isn’t successful.\n\nApple School Manager API 1.8+",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/errorresponse/errors-data.dictionary",
-  "x-apple-developer-api-version": "1.7",
+  "x-apple-developer-api-version": "1.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/errorresponse/errors-data.dictionary.json",
   "type": "object",
   "required": [ "code", "detail", "status", "title" ],

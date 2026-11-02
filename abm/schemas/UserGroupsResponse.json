@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "UserGroupsResponse",
-  "description": "A response that contains a list of user group resources.\n\nApple Business API 2.6+",
+  "description": "A response that contains a list of user group resources.\n\nApple Business API 2.7+",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/usergroupsresponse",
-  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-api-version": "2.7",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/usergroupsresponse.json",
   "type": "object",
   "required": [ "data", "links" ],

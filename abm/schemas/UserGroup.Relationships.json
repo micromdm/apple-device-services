@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "UserGroup.Relationships",
-  "description": "The relationships you include in the request, and those that you can operate on.\n\nApple Business API 2.6+",
+  "description": "The relationships you include in the request, and those that you can operate on.\n\nApple Business API 2.7+",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/usergroup/relationships-data.dictionary",
-  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-api-version": "2.7",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/usergroup/relationships-data.dictionary.json",
   "type": "object",
   "properties": {

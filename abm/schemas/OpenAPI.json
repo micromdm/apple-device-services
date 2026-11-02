@@ -18,13 +18,13 @@
   "info": {
     "description": "Automate device management activities, view device information, and manage users and user groups in Apple Business.",
     "title": "Apple Business API",
-    "version": "2.6"
+    "version": "2.7"
   },
   "openapi": "3.1.0",
   "paths": {
     "/v1/apps": {
       "get": {
-        "description": "Get a list of apps for an organization using the built-in device management in Apple Business.\n\nApple Business API 2.6+\n\n> **Important:** This endpoint requires the built-in device management service to be turned on for the organization. If you need to manage apps without the built-in device management, use the [Apps and Books for Organizations](https://developer.apple.com/documentation/devicemanagement/apps-and-books-for-organizations) API instead.",
+        "description": "Get a list of apps for an organization using the built-in device management in Apple Business.\n\nApple Business API 2.7+\n\n> **Important:** This endpoint requires the built-in device management service to be turned on for the organization. If you need to manage apps without the built-in device management, use the [Apps and Books for Organizations](https://developer.apple.com/documentation/devicemanagement/apps-and-books-for-organizations) API instead.",
         "operationId": "getApps",
         "parameters": [
           {
@@ -113,13 +113,13 @@
           "Apps and Packages"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-apps",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-apps.json"
       }
     },
     "/v1/apps/{id}": {
       "get": {
-        "description": "Get information about a specific app for an organization using the built-in device management in Apple Business.\n\nApple Business API 2.6+\n\n> **Important:** This endpoint requires the built-in device management service to be turned on for the organization. If you need to manage apps without the built-in device management, use the [Apps and Books for Organizations](https://developer.apple.com/documentation/devicemanagement/apps-and-books-for-organizations) API instead.",
+        "description": "Get information about a specific app for an organization using the built-in device management in Apple Business.\n\nApple Business API 2.7+\n\n> **Important:** This endpoint requires the built-in device management service to be turned on for the organization. If you need to manage apps without the built-in device management, use the [Apps and Books for Organizations](https://developer.apple.com/documentation/devicemanagement/apps-and-books-for-organizations) API instead.",
         "operationId": "getAppInformation",
         "parameters": [
           {
@@ -218,13 +218,13 @@
           "Apps and Packages"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-app-information",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-app-information.json"
       }
     },
     "/v1/auditEvents": {
       "get": {
-        "description": "Get a list of audit events in an organization that satisfies the query criteria.\n\nApple Business API 2.6+",
+        "description": "Get a list of audit events in an organization that satisfies the query criteria.\n\nApple Business API 2.7+",
         "operationId": "getAuditEvents",
         "parameters": [
           {
@@ -482,13 +482,13 @@
           "Audit Events"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-audit-events",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-audit-events.json"
       }
     },
     "/v1/blueprints": {
       "get": {
-        "description": "Get a list of Blueprints in an organization.\n\nApple Business API 2.6+",
+        "description": "Get a list of Blueprints in an organization.\n\nApple Business API 2.7+",
         "operationId": "getBlueprints",
         "parameters": [
           {
@@ -654,11 +654,11 @@
           "Blueprints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-blueprints",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-blueprints.json"
       },
       "post": {
-        "description": "Create a new Blueprint in an organization.\n\nApple Business API 2.6+\n\n> **Note:** Any invalid resource IDs will be dropped from the request during Blueprint creation.",
+        "description": "Create a new Blueprint in an organization.\n\nApple Business API 2.7+\n\n> **Note:** Any invalid resource IDs will be dropped from the request during Blueprint creation.",
         "operationId": "createABlueprint",
         "requestBody": {
           "content": {
@@ -746,13 +746,13 @@
           "Blueprints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/create-a-blueprint",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/create-a-blueprint.json"
       }
     },
     "/v1/blueprints/{id}": {
       "delete": {
-        "description": "Delete a Blueprint from an organization.\n\nApple Business API 2.6+",
+        "description": "Delete a Blueprint from an organization.\n\nApple Business API 2.7+",
         "operationId": "deleteABlueprint",
         "parameters": [
           {
@@ -835,11 +835,11 @@
           "Blueprints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/delete-a-blueprint",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/delete-a-blueprint.json"
       },
       "get": {
-        "description": "Get information about a specific Blueprint in an organization.\n\nApple Business API 2.6+",
+        "description": "Get information about a specific Blueprint in an organization.\n\nApple Business API 2.7+",
         "operationId": "getBlueprintInformation",
         "parameters": [
           {
@@ -1015,11 +1015,11 @@
           "Blueprints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-blueprint-information",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-blueprint-information.json"
       },
       "patch": {
-        "description": "Update an existing Blueprint in an organization.\n\nApple Business API 2.6+\n\n> **Note:** Only the fields included in the request are updated. Any omitted fields retain their existing values.\n\n> **Note:** Any invalid resource IDs will be dropped from the request during Blueprint update.",
+        "description": "Update an existing Blueprint in an organization.\n\nApple Business API 2.7+\n\n> **Note:** Only the fields included in the request are updated. Any omitted fields retain their existing values.\n\n> **Note:** Any invalid resource IDs will be dropped from the request during Blueprint update.",
         "operationId": "updateABlueprint",
         "parameters": [
           {
@@ -1128,13 +1128,13 @@
           "Blueprints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/update-a-blueprint",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/update-a-blueprint.json"
       }
     },
     "/v1/blueprints/{id}/relationships/apps": {
       "delete": {
-        "description": "Remove apps from a Blueprint.\n\nApple Business API 2.6+",
+        "description": "Remove apps from a Blueprint.\n\nApple Business API 2.7+",
         "operationId": "removeAppsFromABlueprint",
         "parameters": [
           {
@@ -1226,11 +1226,11 @@
           "Blueprints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/remove-apps-from-a-blueprint",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/remove-apps-from-a-blueprint.json"
       },
       "get": {
-        "description": "Get a list of app IDs associated with a Blueprint.\n\nApple Business API 2.6+",
+        "description": "Get a list of app IDs associated with a Blueprint.\n\nApple Business API 2.7+",
         "operationId": "getAllAppIdsForABlueprint",
         "parameters": [
           {
@@ -1319,11 +1319,11 @@
           "Blueprints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-all-app-ids-for-a-blueprint",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-all-app-ids-for-a-blueprint.json"
       },
       "post": {
-        "description": "Add apps to a Blueprint.\n\nApple Business API 2.6+",
+        "description": "Add apps to a Blueprint.\n\nApple Business API 2.7+",
         "operationId": "addAppsToABlueprint",
         "parameters": [
           {
@@ -1415,13 +1415,13 @@
           "Blueprints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/add-apps-to-a-blueprint",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/add-apps-to-a-blueprint.json"
       }
     },
     "/v1/blueprints/{id}/relationships/configurations": {
       "delete": {
-        "description": "Remove Configurations from a Blueprint.\n\nApple Business API 2.6+",
+        "description": "Remove Configurations from a Blueprint.\n\nApple Business API 2.7+",
         "operationId": "removeConfigurationsFromABlueprint",
         "parameters": [
           {
@@ -1513,11 +1513,11 @@
           "Blueprints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/remove-configurations-from-a-blueprint",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/remove-configurations-from-a-blueprint.json"
       },
       "get": {
-        "description": "Get a list of Configuration IDs associated with a Blueprint.\n\nApple Business API 2.6+",
+        "description": "Get a list of Configuration IDs associated with a Blueprint.\n\nApple Business API 2.7+",
         "operationId": "getAllConfigurationIdsForABlueprint",
         "parameters": [
           {
@@ -1606,11 +1606,11 @@
           "Blueprints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-all-configuration-ids-for-a-blueprint",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-all-configuration-ids-for-a-blueprint.json"
       },
       "post": {
-        "description": "Add Configurations to a Blueprint.\n\nApple Business API 2.6+",
+        "description": "Add Configurations to a Blueprint.\n\nApple Business API 2.7+",
         "operationId": "addConfigurationsToABlueprint",
         "parameters": [
           {
@@ -1702,13 +1702,13 @@
           "Blueprints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/add-configurations-to-a-blueprint",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/add-configurations-to-a-blueprint.json"
       }
     },
     "/v1/blueprints/{id}/relationships/orgDevices": {
       "delete": {
-        "description": "Remove devices from a Blueprint.\n\nApple Business API 2.6+",
+        "description": "Remove devices from a Blueprint.\n\nApple Business API 2.7+",
         "operationId": "removeOrgDevicesFromABlueprint",
         "parameters": [
           {
@@ -1800,11 +1800,11 @@
           "Blueprints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/remove-org-devices-from-a-blueprint",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/remove-org-devices-from-a-blueprint.json"
       },
       "get": {
-        "description": "Get a list of device IDs associated with a Blueprint.\n\nApple Business API 2.6+",
+        "description": "Get a list of device IDs associated with a Blueprint.\n\nApple Business API 2.7+",
         "operationId": "getAllOrgdeviceIdsForABlueprint",
         "parameters": [
           {
@@ -1893,11 +1893,11 @@
           "Blueprints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-all-orgdevice-ids-for-a-blueprint",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-all-orgdevice-ids-for-a-blueprint.json"
       },
       "post": {
-        "description": "Add devices to a Blueprint.\n\nApple Business API 2.6+",
+        "description": "Add devices to a Blueprint.\n\nApple Business API 2.7+",
         "operationId": "addOrgDevicesToABlueprint",
         "parameters": [
           {
@@ -1989,13 +1989,13 @@
           "Blueprints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/add-org-devices-to-a-blueprint",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/add-org-devices-to-a-blueprint.json"
       }
     },
     "/v1/blueprints/{id}/relationships/packages": {
       "delete": {
-        "description": "Remove packages from a Blueprint.\n\nApple Business API 2.6+",
+        "description": "Remove packages from a Blueprint.\n\nApple Business API 2.7+",
         "operationId": "removePackagesFromABlueprint",
         "parameters": [
           {
@@ -2087,11 +2087,11 @@
           "Blueprints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/remove-packages-from-a-blueprint",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/remove-packages-from-a-blueprint.json"
       },
       "get": {
-        "description": "Get a list of package IDs associated with a Blueprint.\n\nApple Business API 2.6+",
+        "description": "Get a list of package IDs associated with a Blueprint.\n\nApple Business API 2.7+",
         "operationId": "getAllPackageIdsForABlueprint",
         "parameters": [
           {
@@ -2180,11 +2180,11 @@
           "Blueprints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-all-package-ids-for-a-blueprint",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-all-package-ids-for-a-blueprint.json"
       },
       "post": {
-        "description": "Add packages to a Blueprint.\n\nApple Business API 2.6+",
+        "description": "Add packages to a Blueprint.\n\nApple Business API 2.7+",
         "operationId": "addPackagesToABlueprint",
         "parameters": [
           {
@@ -2276,13 +2276,13 @@
           "Blueprints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/add-packages-to-a-blueprint",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/add-packages-to-a-blueprint.json"
       }
     },
     "/v1/blueprints/{id}/relationships/userGroups": {
       "delete": {
-        "description": "Remove user groups from a Blueprint.\n\nApple Business API 2.6+",
+        "description": "Remove user groups from a Blueprint.\n\nApple Business API 2.7+",
         "operationId": "removeUserGroupsFromABlueprint",
         "parameters": [
           {
@@ -2374,11 +2374,11 @@
           "Blueprints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/remove-user-groups-from-a-blueprint",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/remove-user-groups-from-a-blueprint.json"
       },
       "get": {
-        "description": "Get a list of user group IDs associated with a Blueprint.\n\nApple Business API 2.6+",
+        "description": "Get a list of user group IDs associated with a Blueprint.\n\nApple Business API 2.7+",
         "operationId": "getAllUserGroupIdsForABlueprint",
         "parameters": [
           {
@@ -2467,11 +2467,11 @@
           "Blueprints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-all-user-group-ids-for-a-blueprint",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-all-user-group-ids-for-a-blueprint.json"
       },
       "post": {
-        "description": "Add user groups to a Blueprint.\n\nApple Business API 2.6+",
+        "description": "Add user groups to a Blueprint.\n\nApple Business API 2.7+",
         "operationId": "addUserGroupsToABlueprint",
         "parameters": [
           {
@@ -2563,13 +2563,13 @@
           "Blueprints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/add-user-groups-to-a-blueprint",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/add-user-groups-to-a-blueprint.json"
       }
     },
     "/v1/blueprints/{id}/relationships/users": {
       "delete": {
-        "description": "Remove users from a Blueprint.\n\nApple Business API 2.6+",
+        "description": "Remove users from a Blueprint.\n\nApple Business API 2.7+",
         "operationId": "removeUsersFromABlueprint",
         "parameters": [
           {
@@ -2661,11 +2661,11 @@
           "Blueprints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/remove-users-from-a-blueprint",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/remove-users-from-a-blueprint.json"
       },
       "get": {
-        "description": "Get a list of user IDs associated with a Blueprint.\n\nApple Business API 2.6+",
+        "description": "Get a list of user IDs associated with a Blueprint.\n\nApple Business API 2.7+",
         "operationId": "getAllUserIdsForABlueprint",
         "parameters": [
           {
@@ -2754,11 +2754,11 @@
           "Blueprints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-all-user-ids-for-a-blueprint",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-all-user-ids-for-a-blueprint.json"
       },
       "post": {
-        "description": "Add users to a Blueprint.\n\nApple Business API 2.6+",
+        "description": "Add users to a Blueprint.\n\nApple Business API 2.7+",
         "operationId": "addUsersToABlueprint",
         "parameters": [
           {
@@ -2850,13 +2850,13 @@
           "Blueprints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/add-users-to-a-blueprint",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/add-users-to-a-blueprint.json"
       }
     },
     "/v1/configurations": {
       "get": {
-        "description": "Get a list of Configurations in an organization.\n\nApple Business API 2.6+\n\n> **Note:** This API will return `null` for `customSettingsValues` for all configuration types, including of type `CUSTOM_SETTING`. To get the `customSettingsValues` for `CUSTOM_SETTING` Configurations, see [Get Configuration Information](https://developer.apple.com/documentation/applebusinessapi/get-configuration-information).",
+        "description": "Get a list of Configurations in an organization.\n\nApple Business API 2.7+\n\n> **Note:** This API will return `null` for `customSettingsValues` for all configuration types, including of type `CUSTOM_SETTING`. To get the `customSettingsValues` for `CUSTOM_SETTING` Configurations, see [Get Configuration Information](https://developer.apple.com/documentation/applebusinessapi/get-configuration-information).",
         "operationId": "getConfigurations",
         "parameters": [
           {
@@ -2944,11 +2944,11 @@
           "Configurations"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-configurations",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-configurations.json"
       },
       "post": {
-        "description": "Create a new custom Configuration in an organization.\n\nApple Business API 2.6+\n\n> **Important:** Only Configurations with type `CUSTOM_SETTING` can be created with the API.\n\n> **Note:** `configurationProfile` is required. `filename` is optional — if omitted, a default filename is generated from the Configuration ID. `configuredForPlatforms` is optional — if omitted, supported platforms are auto-detected from the payload content in the Configuration profile. The profile must be compatible with the resolved platforms.",
+        "description": "Create a new custom Configuration in an organization.\n\nApple Business API 2.7+\n\n> **Important:** Only Configurations with type `CUSTOM_SETTING` can be created with the API.\n\n> **Note:** `configurationProfile` is required. `filename` is optional — if omitted, a default filename is generated from the Configuration ID. `configuredForPlatforms` is optional — if omitted, supported platforms are auto-detected from the payload content in the Configuration profile. The profile must be compatible with the resolved platforms.",
         "operationId": "createAConfiguration",
         "requestBody": {
           "content": {
@@ -3036,13 +3036,13 @@
           "Configurations"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/create-a-configuration",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/create-a-configuration.json"
       }
     },
     "/v1/configurations/{id}": {
       "delete": {
-        "description": "Delete a Configuration from an organization.\n\nApple Business API 2.6+",
+        "description": "Delete a Configuration from an organization.\n\nApple Business API 2.7+",
         "operationId": "deleteAConfiguration",
         "parameters": [
           {
@@ -3125,11 +3125,11 @@
           "Configurations"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/delete-a-configuration",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/delete-a-configuration.json"
       },
       "get": {
-        "description": "Get information about a specific Configuration in an organization.\n\nApple Business API 2.6+\n\n> **Note:** Use this API to retrieve the `customSettingsValues` for a `CUSTOM_SETTING` Configuration.",
+        "description": "Get information about a specific Configuration in an organization.\n\nApple Business API 2.7+\n\n> **Note:** Use this API to retrieve the `customSettingsValues` for a `CUSTOM_SETTING` Configuration.",
         "operationId": "getConfigurationInformation",
         "parameters": [
           {
@@ -3227,11 +3227,11 @@
           "Configurations"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-configuration-information",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-configuration-information.json"
       },
       "patch": {
-        "description": "Update an existing custom Configuration in an organization.\n\nApple Business API 2.6+\n\n> **Important:** Only Configurations with type `CUSTOM_SETTING` can be updated via the API.\n\n> **Note:** If a `filename` is provided, it must end in `.mobileconfig`. A provided `configurationProfile` is validated and must be compatible with the resolved `configuredForPlatforms` (either from the request or the existing value on the Configuration).\n\n> **Note:** Only the fields included in the request are updated. One of `name`, `configuredForPlatforms`, `configurationProfile`, or `filename` must be included, and any omitted fields retain their existing values.",
+        "description": "Update an existing custom Configuration in an organization.\n\nApple Business API 2.7+\n\n> **Important:** Only Configurations with type `CUSTOM_SETTING` can be updated via the API.\n\n> **Note:** If a `filename` is provided, it must end in `.mobileconfig`. A provided `configurationProfile` is validated and must be compatible with the resolved `configuredForPlatforms` (either from the request or the existing value on the Configuration).\n\n> **Note:** Only the fields included in the request are updated. One of `name`, `configuredForPlatforms`, `configurationProfile`, or `filename` must be included, and any omitted fields retain their existing values.",
         "operationId": "updateAConfiguration",
         "parameters": [
           {
@@ -3340,13 +3340,13 @@
           "Configurations"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/update-a-configuration",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/update-a-configuration.json"
       }
     },
     "/v1/mdmDevices": {
       "get": {
-        "description": "Get a list of devices enrolled in Apple Device Management service.\n\nApple Business API 2.6+",
+        "description": "Get a list of devices enrolled in Apple Device Management service.\n\nApple Business API 2.7+",
         "operationId": "getAppleMdmEnrolledDevices",
         "parameters": [
           {
@@ -3433,13 +3433,13 @@
           "Devices"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-apple-mdm-enrolled-devices",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-apple-mdm-enrolled-devices.json"
       }
     },
     "/v1/mdmDevices/{id}/details": {
       "get": {
-        "description": "Get detailed information about a device enrolled in Apple Device Management service.\n\nApple Business API 2.6+",
+        "description": "Get detailed information about a device enrolled in Apple Device Management service.\n\nApple Business API 2.7+",
         "operationId": "getTheDetailsForAppleMdmEnrolledDevice",
         "parameters": [
           {
@@ -3549,13 +3549,13 @@
           "Devices"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-the-details-for-apple-mdm-enrolled-device",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-the-details-for-apple-mdm-enrolled-device.json"
       }
     },
     "/v1/mdmServers": {
       "get": {
-        "description": "Get a list of device management services in an organization.\n\nApple Business API 2.6+",
+        "description": "Get a list of device management services in an organization.\n\nApple Business API 2.7+",
         "operationId": "getMdmServers",
         "parameters": [
           {
@@ -3648,11 +3648,11 @@
           "Device Management Services"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-mdm-servers",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-mdm-servers.json"
       },
       "post": {
-        "description": "Create a new device management service in an organization.\n\nApple Business API 2.6+\n\n> **Note:** The `serverName` and `serverCertificate` attributes are required.",
+        "description": "Create a new device management service in an organization.\n\nApple Business API 2.7+\n\n> **Note:** The `serverName` and `serverCertificate` attributes are required.",
         "operationId": "createAnMdmserver",
         "requestBody": {
           "content": {
@@ -3740,13 +3740,13 @@
           "Device Management Services"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/create-an-mdmserver",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/create-an-mdmserver.json"
       }
     },
     "/v1/mdmServers/{id}": {
       "delete": {
-        "description": "Delete a device management service from an organization.\n\nApple Business API 2.6+\n\n> **Note:** A device management service that has devices assigned to it can’t be deleted. Unassign all devices before deleting.",
+        "description": "Delete a device management service from an organization.\n\nApple Business API 2.7+\n\n> **Note:** A device management service that has devices assigned to it can’t be deleted. Unassign all devices before deleting.",
         "operationId": "deleteAnMdmserver",
         "parameters": [
           {
@@ -3819,11 +3819,11 @@
           "Device Management Services"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/delete-an-mdmserver",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/delete-an-mdmserver.json"
       },
       "get": {
-        "description": "Get the information for a specific device management service.\n\nApple Business API 2.6+",
+        "description": "Get the information for a specific device management service.\n\nApple Business API 2.7+",
         "operationId": "getMdmserverInformation",
         "parameters": [
           {
@@ -3926,11 +3926,11 @@
           "Device Management Services"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-mdmserver-information",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-mdmserver-information.json"
       },
       "patch": {
-        "description": "Update an existing device management service in an organization.\n\nApple Business API 2.6+\n\n> **Note:** Only the fields included in the request are updated. Any omitted fields retain their existing values.",
+        "description": "Update an existing device management service in an organization.\n\nApple Business API 2.7+\n\n> **Note:** Only the fields included in the request are updated. Any omitted fields retain their existing values.",
         "operationId": "updateAnMdmserver",
         "parameters": [
           {
@@ -4039,13 +4039,13 @@
           "Device Management Services"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/update-an-mdmserver",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/update-an-mdmserver.json"
       }
     },
     "/v1/mdmServers/{id}/relationships/devices": {
       "get": {
-        "description": "Get a list of device serial numbers assigned to a device management service.\n\nApple Business API 2.6+",
+        "description": "Get a list of device serial numbers assigned to a device management service.\n\nApple Business API 2.7+",
         "operationId": "getAllDeviceIdsForAnMdmserver",
         "parameters": [
           {
@@ -4134,13 +4134,13 @@
           "Device Management Services"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-all-device-ids-for-an-mdmserver",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-all-device-ids-for-an-mdmserver.json"
       }
     },
     "/v1/orgDeviceActivities": {
       "post": {
-        "description": "Assign or unassign devices to a device management service, manage a device management service migration for devices, or release devices from an organization.\n\nApple Business API 2.6+",
+        "description": "Assign or unassign devices to a device management service, manage a device management service migration for devices, or release devices from an organization.\n\nApple Business API 2.7+",
         "operationId": "createAnOrgdeviceactivity",
         "requestBody": {
           "content": {
@@ -4228,13 +4228,13 @@
           "Device Management Services"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/create-an-orgdeviceactivity",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/create-an-orgdeviceactivity.json"
       }
     },
     "/v1/orgDeviceActivities/{id}": {
       "get": {
-        "description": "Get information for an organization device activity that a device management action, such as assign or unassign, creates.\n\nApple Business API 2.6+\n\n> **Note:** This API supports fetching organization device activity information that the system creates for device management actions, such as assigning or unassigning devices to the device management service in the past 30 days.",
+        "description": "Get information for an organization device activity that a device management action, such as assign or unassign, creates.\n\nApple Business API 2.7+\n\n> **Note:** This API supports fetching organization device activity information that the system creates for device management actions, such as assigning or unassigning devices to the device management service in the past 30 days.",
         "operationId": "getOrgdeviceactivityInformation",
         "parameters": [
           {
@@ -4331,17 +4331,17 @@
           "Device Management Services"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-orgdeviceactivity-information",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-orgdeviceactivity-information.json"
       }
     },
     "/v1/orgDevices": {
       "get": {
-        "description": "Get a list of devices in an organization that enroll using Automated Device Enrollment.\n\nApple Business API 2.6+",
+        "description": "Get a list of devices in an organization that enroll using Automated Device Enrollment.\n\nApple Business API 2.7+",
         "operationId": "getOrgDevices",
         "parameters": [
           {
-            "description": "The fields to return for included related types.",
+            "description": "The fields to include for each device in the response. This parameter doesn’t filter devices. To filter devices, use the `filter` parameters.",
             "in": "query",
             "name": "fields[orgDevices]",
             "schema": {
@@ -4382,6 +4382,155 @@
             "schema": {
               "maximum": 1000,
               "type": "integer"
+            }
+          },
+          {
+            "description": "A pagination cursor to retrieve the next page of results.",
+            "in": "query",
+            "name": "cursor",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by the serial number of the device. Separate multiple values with commas.",
+            "in": "query",
+            "name": "filter[serialNumber]",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Filter by the product family of the device. Possible values: `Mac`, `iPhone`, `iPad`, `iPod`, `AppleTV`, `Watch`, and `Vision`. Separate multiple values with commas.",
+            "in": "query",
+            "name": "filter[productFamily]",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Filter by the purchase source type of the device. Possible values: `APPLE`, `RESELLER`, and `MANUALLY_ADDED`. Separate multiple values with commas.",
+            "in": "query",
+            "name": "filter[purchaseSourceType]",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Filter by the order number of the device. Separate multiple values with commas.",
+            "in": "query",
+            "name": "filter[orderNumber]",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Filter by the assignment status of the device. Possible values: `ASSIGNED` and `UNASSIGNED`. Separate multiple values with commas.",
+            "in": "query",
+            "name": "filter[status]",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Filter by the date and time the device was added to the organization, such as `2025-01-01T00:00:00Z`.",
+            "in": "query",
+            "name": "filter[addedToOrgDateTime]",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Filter for devices added to the organization after this date and time.",
+            "in": "query",
+            "name": "filter[addedToOrgDateTime][GT]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter for devices added to the organization at or after this date and time.",
+            "in": "query",
+            "name": "filter[addedToOrgDateTime][GTE]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter for devices added to the organization before this date and time.",
+            "in": "query",
+            "name": "filter[addedToOrgDateTime][LT]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter for devices added to the organization at or before this date and time.",
+            "in": "query",
+            "name": "filter[addedToOrgDateTime][LTE]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by the date and time the device was ordered, such as `2025-01-01T00:00:00Z`.",
+            "in": "query",
+            "name": "filter[orderDateTime]",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Filter for devices ordered after this date and time.",
+            "in": "query",
+            "name": "filter[orderDateTime][GT]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter for devices ordered at or after this date and time.",
+            "in": "query",
+            "name": "filter[orderDateTime][GTE]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter for devices ordered before this date and time.",
+            "in": "query",
+            "name": "filter[orderDateTime][LT]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter for devices ordered at or before this date and time.",
+            "in": "query",
+            "name": "filter[orderDateTime][LTE]",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -4442,13 +4591,13 @@
           "Devices"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-org-devices",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-org-devices.json"
       }
     },
     "/v1/orgDevices/{id}": {
       "get": {
-        "description": "Get information about a device in an organization.\n\nApple Business API 2.6+",
+        "description": "Get information about a device in an organization.\n\nApple Business API 2.7+",
         "operationId": "getOrgdeviceInformation",
         "parameters": [
           {
@@ -4563,13 +4712,13 @@
           "Devices"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-orgdevice-information",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-orgdevice-information.json"
       }
     },
     "/v1/orgDevices/{id}/activationLockStatus": {
       "get": {
-        "description": "Get the Activation Lock status of an organization device.\n\nApple Business API 2.6+\n\n> **Note:** The request can also fail with an unexpected server error if the device reports an internal-only lock state that isn’t valid for a managed device.",
+        "description": "Get the Activation Lock status of an organization device.\n\nApple Business API 2.7+\n\n> **Note:** The request can also fail with an unexpected server error if the device reports an internal-only lock state that isn’t valid for a managed device.",
         "operationId": "getTheActivationLockStatusInformationForAnOrgdevice",
         "parameters": [
           {
@@ -4663,13 +4812,13 @@
           "Endpoints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-the-activation-lock-status-information-for-an-orgdevice",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-the-activation-lock-status-information-for-an-orgdevice.json"
       }
     },
     "/v1/orgDevices/{id}/appleCareCoverage": {
       "get": {
-        "description": "Get a list of AppleCare coverage resources for an organization device.\n\nApple Business API 2.6+",
+        "description": "Get a list of AppleCare coverage resources for an organization device.\n\nApple Business API 2.7+",
         "operationId": "getAllApplecareCoverageForAnOrgdevice",
         "parameters": [
           {
@@ -4779,13 +4928,13 @@
           "Devices"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-all-applecare-coverage-for-an-orgdevice",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-all-applecare-coverage-for-an-orgdevice.json"
       }
     },
     "/v1/orgDevices/{id}/assignedServer": {
       "get": {
-        "description": "Get the assigned device management service information for a device.\n\nApple Business API 2.6+",
+        "description": "Get the assigned device management service information for a device.\n\nApple Business API 2.7+",
         "operationId": "getTheAssignedServerInformationForAnOrgdevice",
         "parameters": [
           {
@@ -4882,13 +5031,13 @@
           "Device Management Services"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-the-assigned-server-information-for-an-orgdevice",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-the-assigned-server-information-for-an-orgdevice.json"
       }
     },
     "/v1/orgDevices/{id}/relationships/assignedServer": {
       "get": {
-        "description": "Get the assigned device management service ID information for a device.\n\nApple Business API 2.6+",
+        "description": "Get the assigned device management service ID information for a device.\n\nApple Business API 2.7+",
         "operationId": "getTheAssignedServerIdForAnOrgdevice",
         "parameters": [
           {
@@ -4968,13 +5117,13 @@
           "Device Management Services"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-the-assigned-server-id-for-an-orgdevice",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-the-assigned-server-id-for-an-orgdevice.json"
       }
     },
     "/v1/organizationalUnits": {
       "get": {
-        "description": "Get a list of organizational units in an organization.\n\nApple Business API 2.6+",
+        "description": "Get a list of organizational units in an organization.\n\nApple Business API 2.7+",
         "operationId": "getOrganizationalUnits",
         "parameters": [
           {
@@ -5061,13 +5210,13 @@
           "Organizational Units"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-organizational-units",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-organizational-units.json"
       }
     },
     "/v1/organizationalUnits/{id}": {
       "get": {
-        "description": "Get information about a specific organizational unit in an organization.\n\nApple Business API 2.6+",
+        "description": "Get information about a specific organizational unit in an organization.\n\nApple Business API 2.7+",
         "operationId": "getOrganizationalunitInformation",
         "parameters": [
           {
@@ -5164,17 +5313,16 @@
           "Organizational Units"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-organizationalunit-information",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-organizationalunit-information.json"
       }
     },
     "/v1/organizationalUnits/{id}/relationships/users": {
       "get": {
-        "description": "Get a list of user IDs for an organizational unit in an organization.\n\nApple Business API 2.6+",
-        "operationId": "getAllUserIdsForAnOrganizationalunit",
+        "description": "Apple Business API 2.7+",
+        "operationId": "getAllUserIdsForAnOrganizationalUnit",
         "parameters": [
           {
-            "description": "The unique identifier for the resource.",
             "in": "path",
             "name": "id",
             "required": true,
@@ -5183,7 +5331,6 @@
             }
           },
           {
-            "description": "The number of included related resources to return.",
             "in": "query",
             "name": "limit",
             "schema": {
@@ -5211,7 +5358,7 @@
                 }
               }
             },
-            "description": "An error occurred with your request."
+            "description": "Bad Request"
           },
           "401": {
             "content": {
@@ -5231,7 +5378,7 @@
                 }
               }
             },
-            "description": "Request not authorized."
+            "description": "Forbidden"
           },
           "404": {
             "content": {
@@ -5251,21 +5398,21 @@
                 }
               }
             },
-            "description": "**Too Many Requests**"
+            "description": ""
           }
         },
-        "summary": "Get User IDs for an Organizational Unit",
+        "summary": "Get All User IDs for an Organizational Unit",
         "tags": [
-          "Organizational Units"
+          "Endpoints"
         ],
-        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-all-user-ids-for-an-organizationalunit",
-        "x-apple-developer-api-version": "2.6",
-        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-all-user-ids-for-an-organizationalunit.json"
+        "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-all-user-ids-for-an-organizational-unit",
+        "x-apple-developer-api-version": "2.7",
+        "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-all-user-ids-for-an-organizational-unit.json"
       }
     },
     "/v1/packages": {
       "get": {
-        "description": "Get a list of packages for an organization using Apple Business’s built-in device management.\n\nApple Business API 2.6+",
+        "description": "Get a list of packages for an organization using Apple Business’s built-in device management.\n\nApple Business API 2.7+",
         "operationId": "getPackages",
         "parameters": [
           {
@@ -5355,13 +5502,13 @@
           "Apps and Packages"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-packages",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-packages.json"
       }
     },
     "/v1/packages/{id}": {
       "get": {
-        "description": "Get information about a specific package for an organization using Apple Business’s built-in device management.\n\nApple Business API 2.6+",
+        "description": "Get information about a specific package for an organization using Apple Business’s built-in device management.\n\nApple Business API 2.7+",
         "operationId": "getPackageInformation",
         "parameters": [
           {
@@ -5461,13 +5608,13 @@
           "Apps and Packages"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-package-information",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-package-information.json"
       }
     },
     "/v1/userGroups": {
       "get": {
-        "description": "Get a list of user groups in an organization.\n\nApple Business API 2.6+",
+        "description": "Get a list of user groups in an organization.\n\nApple Business API 2.7+",
         "operationId": "getUserGroups",
         "parameters": [
           {
@@ -5557,13 +5704,13 @@
           "UserGroups"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-user-groups",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-user-groups.json"
       }
     },
     "/v1/userGroups/{id}": {
       "get": {
-        "description": "Get information about a specific user group in an organization.\n\nApple Business API 2.6+",
+        "description": "Get information about a specific user group in an organization.\n\nApple Business API 2.7+",
         "operationId": "getUsergroupInformation",
         "parameters": [
           {
@@ -5663,13 +5810,13 @@
           "UserGroups"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-usergroup-information",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-usergroup-information.json"
       }
     },
     "/v1/userGroups/{id}/relationships/users": {
       "get": {
-        "description": "Get a list of user IDs for a user group in an organization.\n\nApple Business API 2.6+",
+        "description": "Get a list of user IDs for a user group in an organization.\n\nApple Business API 2.7+",
         "operationId": "getAllUserIdsForAUserGroup",
         "parameters": [
           {
@@ -5758,13 +5905,13 @@
           "UserGroups"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-all-user-ids-for-a-user-group",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-all-user-ids-for-a-user-group.json"
       }
     },
     "/v1/users": {
       "get": {
-        "description": "Get a list of users in an organization.\n\nApple Business API 2.6+",
+        "description": "Get a list of users in an organization.\n\nApple Business API 2.7+",
         "operationId": "getUsers",
         "parameters": [
           {
@@ -5863,13 +6010,13 @@
           "Users"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-users",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-users.json"
       }
     },
     "/v1/users/{id}": {
       "get": {
-        "description": "Get information about a specific user in an organization.\n\nApple Business API 2.6+",
+        "description": "Get information about a specific user in an organization.\n\nApple Business API 2.7+",
         "operationId": "getUserInformation",
         "parameters": [
           {
@@ -5978,7 +6125,7 @@
           "Users"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/get-user-information",
-        "x-apple-developer-api-version": "2.6",
+        "x-apple-developer-api-version": "2.7",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/get-user-information.json"
       }
     }

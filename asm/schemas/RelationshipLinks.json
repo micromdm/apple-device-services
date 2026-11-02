@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "RelationshipLinks",
-  "description": "Links related to the response document, including self-links.\n\nApple School Manager API 1.7+",
+  "description": "Links related to the response document, including self-links.\n\nApple School Manager API 1.8+",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/relationshiplinks",
-  "x-apple-developer-api-version": "1.7",
+  "x-apple-developer-api-version": "1.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/relationshiplinks.json",
   "type": "object",
   "properties": {

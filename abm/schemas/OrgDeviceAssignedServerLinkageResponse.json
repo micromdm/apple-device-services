@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "OrgDeviceAssignedServerLinkageResponse",
-  "description": "The data and links that describe the relationship between the resources.\n\nApple Business API 2.6+",
+  "description": "The data and links that describe the relationship between the resources.\n\nApple Business API 2.7+",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdeviceassignedserverlinkageresponse",
-  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-api-version": "2.7",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/orgdeviceassignedserverlinkageresponse.json",
   "type": "object",
   "required": [ "data", "links" ],
