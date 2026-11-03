@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "UserGroupStatus",
-  "description": "Strings that represent user group statuses.\n\nApple Business API 2.6+\n\n- Possible Values\n  \n  - ACTIVE: The user group is active.",
+  "description": "Strings that represent user group statuses.\n\nApple Business API 2.7+\n\n- Possible Values\n  \n  - ACTIVE: The user group is active.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/usergroupstatus",
-  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-api-version": "2.7",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/usergroupstatus.json",
   "const": "ACTIVE"
 }

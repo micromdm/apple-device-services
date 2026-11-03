@@ -18,13 +18,13 @@
   "info": {
     "description": "Automate device management activities and view device information in Apple School Manager.",
     "title": "Apple School Manager API",
-    "version": "1.7"
+    "version": "1.8"
   },
   "openapi": "3.1.0",
   "paths": {
     "/v1/mdmServers": {
       "get": {
-        "description": "Get a list of device management services in an organization.\n\nApple School Manager API 1.7+",
+        "description": "Get a list of device management services in an organization.\n\nApple School Manager API 1.8+",
         "operationId": "getDeviceManagementServices",
         "parameters": [
           {
@@ -117,13 +117,13 @@
           "Device Management Services"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/get-device-management-services",
-        "x-apple-developer-api-version": "1.7",
+        "x-apple-developer-api-version": "1.8",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/get-device-management-services.json"
       }
     },
     "/v1/mdmServers/{id}": {
       "get": {
-        "description": "Get the information for a specific device management service.\n\nApple School Manager API 1.7+",
+        "description": "Get the information for a specific device management service.\n\nApple School Manager API 1.8+",
         "operationId": "getMdmserverInformation",
         "parameters": [
           {
@@ -226,13 +226,13 @@
           "Device Management Services"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/get-mdmserver-information",
-        "x-apple-developer-api-version": "1.7",
+        "x-apple-developer-api-version": "1.8",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/get-mdmserver-information.json"
       }
     },
     "/v1/mdmServers/{id}/relationships/devices": {
       "get": {
-        "description": "Apple School Manager API 1.7+",
+        "description": "Apple School Manager API 1.8+",
         "operationId": "getAllDeviceIdsForADeviceManagementService",
         "parameters": [
           {
@@ -319,13 +319,13 @@
           "Device Management Services"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/get-all-device-ids-for-a-device-management-service",
-        "x-apple-developer-api-version": "1.7",
+        "x-apple-developer-api-version": "1.8",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/get-all-device-ids-for-a-device-management-service.json"
       }
     },
     "/v1/orgDeviceActivities": {
       "post": {
-        "description": "Assign or unassign devices to a device management service, or manage a device management service for devices.\n\nApple School Manager API 1.7+",
+        "description": "Assign or unassign devices to a device management service, or manage a device management service for devices.\n\nApple School Manager API 1.8+",
         "operationId": "createAnOrgdeviceactivity",
         "requestBody": {
           "content": {
@@ -413,13 +413,13 @@
           "Device Management Services"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/create-an-orgdeviceactivity",
-        "x-apple-developer-api-version": "1.7",
+        "x-apple-developer-api-version": "1.8",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/create-an-orgdeviceactivity.json"
       }
     },
     "/v1/orgDeviceActivities/{id}": {
       "get": {
-        "description": "Get information for an organization device activity that a device management action, such as assigning or unassigning, creates.\n\nApple School Manager API 1.7+\n\n> **Note:** This API supports fetching organization device activity information that the system creates for device management actions, such as assigning or unassigning devices to the device management service in the past 30 days.",
+        "description": "Get information for an organization device activity that a device management action, such as assigning or unassigning, creates.\n\nApple School Manager API 1.8+\n\n> **Note:** This API supports fetching organization device activity information that the system creates for device management actions, such as assigning or unassigning devices to the device management service in the past 30 days.",
         "operationId": "getOrgdeviceactivityInformation",
         "parameters": [
           {
@@ -516,17 +516,17 @@
           "Device Management Services"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/get-orgdeviceactivity-information",
-        "x-apple-developer-api-version": "1.7",
+        "x-apple-developer-api-version": "1.8",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/get-orgdeviceactivity-information.json"
       }
     },
     "/v1/orgDevices": {
       "get": {
-        "description": "Get a list of devices in an organization that enroll using Automated Device Enrollment.\n\nApple School Manager API 1.7+",
+        "description": "Get a list of devices in an organization that enroll using Automated Device Enrollment.\n\nApple School Manager API 1.8+",
         "operationId": "getOrgDevices",
         "parameters": [
           {
-            "description": "The fields to return for included related types.",
+            "description": "The fields to include for each device in the response. This parameter doesn’t filter devices. To filter devices, use the `filter` parameters.",
             "in": "query",
             "name": "fields[orgDevices]",
             "schema": {
@@ -567,6 +567,155 @@
             "schema": {
               "maximum": 1000,
               "type": "integer"
+            }
+          },
+          {
+            "description": "A pagination cursor to retrieve the next page of results.",
+            "in": "query",
+            "name": "cursor",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by the serial number of the device. Separate multiple values with commas.",
+            "in": "query",
+            "name": "filter[serialNumber]",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Filter by the product family of the device. Possible values: `Mac`, `iPhone`, `iPad`, `iPod`, `AppleTV`, `Watch`, and `Vision`. Separate multiple values with commas.",
+            "in": "query",
+            "name": "filter[productFamily]",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Filter by the purchase source type of the device. Possible values: `APPLE`, `RESELLER`, and `MANUALLY_ADDED`. Separate multiple values with commas.",
+            "in": "query",
+            "name": "filter[purchaseSourceType]",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Filter by the order number of the device. Separate multiple values with commas.",
+            "in": "query",
+            "name": "filter[orderNumber]",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Filter by the assignment status of the device. Possible values: `ASSIGNED` and `UNASSIGNED`. Separate multiple values with commas.",
+            "in": "query",
+            "name": "filter[status]",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Filter by the date and time the device was added to the organization, such as `2025-01-01T00:00:00Z`.",
+            "in": "query",
+            "name": "filter[addedToOrgDateTime]",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Filter for devices added to the organization after this date and time.",
+            "in": "query",
+            "name": "filter[addedToOrgDateTime][GT]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter for devices added to the organization at or after this date and time.",
+            "in": "query",
+            "name": "filter[addedToOrgDateTime][GTE]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter for devices added to the organization before this date and time.",
+            "in": "query",
+            "name": "filter[addedToOrgDateTime][LT]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter for devices added to the organization at or before this date and time.",
+            "in": "query",
+            "name": "filter[addedToOrgDateTime][LTE]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by the date and time the device was ordered, such as `2025-01-01T00:00:00Z`.",
+            "in": "query",
+            "name": "filter[orderDateTime]",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Filter for devices ordered after this date and time.",
+            "in": "query",
+            "name": "filter[orderDateTime][GT]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter for devices ordered at or after this date and time.",
+            "in": "query",
+            "name": "filter[orderDateTime][GTE]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter for devices ordered before this date and time.",
+            "in": "query",
+            "name": "filter[orderDateTime][LT]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter for devices ordered at or before this date and time.",
+            "in": "query",
+            "name": "filter[orderDateTime][LTE]",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -627,13 +776,13 @@
           "Devices"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/get-org-devices",
-        "x-apple-developer-api-version": "1.7",
+        "x-apple-developer-api-version": "1.8",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/get-org-devices.json"
       }
     },
     "/v1/orgDevices/{id}": {
       "get": {
-        "description": "Get information about a device in an organization.\n\nApple School Manager API 1.7+",
+        "description": "Get information about a device in an organization.\n\nApple School Manager API 1.8+",
         "operationId": "getOrgdeviceInformation",
         "parameters": [
           {
@@ -748,13 +897,13 @@
           "Devices"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/get-orgdevice-information",
-        "x-apple-developer-api-version": "1.7",
+        "x-apple-developer-api-version": "1.8",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/get-orgdevice-information.json"
       }
     },
     "/v1/orgDevices/{id}/activationLockStatus": {
       "get": {
-        "description": "Get the Activation Lock status of an organization device.\n\nApple School Manager API 1.7+\n\n> **Note:** The request can also fail with an unexpected server error if the device reports an internal-only lock state that isn’t valid for a managed device.",
+        "description": "Get the Activation Lock status of an organization device.\n\nApple School Manager API 1.8+\n\n> **Note:** The request can also fail with an unexpected server error if the device reports an internal-only lock state that isn’t valid for a managed device.",
         "operationId": "getTheActivationLockStatusInformationForAnOrgdevice",
         "parameters": [
           {
@@ -848,13 +997,13 @@
           "Endpoints"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/get-the-activation-lock-status-information-for-an-orgdevice",
-        "x-apple-developer-api-version": "1.7",
+        "x-apple-developer-api-version": "1.8",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/get-the-activation-lock-status-information-for-an-orgdevice.json"
       }
     },
     "/v1/orgDevices/{id}/appleCareCoverage": {
       "get": {
-        "description": "Get a list of AppleCare coverage resources for an organization device.\n\nApple School Manager API 1.7+",
+        "description": "Get a list of AppleCare coverage resources for an organization device.\n\nApple School Manager API 1.8+",
         "operationId": "getAllApplecareCoverageForAnOrgdevice",
         "parameters": [
           {
@@ -964,13 +1113,13 @@
           "Devices"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/get-all-applecare-coverage-for-an-orgdevice",
-        "x-apple-developer-api-version": "1.7",
+        "x-apple-developer-api-version": "1.8",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/get-all-applecare-coverage-for-an-orgdevice.json"
       }
     },
     "/v1/orgDevices/{id}/assignedServer": {
       "get": {
-        "description": "Get the assigned device management service information for a device.\n\nApple School Manager API 1.7+",
+        "description": "Get the assigned device management service information for a device.\n\nApple School Manager API 1.8+",
         "operationId": "getTheAssignedDeviceManagementServiceInformationForAnOrgdevice",
         "parameters": [
           {
@@ -1067,13 +1216,13 @@
           "Device Management Services"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/get-the-assigned-device-management-service-information-for-an-orgdevice",
-        "x-apple-developer-api-version": "1.7",
+        "x-apple-developer-api-version": "1.8",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/get-the-assigned-device-management-service-information-for-an-orgdevice.json"
       }
     },
     "/v1/orgDevices/{id}/relationships/assignedServer": {
       "get": {
-        "description": "Get the assigned device management service ID information for a device.\n\nApple School Manager API 1.7+",
+        "description": "Get the assigned device management service ID information for a device.\n\nApple School Manager API 1.8+",
         "operationId": "getTheAssignedDeviceManagementServiceIdForAnOrgdevice",
         "parameters": [
           {
@@ -1153,7 +1302,7 @@
           "Device Management Services"
         ],
         "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/get-the-assigned-device-management-service-id-for-an-orgdevice",
-        "x-apple-developer-api-version": "1.7",
+        "x-apple-developer-api-version": "1.8",
         "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/get-the-assigned-device-management-service-id-for-an-orgdevice.json"
       }
     }

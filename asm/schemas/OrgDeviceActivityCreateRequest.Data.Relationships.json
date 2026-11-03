@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "OrgDeviceActivityCreateRequest.Data.Relationships",
-  "description": "The relationships you include in the request, and those that you can operate on.\n\nApple School Manager API 1.7+",
+  "description": "The relationships you include in the request, and those that you can operate on.\n\nApple School Manager API 1.8+",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/orgdeviceactivitycreaterequest/data-data.dictionary/relationships-data.dictionary",
-  "x-apple-developer-api-version": "1.7",
+  "x-apple-developer-api-version": "1.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/orgdeviceactivitycreaterequest/data-data.dictionary/relationships-data.dictionary.json",
   "type": "object",
   "required": [ "devices" ],

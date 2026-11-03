@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "OrgDeviceResponse",
-  "description": "A response that contains a single organization device resource.\n\nApple School Manager API 1.7+",
+  "description": "A response that contains a single organization device resource.\n\nApple School Manager API 1.8+",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/orgdeviceresponse",
-  "x-apple-developer-api-version": "1.7",
+  "x-apple-developer-api-version": "1.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/orgdeviceresponse.json",
   "type": "object",
   "required": [ "data", "links" ],

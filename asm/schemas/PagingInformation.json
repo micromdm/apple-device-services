@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "PagingInformation",
-  "description": "Paging information for data responses.\n\nApple School Manager API 1.7+",
+  "description": "Paging information for data responses.\n\nApple School Manager API 1.8+",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/paginginformation",
-  "x-apple-developer-api-version": "1.7",
+  "x-apple-developer-api-version": "1.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/paginginformation.json",
   "type": "object",
   "required": [ "paging" ],

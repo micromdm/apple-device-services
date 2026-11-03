@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "AuditEventConfigSettingsUpdated",
-  "description": "The data structure that represents the event data for a config settings updated audit event.\n\nApple Business API 2.6+",
+  "description": "The data structure that represents the event data for a config settings updated audit event.\n\nApple Business API 2.7+",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventconfigsettingsupdated",
-  "x-apple-developer-api-version": "2.6",
+  "x-apple-developer-api-version": "2.7",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventconfigsettingsupdated.json",
   "type": "object",
   "properties": {

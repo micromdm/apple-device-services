@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "ErrorLinks.Associated.Meta",
-  "description": "Apple School Manager API 1.7+",
+  "description": "Apple School Manager API 1.8+",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/errorlinks/associated-data.dictionary/meta-data.dictionary",
-  "x-apple-developer-api-version": "1.7",
+  "x-apple-developer-api-version": "1.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/errorlinks/associated-data.dictionary/meta-data.dictionary.json",
   "type": "object",
   "properties": {
