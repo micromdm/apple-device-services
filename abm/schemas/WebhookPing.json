@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WebhookPing",
+  "description": "The data structure that represents a webhook ping resource.\n\nApple Business API 2.8+",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/webhookping",
+  "x-apple-developer-api-version": "2.8",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/webhookping.json",
+  "type": "object",
+  "required": [ "id", "type" ],
+  "properties": {
+    "id": {
+      "description": "The opaque resource ID that uniquely identifies the resource.",
+      "type": "string"
+    },
+    "type": {
+      "description": "The resource type.",
+      "const": "webhookPings"
+    }
+  }
+}

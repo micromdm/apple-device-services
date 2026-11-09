@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WebhookCreateRequest.Data.Attributes",
+  "description": "Attributes that describe the webhook you’re creating.\n\nApple Business API 2.8+",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/webhookcreaterequest/data-data.dictionary/attributes-data.dictionary",
+  "x-apple-developer-api-version": "2.8",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/webhookcreaterequest/data-data.dictionary/attributes-data.dictionary.json",
+  "type": "object",
+  "required": [ "name", "enabled", "eventTypes", "secret", "url" ],
+  "properties": {
+    "enabled": {
+      "description": "A Boolean value that indicates whether the webhook is enabled.",
+      "type": "boolean"
+    },
+    "eventTypes": {
+      "description": "The event types that the webhook subscribes to. See [WebhookEventType](https://developer.apple.com/documentation/applebusinessapi/webhookeventtype) for possible values.",
+      "type": "array",
+      "items": {
+        "$ref": "WebhookEventType.json"
+      }
+    },
+    "name": {
+      "description": "The name of the webhook.",
+      "type": "string"
+    },
+    "secret": {
+      "description": "The secret for the webhook. The API doesn’t return this value in responses.",
+      "type": "string"
+    },
+    "url": {
+      "description": "The URL that receives webhook event notifications.",
+      "type": "uri"
+    }
+  }
+}

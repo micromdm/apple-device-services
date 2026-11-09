@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Webhook.Attributes",
+  "description": "Attributes that describe a webhook resource.\n\nApple Business API 2.8+",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/webhook/attributes-data.dictionary",
+  "x-apple-developer-api-version": "2.8",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/webhook/attributes-data.dictionary.json",
+  "type": "object",
+  "properties": {
+    "createdDateTime": {
+      "description": "The date and time that the webhook was created.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "enabled": {
+      "description": "A Boolean value that indicates whether the webhook is enabled.",
+      "type": "boolean"
+    },
+    "eventTypes": {
+      "description": "The event types that the webhook subscribes to. See [WebhookEventType](https://developer.apple.com/documentation/applebusinessapi/webhookeventtype) for possible values.",
+      "type": "array",
+      "items": {
+        "$ref": "WebhookEventType.json"
+      }
+    },
+    "name": {
+      "description": "The name of the webhook.",
+      "type": "string"
+    },
+    "updatedDateTime": {
+      "description": "The date and time that the webhook was last updated.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "url": {
+      "description": "The URL that receives webhook event notifications.",
+      "type": "uri"
+    }
+  }
+}

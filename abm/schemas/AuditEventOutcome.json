@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "AuditEventOutcome",
-  "description": "Strings that represent the result of an action.\n\nApple Business API 2.7+\n\n- Possible Values\n  \n  - SUCCESS: The action completed successfully.\n  - FAILURE: The action failed.",
+  "description": "Strings that represent the result of an action.\n\nApple Business API 2.8+\n\n- Possible Values\n  \n  - SUCCESS: The action completed successfully.\n  - FAILURE: The action failed.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventoutcome",
-  "x-apple-developer-api-version": "2.7",
+  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventoutcome.json",
   "enum": [ "SUCCESS", "FAILURE" ]
 }

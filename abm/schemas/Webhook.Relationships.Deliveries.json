@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Webhook.Relationships.Deliveries",
+  "description": "The relationship between a webhook and its deliveries.\n\nApple Business API 2.8+",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/webhook/relationships-data.dictionary/deliveries-data.dictionary",
+  "x-apple-developer-api-version": "2.8",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/webhook/relationships-data.dictionary/deliveries-data.dictionary.json",
+  "type": "object",
+  "properties": {
+    "links": {
+      "description": "Navigational links to the related deliveries.",
+      "$ref": "RelationshipLinks.json"
+    }
+  }
+}

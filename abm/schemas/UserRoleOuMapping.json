@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "UserRoleOuMapping",
-  "description": "The data structure that represents a user’s role and organizational unit mapping.\n\nApple Business API 2.7+",
+  "description": "The data structure that represents a user’s role and organizational unit mapping.\n\nApple Business API 2.8+",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/userroleoumapping",
-  "x-apple-developer-api-version": "2.7",
+  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/userroleoumapping.json",
   "type": "object",
   "properties": {

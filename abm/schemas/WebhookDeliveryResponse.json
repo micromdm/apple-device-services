@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WebhookDeliveryResponse",
+  "description": "A response that contains information about a webhook delivery resource.\n\nApple Business API 2.8+",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/webhookdeliveryresponse",
+  "x-apple-developer-api-version": "2.8",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/webhookdeliveryresponse.json",
+  "type": "object",
+  "required": [ "data", "links" ],
+  "properties": {
+    "data": {
+      "description": "The resource data.",
+      "$ref": "WebhookDelivery.json"
+    },
+    "included": {
+      "description": "Related resources included in the response.",
+      "type": "array",
+      "items": {
+        "$ref": "WebhookEvent.json"
+      }
+    },
+    "links": {
+      "description": "Navigational links that include the self-link.",
+      "$ref": "DocumentLinks.json"
+    }
+  }
+}

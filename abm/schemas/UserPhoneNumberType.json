@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "UserPhoneNumberType",
-  "description": "Strings that represent phone number types.\n\nApple Business API 2.7+\n\n- Possible Values\n  \n  - WORK: A work phone number.\n  - HOME: A home phone number.\n  - MOBILE: A mobile phone number.",
+  "description": "Strings that represent phone number types.\n\nApple Business API 2.8+\n\n- Possible Values\n  \n  - WORK: A work phone number.\n  - HOME: A home phone number.\n  - MOBILE: A mobile phone number.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/userphonenumbertype",
-  "x-apple-developer-api-version": "2.7",
+  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/userphonenumbertype.json",
   "enum": [ "WORK", "HOME", "MOBILE" ]
 }

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "StatusResponse",
-  "description": "The status of an asynchronous event.\n\nCompare `numCompleted` against `numRequested` to track the progress of an event. When an event finishes with failures, `failures` describes each one.",
+  "description": "The status of an asynchronous event.\n\nCompare `numCompleted` against `numRequested` to track the progress of an event. When an event finishes with failures, `failures` describes each one.\n\nThe `eventType` reflects the request that created the event:\n\nA revoke event reports an `eventType` of `REVOKE` here, even though the `ASSET_MANAGEMENT` notifications it generates report a `type` of `DISASSOCIATE`. For more information, see [Track revoked assignments](https://developer.apple.com/documentation/devicemanagement/subscribing-to-notifications#Track-revoked-assignments).",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/devicemanagement/statusresponse",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/devicemanagement/statusresponse.json",
   "type": "object",
