@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "AuditEventCommonAttributes",
-  "description": "The common attributes for all audit events.\n\nApple Business API 2.7+",
+  "description": "The common attributes for all audit events.\n\nApple Business API 2.8+",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventcommonattributes",
-  "x-apple-developer-api-version": "2.7",
+  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventcommonattributes.json",
   "type": "object",
   "required": [ "type" ],

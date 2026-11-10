@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WebhookPingCreateRequest.Data",
+  "description": "The data element of the request body.\n\nApple Business API 2.8+",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/webhookpingcreaterequest/data-data.dictionary",
+  "x-apple-developer-api-version": "2.8",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/webhookpingcreaterequest/data-data.dictionary.json",
+  "type": "object",
+  "required": [ "type", "relationships" ],
+  "properties": {
+    "relationships": {
+      "description": "The relationships you include in the request.",
+      "$ref": "WebhookPingCreateRequest.Data.Relationships.json"
+    },
+    "type": {
+      "description": "The resource type.",
+      "const": "webhookPings"
+    }
+  }
+}

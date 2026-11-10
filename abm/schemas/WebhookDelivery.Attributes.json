@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WebhookDelivery.Attributes",
+  "description": "Attributes that describe a webhook delivery resource.\n\nApple Business API 2.8+",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/webhookdelivery/attributes-data.dictionary",
+  "x-apple-developer-api-version": "2.8",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/webhookdelivery/attributes-data.dictionary.json",
+  "type": "object",
+  "properties": {
+    "createdDateTime": {
+      "description": "The date and time that the delivery was created.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "deliveryState": {
+      "description": "The state of the delivery. Possible values: `SUCCEEDED`, `FAILED`, `PENDING`.",
+      "enum": [ "SUCCEEDED", "FAILED", "PENDING" ]
+    },
+    "errorMessage": {
+      "description": "A message that describes the error if the delivery failed.",
+      "type": "string"
+    },
+    "redelivery": {
+      "description": "A Boolean value that indicates whether the delivery is a redelivery.",
+      "type": "boolean"
+    },
+    "request": {
+      "description": "Information about the request that was sent to the webhook URL.",
+      "$ref": "WebhookDelivery.Attributes.Request.json"
+    },
+    "response": {
+      "description": "Information about the response that the webhook URL returned.",
+      "$ref": "WebhookDelivery.Attributes.Response.json"
+    },
+    "sentDateTime": {
+      "description": "The date and time that the delivery was sent.",
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

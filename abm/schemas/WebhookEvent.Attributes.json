@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WebhookEvent.Attributes",
+  "description": "Attributes that describe a webhook event resource.\n\nApple Business API 2.8+",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/webhookevent/attributes-data.dictionary",
+  "x-apple-developer-api-version": "2.8",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/webhookevent/attributes-data.dictionary.json",
+  "type": "object",
+  "properties": {
+    "createdDateTime": {
+      "description": "The date and time that the event was created.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventType": {
+      "description": "The type of event. See [WebhookEventType](https://developer.apple.com/documentation/applebusinessapi/webhookeventtype) for possible values.",
+      "$ref": "WebhookEventType.json"
+    },
+    "isPingEvent": {
+      "description": "A Boolean value that indicates whether the event is a ping event.",
+      "type": "boolean"
+    },
+    "payload": {
+      "description": "The payload of the event.",
+      "type": "string"
+    }
+  }
+}

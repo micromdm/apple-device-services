@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "AppleCareCoverageStatus",
-  "description": "Strings that represent AppleCare coverage status.\n\nApple Business API 2.7+\n\n- Possible Values\n  \n  - ACTIVE:\n  - INACTIVE:",
+  "description": "Strings that represent AppleCare coverage status.\n\nApple Business API 2.8+\n\n- Possible Values\n  \n  - ACTIVE:\n  - INACTIVE:",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/applecarecoveragestatus",
-  "x-apple-developer-api-version": "2.7",
+  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/applecarecoveragestatus.json",
   "enum": [ "ACTIVE", "INACTIVE" ]
 }

@@ -112,6 +112,7 @@
             }
           },
           {
+            "description": "The filter for assets with unlimited licenses. When `true`, the server returns the matching assets in the `unlimitedAssets` array of the response. When `false`, the server returns only assets that don’t have unlimited licenses. When omitted, the server returns all assets.",
             "in": "query",
             "name": "unlimited",
             "schema": {

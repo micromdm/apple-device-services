@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WebhookDelivery.Relationships.Event",
+  "description": "The relationship between a webhook delivery and its event.\n\nApple Business API 2.8+",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/webhookdelivery/relationships-data.dictionary/event-data.dictionary",
+  "x-apple-developer-api-version": "2.8",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/webhookdelivery/relationships-data.dictionary/event-data.dictionary.json",
+  "type": "object",
+  "properties": {
+    "data": {
+      "description": "The type and ID of the related event.",
+      "$ref": "WebhookDelivery.Relationships.Event.Data.json"
+    },
+    "links": {
+      "description": "Navigational links to the related event.",
+      "$ref": "RelationshipLinks.json"
+    }
+  }
+}

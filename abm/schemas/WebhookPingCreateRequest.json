@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WebhookPingCreateRequest",
+  "description": "A request to create a new webhook ping.\n\nApple Business API 2.8+",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/webhookpingcreaterequest",
+  "x-apple-developer-api-version": "2.8",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/webhookpingcreaterequest.json",
+  "type": "object",
+  "required": [ "data" ],
+  "properties": {
+    "data": {
+      "description": "The resource data for the new ping.",
+      "$ref": "WebhookPingCreateRequest.Data.json"
+    }
+  }
+}

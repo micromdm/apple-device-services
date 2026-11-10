@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Parameter",
-  "description": "An object that contains the query parameter that produces the error.\n\nApple Business API 2.7+",
+  "description": "An object that contains the query parameter that produces the error.\n\nApple Business API 2.8+",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/parameter",
-  "x-apple-developer-api-version": "2.7",
+  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/parameter.json",
   "type": "object",
   "required": [ "parameter" ],

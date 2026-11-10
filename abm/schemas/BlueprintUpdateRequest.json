@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "BlueprintUpdateRequest",
-  "description": "A request to update an existing Blueprint.\n\nApple Business API 2.7+",
+  "description": "A request to update an existing Blueprint.\n\nApple Business API 2.8+",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/blueprintupdaterequest",
-  "x-apple-developer-api-version": "2.7",
+  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/blueprintupdaterequest.json",
   "type": "object",
   "required": [ "data" ],

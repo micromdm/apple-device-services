@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "ConfigurationUpdateRequest.Data.Attributes",
-  "description": "Apple Business API 2.7+",
+  "description": "Apple Business API 2.8+",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/configurationupdaterequest/data-data.dictionary/attributes-data.dictionary",
-  "x-apple-developer-api-version": "2.7",
+  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/configurationupdaterequest/data-data.dictionary/attributes-data.dictionary.json",
   "type": "object",
   "properties": {

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditEventWebhookUpdatedAttributes",
+  "description": "The attributes for a webhook updated audit event.\n\nApple Business API 2.8+",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventwebhookupdatedattributes",
+  "x-apple-developer-api-version": "2.8",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventwebhookupdatedattributes.json",
+  "type": "object",
+  "properties": {
+    "eventDataWebhookUpdated": {
+      "description": "The event data for this audit event type.",
+      "$ref": "AuditEventWebhookUpdated.json"
+    }
+  }
+}

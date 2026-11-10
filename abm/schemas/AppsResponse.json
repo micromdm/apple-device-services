@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "AppsResponse",
-  "description": "A response that contains a list of app resources.\n\nApple Business API 2.7+",
+  "description": "A response that contains a list of app resources.\n\nApple Business API 2.8+",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/appsresponse",
-  "x-apple-developer-api-version": "2.7",
+  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/appsresponse.json",
   "type": "object",
   "required": [ "data", "links" ],

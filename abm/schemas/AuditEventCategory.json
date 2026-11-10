@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "AuditEventCategory",
-  "description": "Strings that represent audit event categories.\n\nApple Business API 2.7+\n\n- Possible Values\n  \n  - ORGANIZATION: Organization-level events.\n  - ACCOUNT_ACTIVITY: User and API account activity.\n  - DEVICE_INVENTORY: Device inventory changes.\n  - PURCHASING: Purchase-related events.\n  - DEVICE_MANAGEMENT: Device management configuration events.\n  - ACCESS_MANAGEMENT: Access and role management events.",
+  "description": "Strings that represent audit event categories.\n\nApple Business API 2.8+\n\n- Possible Values\n  \n  - ORGANIZATION: Organization-level events.\n  - ACCOUNT_ACTIVITY: User and API account activity.\n  - DEVICE_INVENTORY: Device inventory changes.\n  - PURCHASING: Purchase-related events.\n  - DEVICE_MANAGEMENT: Device management configuration events.\n  - ACCESS_MANAGEMENT: Access and role management events.\n  - WEBHOOK_ACTIVITY: Webhook management events.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventcategory",
-  "x-apple-developer-api-version": "2.7",
+  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventcategory.json",
   "enum": [
     "ORGANIZATION",
@@ -11,6 +11,7 @@
     "DEVICE_INVENTORY",
     "PURCHASING",
     "DEVICE_MANAGEMENT",
-    "ACCESS_MANAGEMENT"
+    "ACCESS_MANAGEMENT",
+    "WEBHOOK_ACTIVITY"
   ]
 }

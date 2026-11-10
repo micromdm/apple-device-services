@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WebhookEventType",
+  "description": "Strings that represent the types of events a webhook can subscribe to.\n\nApple Business API 2.8+\n\n- Possible Values\n  \n  - ORG_DEVICE_ATTRIBUTE_CHANGED: An attribute of a device changed.\n  - ORG_DEVICE_ATTRIBUTE_MIGRATION_DETAILS_CHANGED: The device management service migration details of a device changed.\n  - ORG_DEVICE_RELATIONSHIP_ASSIGNED_SERVER_CHANGED: The device management service assigned to a device changed.\n  - ORG_DEVICE_RELATIONSHIP_WARRANTY_CHANGED: The AppleCare coverage of a device changed.\n\nFor the data each event contains, see [Understanding webhook events](https://developer.apple.com/documentation/apple-school-and-business-manager-api/understanding-apple-business-api-webhook-events).",
+  "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/webhookeventtype",
+  "x-apple-developer-api-version": "2.8",
+  "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/webhookeventtype.json",
+  "enum": [
+    "ORG_DEVICE_ATTRIBUTE_CHANGED",
+    "ORG_DEVICE_ATTRIBUTE_MIGRATION_DETAILS_CHANGED",
+    "ORG_DEVICE_RELATIONSHIP_ASSIGNED_SERVER_CHANGED",
+    "ORG_DEVICE_RELATIONSHIP_WARRANTY_CHANGED"
+  ]
+}
