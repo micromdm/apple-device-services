@@ -1,9 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "OrgDeviceActivityType",
-  "description": "Strings that represent organization device activities.\n\nApple School Manager API 1.8+\n\n- Possible Values\n  \n  - ASSIGN_DEVICES:\n  - UNASSIGN_DEVICES:\n  - ASSIGN_DEVICES_WITH_MDM_MIGRATION_DEADLINE: Assign devices to a device management service and schedule a device management service migration by the given deadline.\n  - UPDATE_MDM_MIGRATION_DEADLINE: Update the deadline for an in-progress device management service migration.\n  - CANCEL_MDM_MIGRATION: Cancel an in-progress device management service migration.",
+  "description": "Strings that represent organization device activities.\n\n- Possible Values\n  \n  - ASSIGN_DEVICES:\n  - UNASSIGN_DEVICES:\n  - ASSIGN_DEVICES_WITH_MDM_MIGRATION_DEADLINE: Assign devices to a device management service and schedule a device management service migration by the given deadline.\n  - UPDATE_MDM_MIGRATION_DEADLINE: Update the deadline for an in-progress device management service migration.\n  - CANCEL_MDM_MIGRATION: Cancel an in-progress device management service migration.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/orgdeviceactivitytype",
-  "x-apple-developer-api-version": "1.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/orgdeviceactivitytype.json",
   "enum": [
     "ASSIGN_DEVICES",

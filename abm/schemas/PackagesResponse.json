@@ -1,9 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "PackagesResponse",
-  "description": "A response that contains a list of package resources.\n\nApple Business API 2.8+",
+  "description": "A response that contains a list of package resources.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/packagesresponse",
-  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/packagesresponse.json",
   "type": "object",
   "required": [ "data", "links" ],

@@ -1,9 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "DeviceEraseStatus",
-  "description": "Strings that represent device erase statuses.\n\nApple Business API 2.8+\n\n- Possible Values\n  \n  - NOT_ERASED:\n  - ERASED:",
+  "description": "Strings that represent device erase statuses.\n\n- Possible Values\n  \n  - NOT_ERASED:\n  - ERASED:",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/deviceerasestatus",
-  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/deviceerasestatus.json",
   "enum": [ "NOT_ERASED", "ERASED" ]
 }

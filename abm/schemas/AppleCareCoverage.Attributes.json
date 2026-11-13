@@ -1,9 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "AppleCareCoverage.Attributes",
-  "description": "Attributes for an organization device’s AppleCare coverage resource.\n\nApple Business API 2.8+\n\n> **Note:** When additional attributes are added by Apple, they appear automatically, without requiring a newer version of the API.",
+  "description": "Attributes for an organization device’s AppleCare coverage resource.\n\n> **Note:** When additional attributes are added by Apple, they appear automatically, without requiring a newer version of the API.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/applecarecoverage/attributes-data.dictionary",
-  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/applecarecoverage/attributes-data.dictionary.json",
   "type": "object",
   "properties": {

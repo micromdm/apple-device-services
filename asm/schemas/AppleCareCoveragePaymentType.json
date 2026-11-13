@@ -1,9 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "AppleCareCoveragePaymentType",
-  "description": "Strings that represent AppleCare coverage payment types.\n\nApple School Manager API 1.8+\n\n- Possible Values\n  \n  - ABE_SUBSCRIPTION:\n  - PAID_UP_FRONT:\n  - SUBSCRIPTION:\n  - NONE:",
+  "description": "Strings that represent AppleCare coverage payment types.\n\n- Possible Values\n  \n  - ABE_SUBSCRIPTION:\n  - PAID_UP_FRONT:\n  - SUBSCRIPTION:\n  - NONE:",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/applecarecoveragepaymenttype",
-  "x-apple-developer-api-version": "1.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/applecarecoveragepaymenttype.json",
   "enum": [ "ABE_SUBSCRIPTION", "PAID_UP_FRONT", "SUBSCRIPTION", "NONE" ]
 }

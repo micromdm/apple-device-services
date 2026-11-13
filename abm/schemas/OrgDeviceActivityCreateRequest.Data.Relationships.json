@@ -1,9 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "OrgDeviceActivityCreateRequest.Data.Relationships",
-  "description": "The relationships you include in the request, and those that you can operate on.\n\nApple Business API 2.8+",
+  "description": "The relationships you include in the request, and those that you can operate on.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/orgdeviceactivitycreaterequest/data-data.dictionary/relationships-data.dictionary",
-  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/orgdeviceactivitycreaterequest/data-data.dictionary/relationships-data.dictionary.json",
   "type": "object",
   "required": [ "devices" ],

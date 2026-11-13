@@ -1,9 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "WebhookUpdateRequest.Data",
-  "description": "The data element of the request body.\n\nApple Business API 2.8+",
+  "description": "The data element of the request body.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/webhookupdaterequest/data-data.dictionary",
-  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/webhookupdaterequest/data-data.dictionary.json",
   "type": "object",
   "required": [ "type", "id" ],

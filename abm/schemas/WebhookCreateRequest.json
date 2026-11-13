@@ -1,9 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "WebhookCreateRequest",
-  "description": "A request to create a new webhook.\n\nApple Business API 2.8+",
+  "description": "A request to create a new webhook.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/webhookcreaterequest",
-  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/webhookcreaterequest.json",
   "type": "object",
   "required": [ "data" ],

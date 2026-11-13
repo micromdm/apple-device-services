@@ -1,9 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "MdmServerProductFamily",
-  "description": "Strings that represent a product family that can be assigned as a default to a device management service.\n\nApple School Manager API 1.8+\n\n- Possible Values\n  \n  - APPLE_TV: Apple TV.\n  - IPAD: iPad.\n  - IPHONE: iPhone.\n  - IPOD: iPod touch.\n  - MAC: Mac.\n  - VISION: Apple Vision Pro.\n  - WATCH: Apple Watch.",
+  "description": "Strings that represent a product family that can be assigned as a default to a device management service.\n\n- Possible Values\n  \n  - APPLE_TV: Apple TV.\n  - IPAD: iPad.\n  - IPHONE: iPhone.\n  - IPOD: iPod touch.\n  - MAC: Mac.\n  - VISION: Apple Vision Pro.\n  - WATCH: Apple Watch.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/mdmserverproductfamily",
-  "x-apple-developer-api-version": "1.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/mdmserverproductfamily.json",
   "enum": [ "APPLE_TV", "IPAD", "IPHONE", "IPOD", "MAC", "VISION", "WATCH" ]
 }
