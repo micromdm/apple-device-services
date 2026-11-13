@@ -21,7 +21,7 @@ fetch-dep:
 	tools/dev_docs_schema.py fetch devicemanagement/roster-management.json
 
 generate-abm:
-	tools/dev_docs_schema.py generate applebusinessapi.json abm/schemas
+	tools/dev_docs_schema.py generate --no-doc-versions applebusinessapi.json abm/schemas
 	tools/dev_docs_schema.py prune applebusinessapi.json abm/schemas
 	tools/sortkeys.py abm/patches/*.json
 	tools/apply_schema_patches.py abm/patches abm/schemas
@@ -41,7 +41,7 @@ fetch-anb:
 	tools/dev_docs_schema.py fetch devicemanagement/app-book-and-subscription-management.json
 
 generate-asm:
-	tools/dev_docs_schema.py generate appleschoolmanagerapi.json asm/schemas
+	tools/dev_docs_schema.py generate --no-doc-versions appleschoolmanagerapi.json asm/schemas
 	tools/dev_docs_schema.py prune appleschoolmanagerapi.json asm/schemas
 	tools/sortkeys.py asm/patches/*.json
 	tools/apply_schema_patches.py asm/patches asm/schemas

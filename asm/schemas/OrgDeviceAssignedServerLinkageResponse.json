@@ -1,9 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "OrgDeviceAssignedServerLinkageResponse",
-  "description": "The data and links that describe the relationship between the resources.\n\nApple School Manager API 1.8+",
+  "description": "The data and links that describe the relationship between the resources.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/orgdeviceassignedserverlinkageresponse",
-  "x-apple-developer-api-version": "1.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/orgdeviceassignedserverlinkageresponse.json",
   "type": "object",
   "required": [ "data", "links" ],

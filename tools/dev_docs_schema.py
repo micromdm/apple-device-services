@@ -636,20 +636,28 @@ def document_uris(
     return None, None
 
 
-def document_description(doc: JSON, refs: JSON) -> str:
-    """Render a document's description: abstract, availability and prose."""
+def document_description(doc: JSON, refs: JSON, versions: bool = True) -> str:
+    """Render a document's description: abstract, availability and prose.
+
+    Without ``versions``, the availability line is left out.
+    """
     parts = (
         inline_text(doc.get("abstract", []), refs),
-        introduced_text(doc),
+        introduced_text(doc) if versions else "",
         discussion_text(doc, refs),
     )
     return "\n\n".join(part for part in parts if part)
 
 
-def document_extensions(doc: JSON, data_base: str = DATA_BASE) -> JSON:
-    """Return the ``x-apple-developer-*`` fields that point back at a document."""
+def document_extensions(
+    doc: JSON, data_base: str = DATA_BASE, versions: bool = True
+) -> JSON:
+    """Return the ``x-apple-developer-*`` fields that point back at a document.
+
+    Without ``versions``, the API version is left out.
+    """
     fields: JSON = {}
-    version = api_version(doc)
+    version = api_version(doc) if versions else None
     if version:
         fields["x-apple-developer-api-version"] = version
     api_uri, data_uri = document_uris(doc, data_base)
@@ -660,8 +668,14 @@ def document_extensions(doc: JSON, data_base: str = DATA_BASE) -> JSON:
     return fields
 
 
-def document_schema(doc: JSON, data_base: str = DATA_BASE) -> JSON:
-    """Build the JSON Schema for an Apple type document."""
+def document_schema(
+    doc: JSON, data_base: str = DATA_BASE, versions: bool = True
+) -> JSON:
+    """Build the JSON Schema for an Apple type document.
+
+    Without ``versions``, the schema names no API version: neither the
+    availability line of its description nor the version extension field.
+    """
     meta = doc.get("metadata", {})
     refs = doc.get("references", {})
 
@@ -669,10 +683,10 @@ def document_schema(doc: JSON, data_base: str = DATA_BASE) -> JSON:
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "title": meta.get("title"),
     }
-    description = document_description(doc, refs)
+    description = document_description(doc, refs, versions)
     if description:
         schema["description"] = description
-    schema.update(document_extensions(doc, data_base))
+    schema.update(document_extensions(doc, data_base, versions))
 
     values = possible_values(doc)
     if values is not None:
@@ -856,14 +870,20 @@ def operation_responses(doc: JSON, refs: JSON) -> JSON:
     return responses
 
 
-def operation(name: str, doc: JSON, data_base: str = DATA_BASE) -> JSON:
-    """Build the OpenAPI operation of an endpoint document."""
+def operation(
+    name: str, doc: JSON, data_base: str = DATA_BASE, versions: bool = True
+) -> JSON:
+    """Build the OpenAPI operation of an endpoint document.
+
+    Without ``versions``, the operation names no API version, the way
+    ``document_schema`` leaves it out.
+    """
     refs = doc.get("references", {})
     op: JSON = {"operationId": operation_id(name), "summary": document_title(doc)}
-    description = document_description(doc, refs)
+    description = document_description(doc, refs, versions)
     if description:
         op["description"] = description
-    op.update(document_extensions(doc, data_base))
+    op.update(document_extensions(doc, data_base, versions))
     parameters = operation_parameters(doc, refs)
     if parameters:
         op["parameters"] = parameters
@@ -919,25 +939,29 @@ def endpoint_tags(roots: list[JSON]) -> tuple[dict[str, str], list[str]]:
 
 
 def openapi_document(
-    roots: list[JSON], endpoints: dict[str, JSON], data_base: str = DATA_BASE
+    roots: list[JSON],
+    endpoints: dict[str, JSON],
+    data_base: str = DATA_BASE,
+    versions: bool = True,
 ) -> JSON:
     """Build the OpenAPI document of the endpoints a walk found.
 
     The roots are the documents the walks started at; the endpoints are the
     endpoint documents, by cache name. The types the operations name are
-    referenced as the sibling schema files.
+    referenced as the sibling schema files. Without ``versions``, the
+    operations name no API version; ``info.version`` still does.
     """
     paths: dict[str, JSON] = {}
     servers: dict[str, list[JSON]] = {}
     ids: dict[str, str] = {}
-    versions: list[str] = []
+    introduced: list[str] = []
     tags, tag_order = endpoint_tags(roots)
     for name in sorted(endpoints):
         doc = endpoints[name]
         url = endpoint(doc)
         if url is None:
             raise ValueError(f"{name}: an endpoint without a URL")
-        op = operation(name, doc, data_base)
+        op = operation(name, doc, data_base, versions)
         if name in tags:
             op["tags"] = [tags[name]]
         previous = ids.setdefault(op["operationId"], name)
@@ -950,7 +974,7 @@ def openapi_document(
         servers.setdefault(url.server, []).append(op)
         version = api_version(doc)
         if version:
-            versions.append(version)
+            introduced.append(version)
 
     if len(servers) > 1:
         # Operations on several hosts: each names its own.
@@ -961,7 +985,7 @@ def openapi_document(
         "title": " / ".join(filter(None, map(document_title, roots))),
         # The latest version any operation was introduced in: the version of
         # the API that has all of them.
-        "version": max(versions, key=version_key) if versions else "",
+        "version": max(introduced, key=version_key) if introduced else "",
     }
     description = "\n\n".join(
         filter(None, (inline_text(r.get("abstract", []), {}) for r in roots))
@@ -1212,6 +1236,9 @@ def command_generate(args: argparse.Namespace) -> int:
     The endpoints the sources name become the operations of an OpenAPI
     document, written beside the schemas as ``OpenAPI.json``; the types they
     reference are the schemas.
+
+    With ``--no-doc-versions``, only the OpenAPI document's ``info.version``
+    names the API version (see the option's help).
     """
     cache = Cache(args.cache_dir, args.data_base)
     schema_dir = Path(args.schema_dir)
@@ -1256,7 +1283,7 @@ def command_generate(args: argparse.Namespace) -> int:
                         file=sys.stderr,
                     )
                 writes[schema_dir / name] = document_schema(
-                    document.data, args.data_base
+                    document.data, args.data_base, args.doc_versions
                 )
         missing |= resolver.missing
 
@@ -1273,7 +1300,9 @@ def command_generate(args: argparse.Namespace) -> int:
         return 1
 
     if endpoints:
-        document = openapi_document(roots, endpoints, args.data_base)
+        document = openapi_document(
+            roots, endpoints, args.data_base, args.doc_versions
+        )
         # Every type an operation references has to be a schema.
         unresolved = sorted(
             ref
@@ -1458,6 +1487,17 @@ def build_parser() -> argparse.ArgumentParser:
         "sources", nargs="+", metavar="SOURCE", help='e.g. "applebusinessapi.json"'
     )
     generate.add_argument("schema_dir", help='e.g. "abm/schemas"')
+    generate.add_argument(
+        "--no-doc-versions",
+        dest="doc_versions",
+        action="store_false",
+        help=(
+            "name the API version only in the OpenAPI document's info.version, "
+            "not in each schema and operation: for an API that Apple stamps "
+            "with one version throughout, which every release would otherwise "
+            "change in every file"
+        ),
+    )
     generate.set_defaults(func=command_generate)
 
     single = commands.add_parser(

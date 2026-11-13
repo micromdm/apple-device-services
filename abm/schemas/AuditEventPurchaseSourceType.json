@@ -1,9 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "AuditEventPurchaseSourceType",
-  "description": "Strings that represent how a device was added to an organization.\n\nApple Business API 2.8+\n\n- Possible Values\n  \n  - APPLE: Device purchased from Apple.\n  - MANUALLY_ADDED: Device manually added.\n  - RESELLER: Device purchased from an Apple Authorized Reseller or an authorized cellular carrier.",
+  "description": "Strings that represent how a device was added to an organization.\n\n- Possible Values\n  \n  - APPLE: Device purchased from Apple.\n  - MANUALLY_ADDED: Device manually added.\n  - RESELLER: Device purchased from an Apple Authorized Reseller or an authorized cellular carrier.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventpurchasesourcetype",
-  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventpurchasesourcetype.json",
   "enum": [ "APPLE", "MANUALLY_ADDED", "RESELLER" ]
 }

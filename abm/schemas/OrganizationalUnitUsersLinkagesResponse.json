@@ -1,9 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "OrganizationalUnitUsersLinkagesResponse",
-  "description": "A response that contains a list of user IDs for an organizational unit.\n\nApple Business API 2.8+",
+  "description": "A response that contains a list of user IDs for an organizational unit.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/organizationalunituserslinkagesresponse",
-  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/organizationalunituserslinkagesresponse.json",
   "type": "object",
   "required": [ "data", "links" ],

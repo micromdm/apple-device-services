@@ -1,9 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "AuditEventExternalAccountDisassociated",
-  "description": "The data structure that represents the event data for an external account disassociated audit event.\n\nApple Business API 2.8+",
+  "description": "The data structure that represents the event data for an external account disassociated audit event.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventexternalaccountdisassociated",
-  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventexternalaccountdisassociated.json",
   "type": "object"
 }

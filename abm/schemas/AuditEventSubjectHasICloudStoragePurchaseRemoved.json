@@ -1,9 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "AuditEventSubjectHasICloudStoragePurchaseRemoved",
-  "description": "The data structure that represents the event data for a subject has iCloud storage purchase removed audit event.\n\nApple Business API 2.8+",
+  "description": "The data structure that represents the event data for a subject has iCloud storage purchase removed audit event.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventsubjecthasicloudstoragepurchaseremoved",
-  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventsubjecthasicloudstoragepurchaseremoved.json",
   "type": "object",
   "properties": {

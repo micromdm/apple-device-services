@@ -1,9 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "ActivityTypeMetadata",
-  "description": "Additional metadata for an organization device activity, used by device management service migration activity types.\n\nApple Business API 2.8+",
+  "description": "Additional metadata for an organization device activity, used by device management service migration activity types.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/activitytypemetadata",
-  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/activitytypemetadata.json",
   "type": "object",
   "properties": {

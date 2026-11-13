@@ -131,6 +131,12 @@ The JSON document has a stable shape. Relevant fields:
     pages were curated by hand. And some documents carry no `platforms` entry at
     all — DAS's response types do not — so they assert no version. Take the
     line as what the front-end shows, not as a per-type feature history.
+
+    Where one version covers a whole namespace, every release would change
+    it in every file. `generate --no-doc-versions` leaves out both the
+    availability line and the extension field, so the version appears only
+    in the OpenAPI document's `info.version`. The ABM and ASM targets use
+    it; DEP and ANB keep the per-document versions.
   - `symbolKind` — e.g. `dictionary` (data type), `typealias` (enum-like string
     type) or `httpRequest` (endpoint).
   - `roleHeading` — e.g. `Object`.

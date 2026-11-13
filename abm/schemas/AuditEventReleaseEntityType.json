@@ -1,9 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "AuditEventReleaseEntityType",
-  "description": "Strings that represent the type of entity that conducted the release operation.\n\nApple Business API 2.8+\n\n- Possible Values\n  \n  - USER: Released by user.\n  - MDM: Released by a device management service.\n  - RESELLER: Released by an Apple Authorized Reseller or an authorized cellular carrier.\n  - API: Released via API.\n  - REPLACEMENT: Released due to replacement.",
+  "description": "Strings that represent the type of entity that conducted the release operation.\n\n- Possible Values\n  \n  - USER: Released by user.\n  - MDM: Released by a device management service.\n  - RESELLER: Released by an Apple Authorized Reseller or an authorized cellular carrier.\n  - API: Released via API.\n  - REPLACEMENT: Released due to replacement.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventreleaseentitytype",
-  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventreleaseentitytype.json",
   "enum": [ "USER", "MDM", "RESELLER", "API", "REPLACEMENT" ]
 }

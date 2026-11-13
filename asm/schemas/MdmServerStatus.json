@@ -1,9 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "MdmServerStatus",
-  "description": "Strings that represent the operational status of a device management service.\n\nApple School Manager API 1.8+\n\n- Possible Values\n  \n  - ACTIVE: The server is active and able to manage devices.\n  - INACTIVE: The server is currently inactive.\n  - DELETED: The server has been removed from the organization.",
+  "description": "Strings that represent the operational status of a device management service.\n\n- Possible Values\n  \n  - ACTIVE: The server is active and able to manage devices.\n  - INACTIVE: The server is currently inactive.\n  - DELETED: The server has been removed from the organization.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/mdmserverstatus",
-  "x-apple-developer-api-version": "1.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/mdmserverstatus.json",
   "enum": [ "ACTIVE", "DELETED", "INACTIVE" ]
 }

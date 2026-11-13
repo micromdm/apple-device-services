@@ -1,9 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "AuditEventRoleCreatedAttributes",
-  "description": "The attributes for a role created audit event.\n\nApple Business API 2.8+",
+  "description": "The attributes for a role created audit event.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/auditeventrolecreatedattributes",
-  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/auditeventrolecreatedattributes.json",
   "type": "object",
   "properties": {

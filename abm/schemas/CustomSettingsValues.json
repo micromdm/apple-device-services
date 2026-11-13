@@ -1,9 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "CustomSettingsValues",
-  "description": "The custom settings payload for a Configuration of type `CUSTOM_SETTING`.\n\nApple Business API 2.8+",
+  "description": "The custom settings payload for a Configuration of type `CUSTOM_SETTING`.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/customsettingsvalues",
-  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/customsettingsvalues.json",
   "type": "object",
   "properties": {

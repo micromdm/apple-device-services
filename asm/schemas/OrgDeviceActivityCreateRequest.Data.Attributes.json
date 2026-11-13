@@ -1,9 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "OrgDeviceActivityCreateRequest.Data.Attributes",
-  "description": "Attributes with values that you’re changing as part of the create request.\n\nApple School Manager API 1.8+",
+  "description": "Attributes with values that you’re changing as part of the create request.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/orgdeviceactivitycreaterequest/data-data.dictionary/attributes-data.dictionary",
-  "x-apple-developer-api-version": "1.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/orgdeviceactivitycreaterequest/data-data.dictionary/attributes-data.dictionary.json",
   "type": "object",
   "required": [ "activityType" ],

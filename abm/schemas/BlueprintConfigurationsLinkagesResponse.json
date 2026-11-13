@@ -1,9 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "BlueprintConfigurationsLinkagesResponse",
-  "description": "A response that contains a list of Configuration resource linkages for a Blueprint.\n\nApple Business API 2.8+",
+  "description": "A response that contains a list of Configuration resource linkages for a Blueprint.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/applebusinessapi/blueprintconfigurationslinkagesresponse",
-  "x-apple-developer-api-version": "2.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/applebusinessapi/blueprintconfigurationslinkagesresponse.json",
   "type": "object",
   "required": [ "data", "links" ],

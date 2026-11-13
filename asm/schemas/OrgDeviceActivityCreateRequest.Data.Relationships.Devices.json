@@ -1,9 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "OrgDeviceActivityCreateRequest.Data.Relationships.Devices",
-  "description": "The data that describe the relationship between the resources.\n\nApple School Manager API 1.8+",
+  "description": "The data that describe the relationship between the resources.",
   "x-apple-developer-api-uri": "https://developer.apple.com/documentation/appleschoolmanagerapi/orgdeviceactivitycreaterequest/data-data.dictionary/relationships-data.dictionary/devices-data.dictionary",
-  "x-apple-developer-api-version": "1.8",
   "x-apple-developer-data-uri": "https://developer.apple.com/tutorials/data/documentation/appleschoolmanagerapi/orgdeviceactivitycreaterequest/data-data.dictionary/relationships-data.dictionary/devices-data.dictionary.json",
   "type": "object",
   "required": [ "data" ],
