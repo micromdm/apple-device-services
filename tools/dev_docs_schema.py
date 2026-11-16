@@ -297,6 +297,7 @@ SCALAR_TYPES: dict[str, str] = {
 
 # Apple type names that are JSON Schema string formats, not types.
 STRING_FORMATS: set[str] = {
+    "uri",
     "uri-reference",
     "date",
     "date-time",

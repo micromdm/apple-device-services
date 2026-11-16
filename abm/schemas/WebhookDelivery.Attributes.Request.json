@@ -8,7 +8,8 @@
   "properties": {
     "url": {
       "description": "The URL that the request was sent to.",
-      "type": "uri"
+      "type": "string",
+      "format": "uri"
     }
   }
 }

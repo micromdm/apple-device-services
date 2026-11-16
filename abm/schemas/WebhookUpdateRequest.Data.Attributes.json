@@ -27,7 +27,8 @@
     },
     "url": {
       "description": "The URL that receives webhook event notifications.",
-      "type": "uri"
+      "type": "string",
+      "format": "uri"
     }
   }
 }
